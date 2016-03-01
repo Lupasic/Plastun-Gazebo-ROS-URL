@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package>
+  <name>plastun_control</name>
+  <version>1.0.0</version>
+  <description>The plastun_control package</description>
+
+<<<<<<< HEAD
+=======
+   <description>Describes MRC "Plastun" with camera, hokyo plugins for Gazebo</description>
+
+>>>>>>> fd03673fe43930af496e4b182a99662ac75b0ddd
+  <maintainer email="obulichev@yandex.ru">Bulichev Oleg</maintainer>
+
+
+
+  <license>None</license>
+
+
+  <url type="website">https://Lupasic@bitbucket.org/Lupasic/mrc-plastun-gazebo-ros.git</url>
+
+  <author email="obulichev@yandex.ru">Bulichev Oleg</author>
+
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>plastun_description</run_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
