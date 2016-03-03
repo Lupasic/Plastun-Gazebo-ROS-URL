@@ -1,0 +1,409 @@
+<?xml version="1.0" ?>
+
+<robot name="MRC_&quot;Plastun&quot;">
+
+  <link name="chassis">
+    <inertial>
+      <mass value="30"/>
+      <origin rpy="0  0  0" xyz="0.32045 -0.00448  0.06272"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="0  0  0" xyz="0.32045 0  0.06272"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0.32045 0  0.06272"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+
+<!-- wheels -->
+    <link name="wheel_left_1">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.096"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/wheel.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="wheel_left_2">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.096"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/wheel.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="wheel_left_3">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision>
+      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.096"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/wheel.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="wheel_right_1">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.096"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/wheel.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="wheel_right_2">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.096"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/wheel.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="wheel_right_3">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.096"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/wheel.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+<!-- cameras and sensors -->
+  <link name="lazer_ukazka">
+    <inertial>
+      <mass value="0.5"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/lazer_ukazka.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/lazer_ukazka.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="camera_1">
+    <inertial>
+      <mass value="0.0290342"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.00034961" ixy="0" ixz="0" iyy="0.00243426" iyz="0" izz="0.0027544"/>
+    </inertial>
+    <collision >
+      <origin rpy="0  0  0" xyz="0    0    0.04"/>
+      <geometry>
+        <box size="0.17 0.1 0.06"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="camera_2">
+    <inertial>
+      <mass value="0.00092334"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="9.8e-07" ixy="0" ixz="0" iyy="2.45e-06" iyz="0" izz="2.95e-06"/>
+    </inertial>
+    <collision >
+      <origin rpy="0  0  0" xyz="0    0    0.04"/>
+      <geometry>
+        <box size="0.17 0.1 0.06"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="hokuyo">
+    <inertial>
+      <mass value="0.00014924"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="2.7e-07" ixy="0" ixz="0" iyy="1.9e-07" iyz="0" izz="8e-08"/>
+    </inertial>
+    <collision >
+      <origin rpy="0  0  0" xyz="0    0    0.05"/>
+      <geometry>
+        <box size="0.06524 0.079833 0.102579"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/hokuyo.stl" scale="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+
+<!-- Turrel -->
+    <link name="turrel_vniz">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/turrel_vniz.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/turrel_vniz.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+
+    </visual>
+  </link>
+
+  <link name="turrel_sered">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/turrel_sered.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/turrel_sered.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+
+    </visual>
+  </link>
+
+  <link name="turrel_vverh">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0    0   -0.02"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision >
+      <origin rpy="0  0  0" xyz="0    0   -0.02"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/turrel_vverh.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </collision>
+    <visual >
+      <origin rpy="0  0  0" xyz="0    0   -0.02"/>
+      <geometry>
+        <mesh filename="package://plastun_description/meshes/STL_min/turrel_vverh.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+
+    </visual>
+  </link>
+
+
+
+  <joint name="chassis _ turrel_vniz fixed" type="fixed">
+    <parent link="chassis"/>
+    <child link="turrel_vniz"/>
+    <origin rpy="0 0  0" xyz="0.25857 -0.01238  0.42994"/>
+    <axis xyz="0  0  0"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+
+  <joint name="chassis _ hokuyo fixed" type="fixed">
+    <parent link="chassis"/>
+    <child link="hokuyo"/>
+    <origin rpy="0       0       0" xyz="0.15582  0.0808   0.42783"/>
+    <axis xyz="0  0  0"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+
+  <joint name="wheel_lev_1" type="revolute">
+    <parent link="chassis"/>
+    <child link="wheel_left_1"/>
+    <origin rpy="0       0      0" xyz="0.36566 -0.20499   0.15237"/>
+    <axis xyz="0 -1  0"/>
+   <!-- <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/> -->
+   <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+  </joint>
+
+  <joint name="wheel_lev_2" type="revolute">
+    <parent link="chassis"/>
+    <child link="wheel_left_2"/>
+    <origin rpy="0       0      0" xyz="0.13874 -0.20499  0.15237"/>
+    <axis xyz="0 -1  0"/>
+      <!-- <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/> -->
+   <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+  </joint>
+
+  <joint name="wheel_lev_3" type="revolute">
+    <parent link="chassis"/>
+    <child link="wheel_left_3"/>
+    <origin rpy="0       0      0" xyz="0.58393 -0.20499  0.15237"/>
+    <axis xyz="0 -1  0"/>
+      <!-- <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/> -->
+   <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+  </joint>
+
+  <joint name="wheel_prav_1" type="revolute">
+    <parent link="chassis"/>
+    <child link="wheel_right_1"/>
+    <origin rpy="0       0      0" xyz="0.13874  0.20499  0.15237"/>
+    <axis xyz="0 -1  0"/>
+      <!-- <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/> -->
+   <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+  </joint>
+
+  <joint name="wheel_prav_2" type="revolute">
+    <parent link="chassis"/>
+    <child link="wheel_right_2"/>
+    <origin rpy="0       0      0" xyz="0.36566  0.20499  0.15237"/>
+    <axis xyz="0 -1  0"/>
+      <!-- <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/> -->
+   <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+  </joint>
+
+  <joint name="wheel_prav_3" type="revolute">
+    <parent link="chassis"/>
+    <child link="wheel_right_3"/>
+    <origin rpy="0  0  0" xyz="0.58393  0.20499  0.15237"/>
+    <axis xyz="0 -1  0"/>
+       <!-- <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/> -->
+   <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+  </joint>
+
+  <joint name="camera_1 _ lazer_ukazka fixed" type="fixed">
+    <parent link="camera_1"/>
+    <child link="lazer_ukazka"/>
+    <origin rpy="0       0      0" xyz="-0.04766  0.00111  0.10548"/>
+    <axis xyz="0  0  0"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+
+  <joint name="turrel_vniz _ turrel_sered revolute" type="fixed">
+    <parent link="turrel_vniz"/>
+    <child link="turrel_sered"/>
+    <origin rpy="0  0   0" xyz="0.00045 -0.00033  0.13474"/>
+    <axis xyz="0  0  0"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+
+  <joint name="turrel_vverh _ camera_1 fixed" type="fixed">
+    <parent link="turrel_vverh"/>
+    <child link="camera_1"/>
+    <origin rpy="0       0       0" xyz="-0.07152 -0.21215 -0.017"/>
+    <axis xyz="0  0  0"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+
+  <joint name="turrel_vverh _ camera_2 fixed" type="fixed">
+    <parent link="turrel_vverh"/>
+    <child link="camera_2"/>
+    <origin rpy="0       0       0" xyz="-0.07152  0.21176 -0.017"/>
+    <axis xyz="0  0  0"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+
+  <joint name="turrel_sered _ turrel_vverh up-to-down" type="fixed">
+    <parent link="turrel_sered"/>
+    <child link="turrel_vverh"/>
+    <origin rpy="0   0   0" xyz="0.00306  0.00468  0.13878"/>
+    <axis xyz="0  0  0"/>
+    <limit effort="0" lower="0" upper="0" velocity="0"/>
+  </joint>
+
+
+  <gazebo>
+    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
+      <robotNamespace>/plastun</robotNamespace>
+    </plugin>
+  </gazebo>
+
+</robot>

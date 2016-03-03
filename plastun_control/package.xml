@@ -4,11 +4,7 @@
   <version>1.0.0</version>
   <description>The plastun_control package</description>
 
-<<<<<<< HEAD
-=======
-   <description>Describes MRC "Plastun" with camera, hokyo plugins for Gazebo</description>
 
->>>>>>> fd03673fe43930af496e4b182a99662ac75b0ddd
   <maintainer email="obulichev@yandex.ru">Bulichev Oleg</maintainer>
 
 

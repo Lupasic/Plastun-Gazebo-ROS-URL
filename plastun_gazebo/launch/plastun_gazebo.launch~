@@ -1,0 +1,20 @@
+<launch>
+
+   <param name="robot_description" textfile="$(find plastun_description)/urdf/plastun.urdf" />  
+
+<!-- запускаем комнату -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="komnata" value="$(find plastun_gazebo)/worlds/komnata.world"/>
+    <arg name="paused" value="true"/>
+    
+  </include>
+  
+
+<!-- Spawn a robot into Gazebo -->
+<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find plastun_description)/urdf/plastun.urdf -urdf -z 1 -model plastun" />
+
+
+
+
+
+</launch>
