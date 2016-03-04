@@ -170,9 +170,9 @@
       <inertia ixx="0.00034961" ixy="0" ixz="0" iyy="0.00243426" iyz="0" izz="0.0027544"/>
     </inertial>
     <collision >
-      <origin rpy="0  0  0" xyz="0    0    0.04"/>
+       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
-        <box size="0.17 0.1 0.06"/>
+        <mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual >
@@ -190,9 +190,9 @@
       <inertia ixx="9.8e-07" ixy="0" ixz="0" iyy="2.45e-06" iyz="0" izz="2.95e-06"/>
     </inertial>
     <collision >
-      <origin rpy="0  0  0" xyz="0    0    0.04"/>
+    <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
-        <box size="0.17 0.1 0.06"/>
+        <mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual >
@@ -269,17 +269,17 @@
   <link name="turrel_vverh">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0    0   -0.02"/>
+      <origin rpy="0  0  0" xyz="0    0   0"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
-      <origin rpy="0  0  0" xyz="0    0   -0.02"/>
+      <origin rpy="0  0  0" xyz="0    0   0"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/turrel_vverh.stl" scale="1.0 1.0 1.0"/>
       </geometry>
     </collision>
     <visual >
-      <origin rpy="0  0  0" xyz="0    0   -0.02"/>
+      <origin rpy="0  0  0" xyz="0    0   0"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/turrel_vverh.stl" scale="1.0 1.0 1.0"/>
       </geometry>
@@ -397,9 +397,9 @@
   <joint name="turrel_sered _ turrel_vverh up-to-down" type="revolute">
     <parent link="turrel_sered"/>
     <child link="turrel_vverh"/>
-    <origin rpy="0   0   0" xyz="0.00306  0.00468  0.13878"/>
+    <origin rpy="0   0   0" xyz="0.00306  0.00468  0.12878"/>
     <axis xyz="0  1  0"/>
-     <limit effort="10" lower="-1" upper="1" velocity="100"/>
+     <limit effort="1" lower="-1" upper="1" velocity="100"/>
   </joint>
 
 <!-- plugins -->
@@ -462,7 +462,7 @@
 <!-- sensors -->
   <gazebo reference="camera_1">
         <sensor name='camera' type='camera'>
-          <pose>-0.050000 -0.010000 0.000000 -1.5708 0.000000 -3.141592</pose>
+          <pose>0 0.2 0.01 -1.5708 0.000000 3,1416</pose>
           <camera name='__default__'>
             <horizontal_fov>1.012300</horizontal_fov>
             <image>
@@ -480,7 +480,8 @@
           <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
             <alwaysOn>true</alwaysOn>
             <updateRate>30</updateRate>
-            <cameraName>plastun/camera_1</cameraName>
+            <cameraName>camera_1</cameraName>
+            <robotNamespace>plastun</robotNamespace>
             <imageTopicName>image_raw_1</imageTopicName>
             <cameraInfoTopicName>camera_info_1</cameraInfoTopicName>
             <frameName>camera_link</frameName>
@@ -496,7 +497,7 @@
 
 <gazebo reference="camera_2">
         <sensor name='camera' type='camera'>
-          <pose>-0.050000 -0.010000 0.000000 -1.5708 0.000000 -3.141592</pose>
+          <pose>0 0.2 0.01 -1.5708 0.000000 3,1416</pose>
           <camera name='__default__'>
             <horizontal_fov>1.012300</horizontal_fov>
             <image>
@@ -514,8 +515,9 @@
           <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
             <alwaysOn>true</alwaysOn>
             <updateRate>30</updateRate>
-            <cameraName>plastun/camera_2</cameraName>
+            <cameraName>camera_2</cameraName>
             <imageTopicName>image_raw_2</imageTopicName>
+            <robotNamespace>plastun</robotNamespace>
             <cameraInfoTopicName>camera_info_2</cameraInfoTopicName>
             <frameName>camera_link</frameName>
             <hackBaseline>0.07</hackBaseline>
@@ -530,7 +532,7 @@
 
  <gazebo reference="hokuyo">
     <sensor type="gpu_ray" name="head_hokuyo_sensor">
-      <pose>0 0 0 0 0 0</pose>
+      <pose>0 0 0.5 0 0 3,1416</pose>
       <visualize>true</visualize>
       <update_rate>40</update_rate>
       <ray>
@@ -538,8 +540,8 @@
           <horizontal>
             <samples>720</samples>
             <resolution>1</resolution>
-            <min_angle>-1.570796</min_angle>
-            <max_angle>1.570796</max_angle>
+            <min_angle>-1.470796</min_angle>
+            <max_angle>1.470796</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -558,33 +560,16 @@
         </noise>
       </ray>
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_gpu_laser.so">
-        <topicName>plastun/laser/scan</topicName>
+        <robotNamespace>plastun</robotNamespace>
+        <topicName>laser/scan</topicName>
         <frameName>hokuyo_link</frameName>
       </plugin>
     </sensor>
   </gazebo>
 
-<gazebo>
-  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-    <updateRate>100.0</updateRate>
-    <robotNamespace>plastun</robotNamespace>
-    <leftFrontJoint>wheel_lev_1</leftFrontJoint>
-    <rightFrontJoint>wheel_prav_1</rightFrontJoint>
-    <leftRearJoint>wheel_lev_3</leftRearJoint>
-    <rightRearJoint>wheel_prav_3</rightRearJoint>
-    <wheelSeparation>0.4</wheelSeparation>
-    <wheelDiameter>0.192</wheelDiameter>
-    <robotBaseFrame>chassis</robotBaseFrame>
-    <torque>20</torque>
-    <commandTopic>cmd_vel</commandTopic>
-    <odometryTopic>odom</odometryTopic>
-    <broadcastTF>false</broadcastTF>
-  </plugin>
-</gazebo>
-
 <gazebo reference="lazer_ukazka">
     <sensor type="gpu_ray" name="head_hokuyo_sensor">
-      <pose>0 0 0 0 0 0</pose>
+      <pose>0 0.5 0.2 0 0 3.14</pose>
       <visualize>true</visualize>
       <update_rate>40</update_rate>
       <ray>
@@ -612,10 +597,32 @@
         </noise>
       </ray>
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_gpu_laser.so">
-        <topicName>plastun/laser/scan_ukaz</topicName>
+        <robotNamespace>plastun</robotNamespace>
+        <topicName>laser/scan_ukaz</topicName>
         <frameName>ukaz_link</frameName>
       </plugin>
     </sensor>
   </gazebo>
+
+<gazebo>
+  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+    <updateRate>100.0</updateRate>
+    <robotNamespace>plastun</robotNamespace>
+    <leftFrontJoint>wheel_lev_1</leftFrontJoint>
+    <rightFrontJoint>wheel_prav_1</rightFrontJoint>
+    <leftRearJoint>wheel_lev_3</leftRearJoint>
+    <rightRearJoint>wheel_prav_3</rightRearJoint>
+    <wheelSeparation>0.4</wheelSeparation>
+    <wheelDiameter>0.192</wheelDiameter>
+    <robotBaseFrame>chassis</robotBaseFrame>
+    <torque>20</torque>
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <broadcastTF>false</broadcastTF>
+  </plugin>
+</gazebo>
+
+
 
 </robot>
