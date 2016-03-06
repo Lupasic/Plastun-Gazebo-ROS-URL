@@ -2,7 +2,7 @@
 
 <robot name="MRC_Plastun">
 
-<link name="base_link"/>
+  <link name="base_link"/>
   
   <joint name="base_link_to_chassis" type="fixed">
     <parent link="base_link"/>
@@ -13,7 +13,7 @@
   <link name="chassis">
     <inertial>
       <mass value="30"/>
-      <origin rpy="0  0  0" xyz="0.32045 -0.00448  0.06272"/>
+      <origin rpy="0  0  0" xyz="0.436419 -0.000612  0.228789"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
@@ -35,8 +35,8 @@
   <link name="wheel_left_1">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
+       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
@@ -55,7 +55,7 @@
   <link name="wheel_left_2">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
@@ -75,7 +75,7 @@
   <link name="wheel_left_3">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision>
@@ -94,8 +94,8 @@
   <link name="wheel_right_1">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
+            <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
@@ -114,7 +114,7 @@
   <link name="wheel_right_2">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
@@ -134,7 +134,7 @@
   <link name="wheel_right_3">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
@@ -154,9 +154,9 @@
   <!-- cameras and sensors -->
   <link name="lazer_ukazka">
     <inertial>
-      <mass value="0.5"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <mass value="0.001"/>
+      <origin rpy="0  0  0" xyz="-0.017806  0  0.027446"/>
+      <inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0.0"/>
     </inertial>
     <collision >
       <origin rpy="0  0  0" xyz="0  0  0"/>
@@ -175,8 +175,8 @@
 
   <link name="camera_1">
     <inertial>
-      <mass value="0.0290342"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <mass value="0.001"/>
+      <origin rpy="0  0  0" xyz="-0.000018  -0.000225  0.060158"/>
       <inertia ixx="0.00034961" ixy="0" ixz="0" iyy="0.00243426" iyz="0" izz="0.0027544"/>
     </inertial>
     <collision >
@@ -195,9 +195,9 @@
 
   <link name="camera_2">
     <inertial>
-      <mass value="0.00092334"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
-      <inertia ixx="9.8e-07" ixy="0" ixz="0" iyy="2.45e-06" iyz="0" izz="2.95e-06"/>
+      <mass value="0.003"/>
+      <origin rpy="0  0  0" xyz="-0.000018  -0.000225  0.060158"/>
+      <inertia ixx="0.00034961" ixy="0" ixz="0" iyy="0.00243426" iyz="0" izz="0.0027544"/>
     </inertial>
     <collision >
       <origin rpy="0  0  0" xyz="0  0  0"/>
@@ -215,9 +215,9 @@
 
   <link name="hokuyo">
     <inertial>
-      <mass value="0.00014924"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
-      <inertia ixx="2.7e-07" ixy="0" ixz="0" iyy="1.9e-07" iyz="0" izz="8e-08"/>
+      <mass value="0.3"/>
+      <origin rpy="0  0  0" xyz="-0.000001  0  0.053927"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
       <origin rpy="0  0  0" xyz="0    0    0.05"/>
@@ -237,7 +237,7 @@
   <link name="turrel_vniz">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="-0.000002  0  0.072908"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
@@ -258,7 +258,7 @@
   <link name="turrel_sered">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="0  0  0.089664"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
@@ -279,8 +279,8 @@
   <link name="turrel_vverh">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0    0   0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <origin rpy="0  0  0" xyz="0    -0.005000   0.051671"/>
+            <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
       <origin rpy="0  0  0" xyz="0    0   0"/>
@@ -349,7 +349,7 @@
   </joint>
 
   <!--fix'es joints -->
-  <joint name="camera_1 _ lazer_ukazka fixed" type="revolute">
+  <joint name="camera_1_lazer_ukazka_fixed" type="revolute">
     <parent link="camera_1"/>
     <child link="lazer_ukazka"/>
     <origin rpy="0       0      0" xyz="-0.04766  0.00111  0.10548"/>
@@ -357,7 +357,7 @@
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
 
-  <joint name="turrel_vverh _ camera_1 fixed" type="revolute">
+  <joint name="turrel_vverh_camera_1_ixed" type="revolute">
     <parent link="turrel_vverh"/>
     <child link="camera_1"/>
     <origin rpy="0       0       0" xyz="-0.07152 -0.21215 -0.017"/>
@@ -365,7 +365,7 @@
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
 
-  <joint name="turrel_vverh _ camera_2 fixed" type="revolute">
+  <joint name="turrel_vverh_camera_2_fixed" type="revolute">
     <parent link="turrel_vverh"/>
     <child link="camera_2"/>
     <origin rpy="0       0       0" xyz="-0.07152  0.21176 -0.017"/>
@@ -373,7 +373,7 @@
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
 
-  <joint name="chassis _ turrel_vniz fixed" type="fixed">
+  <joint name="chassis_turrel_vniz_fixed" type="fixed">
     <parent link="chassis"/>
     <child link="turrel_vniz"/>
     <origin rpy="0 0  0" xyz="0.25857 -0.01238  0.42994"/>
@@ -381,7 +381,7 @@
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
 
-  <joint name="chassis _ hokuyo fixed" type="revolute">
+  <joint name="chassis_hokuyo_fixed" type="revolute">
     <parent link="chassis"/>
     <child link="hokuyo"/>
     <origin rpy="0       0       0" xyz="0.15582  0.0808   0.42783"/>
@@ -390,15 +390,15 @@
   </joint>
 
   <!-- revolute joints -->  
-  <joint name="turrel_vniz _ turrel_sered revolute" type="revolute">
+  <joint name="turrel_vniz_turrel_sered_revolute" type="revolute">
     <parent link="turrel_vniz"/>
     <child link="turrel_sered"/>
     <origin rpy="0  0   0" xyz="0.00045 -0.00033  0.13474"/>
     <axis xyz="0  0  1"/>
-    <limit effort="2" lower="-5" upper="5" velocity="100"/>
+    <limit effort="0" lower="0" upper="0" velocity="100"/>
   </joint>
 
-  <joint name="turrel_sered _ turrel_vverh up-to-down" type="fixed">
+  <joint name="turrel_sered_turrel_vverh_up_to_down" type="revolute">
     <parent link="turrel_sered"/>
     <child link="turrel_vverh"/>
     <origin rpy="0   0   0" xyz="0.00306  0.00468  0.12878"/>
@@ -406,10 +406,79 @@
     <limit effort="1" lower="-1" upper="1" velocity="100"/>
   </joint>
 
+
+  <!--transmitions-->
+  <transmission name="wheel_l_1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_lev_1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wh_l_1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="wheel_l_3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_lev_3">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wh_l_3">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="wheel_r_1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_prav_1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wh_r_1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="wheel_r_3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_prav_3">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wh_r_3">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="turrel_revol">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="turrel_vniz_turrel_sered_revolute">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="tl_rev">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="turrel_up_to_down">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="turrel_sered_turrel_vverh_up_to_down">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="tl_ud">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+
   <!-- plugins -->
   <gazebo>
-    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-      <robotNamespace>/plastun</robotNamespace>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so" >
+      <robotNamespace>plastun</robotNamespace>
     </plugin>
   </gazebo>
 
@@ -513,130 +582,130 @@
                reading. -->
                <mean>0.0</mean>
                <stddev>0.01</stddev>
-           </noise>
-       </ray>
-       <plugin name="gazebo_ros_hokuyo_sensor" filename="libgazebo_ros_gpu_laser.so">
-        <robotNamespace>plastun</robotNamespace>
-        <topicName>laser/scan</topicName>
-        <frameName>hokuyo_link</frameName>
-       </plugin>
-   </sensor>
-</gazebo>
+             </noise>
+           </ray>
+           <plugin name="gazebo_ros_hokuyo_sensor" filename="libgazebo_ros_gpu_laser.so">
+            <robotNamespace>plastun</robotNamespace>
+            <topicName>laser/scan</topicName>
+            <frameName>hokuyo_link</frameName>
+          </plugin>
+        </sensor>
+      </gazebo>
 
-<gazebo reference="lazer_ukazka">
-  <sensor type="gpu_ray" name="hokuyo_laser_ukaz">
-    <pose>-0.1 0 0.05 0 0 3.1416</pose>
-    <visualize>true</visualize>
-    <update_rate>40</update_rate>
-    <ray>
-      <scan>
-        <horizontal>
-          <samples>6</samples>
-            <resolution>1</resolution>
-            <min_angle>-0.005</min_angle>
-            <max_angle>0.005</max_angle>
-        </horizontal>
-      </scan>
-      <range>
-        <min>0.10</min>
-        <max>10.0</max>
-        <resolution>0.01</resolution>
-      </range>
-      <noise>
-        <type>gaussian</type>
+      <gazebo reference="lazer_ukazka">
+        <sensor type="gpu_ray" name="hokuyo_laser_ukaz">
+          <pose>-0.1 0 0.05 0 0 3.1416</pose>
+          <visualize>true</visualize>
+          <update_rate>40</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>6</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.005</min_angle>
+                <max_angle>0.005</max_angle>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.10</min>
+              <max>10.0</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
           <!-- Noise parameters based on published spec for Hokuyo laser
                achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
                reading. -->
                <mean>0.0</mean>
                <stddev>0.01</stddev>
-           </noise>
-       </ray>
-       <plugin name="gazebo_ros_hokuyo_laser_ukaz" filename="libgazebo_ros_gpu_laser.so">
-        <robotNamespace>plastun</robotNamespace>
-        <topicName>laser/scan_ukaz</topicName>
-        <frameName>ukaz_link</frameName>
-       </plugin>
-   </sensor>
-</gazebo>
+             </noise>
+           </ray>
+           <plugin name="gazebo_ros_hokuyo_laser_ukaz" filename="libgazebo_ros_gpu_laser.so">
+            <robotNamespace>plastun</robotNamespace>
+            <topicName>laser/scan_ukaz</topicName>
+            <frameName>ukaz_link</frameName>
+          </plugin>
+        </sensor>
+      </gazebo>
 
-<gazebo>
-  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-    <updateRate>100.0</updateRate>
-    <robotNamespace>plastun</robotNamespace>
-    <leftFrontJoint>wheel_lev_1</leftFrontJoint>
-    <rightFrontJoint>wheel_prav_1</rightFrontJoint>
-    <leftRearJoint>wheel_lev_3</leftRearJoint>
-    <rightRearJoint>wheel_prav_3</rightRearJoint>
-    <wheelSeparation>0.4</wheelSeparation>
-    <wheelDiameter>0.192</wheelDiameter>
-    <robotBaseFrame>chassis</robotBaseFrame>
-    <torque>20</torque>
-    <commandTopic>cmd_vel</commandTopic>
-    <odometryTopic>odom</odometryTopic>
-    <odometryFrame>odom</odometryFrame>
-    <broadcastTF>true</broadcastTF>
-    <covariance_x>0.000100</covariance_x>
-    <covariance_y>0.000100</covariance_y>
-    <covariance_yaw>0.000100</covariance_yaw>
-  </plugin>
-</gazebo>
-
-
-<!-- Import Rviz colors -->
-<material name="black">
-  <color rgba="0.0 0.0 0.0 1.0"/>
-</material>
-<material name="blue">
-  <color rgba="0.0 0.0 0.8 1.0"/>
-</material>
-<material name="green">
-  <color rgba="0.0 0.8 0.0 1.0"/>
-</material>
-<material name="grey">
-  <color rgba="0.2 0.2 0.2 1.0"/>
-</material>
-<material name="orange">
-  <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
-</material>
-<material name="brown">
-  <color rgba="0.870588235294 0.811764705882 0.764705882353 1.0"/>
-</material>
-<material name="red">
-  <color rgba="0.8 0.0 0.0 1.0"/>
-</material>
-<material name="white">
-  <color rgba="1.0 1.0 1.0 1.0"/>
-</material>
-
-<!--Import Gazebo colors -->
-<gazebo reference="chassis">
-  <material>Gazebo/Grey</material>
-</gazebo>
-
-<gazebo reference="turrel_vniz">
-  <material>Gazebo/Grey</material>
-</gazebo>
-
-<gazebo reference="turrel_sered">
-  <material>Gazebo/Grey</material>
-</gazebo>
-
-<gazebo reference="turrel_vverh">
-  <material>Gazebo/Grey</material>
-</gazebo>
-
-<gazebo reference="hokuyo">
-  <material>Gazebo/Grey</material>
-</gazebo>
-
-<gazebo reference="camera_1">
-  <material>Gazebo/Grey</material>
-</gazebo>
-
-<gazebo reference="camera_2">
-  <material>Gazebo/Grey</material>
-</gazebo>
+      <gazebo>
+        <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+          <updateRate>100.0</updateRate>
+          <robotNamespace>plastun</robotNamespace>
+          <leftFrontJoint>wheel_lev_1</leftFrontJoint>
+          <rightFrontJoint>wheel_prav_1</rightFrontJoint>
+          <leftRearJoint>wheel_lev_3</leftRearJoint>
+          <rightRearJoint>wheel_prav_3</rightRearJoint>
+          <wheelSeparation>0.4</wheelSeparation>
+          <wheelDiameter>0.192</wheelDiameter>
+          <robotBaseFrame>chassis</robotBaseFrame>
+          <torque>20</torque>
+          <commandTopic>cmd_vel</commandTopic>
+          <odometryTopic>odom</odometryTopic>
+          <odometryFrame>odom</odometryFrame>
+          <broadcastTF>true</broadcastTF>
+          <covariance_x>0.000100</covariance_x>
+          <covariance_y>0.000100</covariance_y>
+          <covariance_yaw>0.000100</covariance_yaw>
+        </plugin>
+      </gazebo>
 
 
-</robot>
+      <!-- Import Rviz colors -->
+      <material name="black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+      </material>
+      <material name="blue">
+        <color rgba="0.0 0.0 0.8 1.0"/>
+      </material>
+      <material name="green">
+        <color rgba="0.0 0.8 0.0 1.0"/>
+      </material>
+      <material name="grey">
+        <color rgba="0.2 0.2 0.2 1.0"/>
+      </material>
+      <material name="orange">
+        <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
+      </material>
+      <material name="brown">
+        <color rgba="0.870588235294 0.811764705882 0.764705882353 1.0"/>
+      </material>
+      <material name="red">
+        <color rgba="0.8 0.0 0.0 1.0"/>
+      </material>
+      <material name="white">
+        <color rgba="1.0 1.0 1.0 1.0"/>
+      </material>
+
+      <!--Import Gazebo colors -->
+      <gazebo reference="chassis">
+        <material>Gazebo/Grey</material>
+      </gazebo>
+
+      <gazebo reference="turrel_vniz">
+        <material>Gazebo/Grey</material>
+      </gazebo>
+
+      <gazebo reference="turrel_sered">
+        <material>Gazebo/Grey</material>
+      </gazebo>
+
+      <gazebo reference="turrel_vverh">
+        <material>Gazebo/Grey</material>
+      </gazebo>
+
+      <gazebo reference="hokuyo">
+        <material>Gazebo/Grey</material>
+      </gazebo>
+
+      <gazebo reference="camera_1">
+        <material>Gazebo/Grey</material>
+      </gazebo>
+
+      <gazebo reference="camera_2">
+        <material>Gazebo/Grey</material>
+      </gazebo>
+
+
+    </robot>

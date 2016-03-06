@@ -25,6 +25,7 @@
   <run_depend>gazebo_ros</run_depend>
   <run_depend>gazebo_ros_control</run_depend>
   <run_depend>plastun_description</run_depend>
+  <run_depend>plasun_control</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>sensor_msgs</run_depend>
 

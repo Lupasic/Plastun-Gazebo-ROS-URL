@@ -1,0 +1,31 @@
+plastun:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+  
+  # Position Controllers ---------------------------------------
+  wheel_l_1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: wheel_lev_1
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  wheel_l_3_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: wheel_lev_3
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  wheel_r_1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: wheel_prav_1
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  wheel_r_3_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: wheel_prav_3
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  turrel_revol_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: turrel_vniz_turrel_sered_revolute
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  turrel_up_to_down_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: turrel_sered_turrel_vverh_up_to_down
+    pid: {p: 100.0, i: 0.01, d: 10.0}
