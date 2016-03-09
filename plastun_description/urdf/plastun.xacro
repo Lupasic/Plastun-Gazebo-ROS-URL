@@ -10,8 +10,8 @@
   <!-- Constants for robot dimensions -->
   <xacro:property name="mass_wheels" value="1" />
   <xacro:property name="y_wheel" value="0.20499" />
-  <xacro:property name="z_wheel" value=" 0.15237" />
-  <xacro:property name="between_wheels" value="0.205" />
+  <xacro:property name="z_wheel" value=" 0.0925" />
+  <xacro:property name="between_wheels" value="0.2213343" />
 
   <xacro:property name="x_camera" value="-0.07152" />
   <xacro:property name="y_camera" value="0.21176" />
@@ -42,7 +42,7 @@
     <joint name="wheel_${rev}_${num}" type="revolute">
       <parent link="chassis"/>
       <child link="wheel_${prefix}_${num}"/>
-      <origin rpy="0       0      0" xyz="${0.13874 + (num - 1) * between_wheels} ${y_wheel * side}   ${z_wheel}"/>
+      <origin rpy="0       0      0" xyz="${0.1405513 + (num - 1) * between_wheels} ${y_wheel * side}   ${z_wheel}"/>
       <axis xyz="0 -1  0"/>
       <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
     </joint>
@@ -95,13 +95,13 @@
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision >
-      <origin rpy="0  0  0" xyz="0.32045 0  0.06272"/>
+      <origin rpy="0  0  0" xyz="0 0  0"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1.0 1.0 1.0"/>
       </geometry>
     </collision>
     <visual >
-      <origin rpy="0  0  0" xyz="0.32045 0  0.06272"/>
+      <origin rpy="0  0  0" xyz="0 0  0"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1 1 1"/>
       </geometry>
@@ -244,7 +244,7 @@
   <joint name="chassis_hokuyo_fixed" type="revolute">
     <parent link="chassis"/>
     <child link="hokuyo"/>
-    <origin rpy="0       0       0" xyz="0.15582  0.0808   0.42783"/>
+    <origin rpy="0       0       0" xyz="0.15586  0.083   0.365"/>
     <axis xyz="0  0  1"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
@@ -252,7 +252,7 @@
   <joint name="chassis_turrel_vniz_fixed" type="fixed">
     <parent link="chassis"/>
     <child link="turrel_vniz"/>
-    <origin rpy="0 0  0" xyz="0.25857 -0.01238  0.42994"/>
+    <origin rpy="0 0  0" xyz="0.255 0  0.37358"/>
     <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
@@ -262,7 +262,7 @@
   <joint name="turrel_vniz_turrel_sered_revolute" type="revolute">
     <parent link="turrel_vniz"/>
     <child link="turrel_sered"/>
-    <origin rpy="0  0   0" xyz="0.00045 -0.00033  0.13474"/>
+    <origin rpy="0  0   0" xyz="0 0  0.13474"/>
     <axis xyz="0  0  1"/>
     <limit effort="0" lower="0" upper="0" velocity="100"/>
   </joint>
@@ -270,7 +270,7 @@
   <joint name="turrel_sered_turrel_vverh_up_to_down" type="revolute">
     <parent link="turrel_sered"/>
     <child link="turrel_vverh"/>
-    <origin rpy="0   0   0" xyz="0.00306  0.00468  0.1"/>
+    <origin rpy="0   0   0" xyz="0  0 0.1089254"/>
     <axis xyz="0  1  0"/>
     <limit effort="1" lower="-1" upper="1" velocity="100"/>
   </joint>
