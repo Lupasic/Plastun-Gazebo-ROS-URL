@@ -244,7 +244,7 @@
   <joint name="chassis_hokuyo_fixed" type="revolute">
     <parent link="chassis"/>
     <child link="hokuyo"/>
-    <origin rpy="0       0       0" xyz="0.15586  0.083   0.365"/>
+    <origin rpy="0       0       0" xyz="0.14586  0.083   0.365"/>
     <axis xyz="0  0  1"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
@@ -264,13 +264,13 @@
     <child link="turrel_sered"/>
     <origin rpy="0  0   0" xyz="0 0  0.13474"/>
     <axis xyz="0  0  1"/>
-    <limit effort="0" lower="0" upper="0" velocity="100"/>
+    <limit effort="1" lower="-7" upper="7" velocity="10"/>
   </joint>
 
   <joint name="turrel_sered_turrel_vverh_up_to_down" type="revolute">
     <parent link="turrel_sered"/>
     <child link="turrel_vverh"/>
-    <origin rpy="0   0   0" xyz="0  0 0.1089254"/>
+    <origin rpy="0   0   0" xyz="0  0.005 0.1"/>
     <axis xyz="0  1  0"/>
     <limit effort="1" lower="-1" upper="1" velocity="100"/>
   </joint>
