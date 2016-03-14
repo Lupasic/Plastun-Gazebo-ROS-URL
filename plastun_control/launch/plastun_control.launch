@@ -5,12 +5,9 @@
 
   <!-- load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-	output="screen" ns="/plastun" args="wheel_l_1_position_controller
-					    wheel_l_3_position_controller
-					    wheel_r_1_position_controller
-					    wheel_r_3_position_controller
-					    turrel_revol_position_controller
-					    turrel_up_to_down_position_controller"/>
+	output="screen" ns="/plastun" args="joint_state_controller
+                                      turrel_revol_position_controller
+					                           turrel_up_to_down_position_controller"/>
 
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"

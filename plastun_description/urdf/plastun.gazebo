@@ -55,7 +55,7 @@
         <robotNamespace>plastun</robotNamespace>
         <imageTopicName>image_raw_1</imageTopicName>
         <cameraInfoTopicName>camera_info_1</cameraInfoTopicName>
-        <frameName>camera_link</frameName>
+        <frameName>camera_1</frameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
@@ -90,7 +90,7 @@
         <imageTopicName>image_raw_2</imageTopicName>
         <robotNamespace>plastun</robotNamespace>
         <cameraInfoTopicName>camera_info_2</cameraInfoTopicName>
-        <frameName>camera_link</frameName>
+        <frameName>camera_2</frameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
@@ -129,7 +129,7 @@
       <plugin name="gazebo_ros_hokuyo_sensor" filename="libgazebo_ros_gpu_laser.so">
         <robotNamespace>plastun</robotNamespace>
         <topicName>laser/scan</topicName>
-        <frameName>hokuyo_link</frameName>
+        <frameName>hokuyo</frameName>
       </plugin>
     </sensor>
   </gazebo>
@@ -162,7 +162,7 @@
       <plugin name="gazebo_ros_hokuyo_laser_ukaz" filename="libgazebo_ros_gpu_laser.so">
         <robotNamespace>plastun</robotNamespace>
         <topicName>laser/scan_ukaz</topicName>
-        <frameName>ukaz_link</frameName>
+        <frameName>ukaz</frameName>
       </plugin>
     </sensor>
   </gazebo>

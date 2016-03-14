@@ -13,3 +13,7 @@ plastun:
     type: effort_controllers/JointPositionController
     joint: turrel_sered_turrel_vverh_up_to_down
     pid: {p: 100.0, i: 0.01, d: 400.0}
+  hokyuo_fix_controller:
+    type: effort_controllers/JointPositionController
+    joint: chassis_hokuyo_fixed
+    pid: {p: 100.0, i: 0.01, d: 400.0}

@@ -56,7 +56,7 @@
         <robotNamespace>plastun</robotNamespace>
         <imageTopicName>image_raw_1</imageTopicName>
         <cameraInfoTopicName>camera_info_1</cameraInfoTopicName>
-        <frameName>camera_link</frameName>
+        <frameName>camera_1</frameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
@@ -90,7 +90,7 @@
         <imageTopicName>image_raw_2</imageTopicName>
         <robotNamespace>plastun</robotNamespace>
         <cameraInfoTopicName>camera_info_2</cameraInfoTopicName>
-        <frameName>camera_link</frameName>
+        <frameName>camera_2</frameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
@@ -128,7 +128,7 @@
       <plugin filename="libgazebo_ros_gpu_laser.so" name="gazebo_ros_hokuyo_sensor">
         <robotNamespace>plastun</robotNamespace>
         <topicName>laser/scan</topicName>
-        <frameName>hokuyo_link</frameName>
+        <frameName>hokuyo</frameName>
       </plugin>
     </sensor>
   </gazebo>
@@ -160,7 +160,7 @@
       <plugin filename="libgazebo_ros_gpu_laser.so" name="gazebo_ros_hokuyo_laser_ukaz">
         <robotNamespace>plastun</robotNamespace>
         <topicName>laser/scan_ukaz</topicName>
-        <frameName>ukaz_link</frameName>
+        <frameName>ukaz</frameName>
       </plugin>
     </sensor>
   </gazebo>
@@ -211,7 +211,7 @@
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
   <link name="base_link"/>
-  <joint name="base_link_to_chassis" type="fixed">
+  <joint name="chassis_base_link_fixed" type="fixed">
     <parent link="base_link"/>
     <child link="chassis"/>
   </joint>
@@ -222,13 +222,13 @@
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision>
-      <origin rpy="0  0  0" xyz="0.32045 0  0.06272"/>
+      <origin rpy="0  0  0" xyz="0 0  0"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1.0 1.0 1.0"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="0  0  0" xyz="0.32045 0  0.06272"/>
+      <origin rpy="0  0  0" xyz="0 0  0"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1 1 1"/>
       </geometry>
@@ -410,7 +410,7 @@
   <joint name="wheel_lev_1" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_left_1"/>
-    <origin rpy="0       0      0" xyz="0.13874 -0.20499   0.15237"/>
+    <origin rpy="0       0      0" xyz="0.1405513 -0.20499   0.0925"/>
     <axis xyz="0 -1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
@@ -436,7 +436,7 @@
   <joint name="wheel_lev_2" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_left_2"/>
-    <origin rpy="0       0      0" xyz="0.34374 -0.20499   0.15237"/>
+    <origin rpy="0       0      0" xyz="0.3618856 -0.20499   0.0925"/>
     <axis xyz="0 -1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
@@ -462,7 +462,7 @@
   <joint name="wheel_lev_3" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_left_3"/>
-    <origin rpy="0       0      0" xyz="0.54874 -0.20499   0.15237"/>
+    <origin rpy="0       0      0" xyz="0.5832199 -0.20499   0.0925"/>
     <axis xyz="0 -1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
@@ -488,7 +488,7 @@
   <joint name="wheel_prav_1" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_right_1"/>
-    <origin rpy="0       0      0" xyz="0.13874 0.20499   0.15237"/>
+    <origin rpy="0       0      0" xyz="0.1405513 0.20499   0.0925"/>
     <axis xyz="0 -1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
@@ -514,7 +514,7 @@
   <joint name="wheel_prav_2" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_right_2"/>
-    <origin rpy="0       0      0" xyz="0.34374 0.20499   0.15237"/>
+    <origin rpy="0       0      0" xyz="0.3618856 0.20499   0.0925"/>
     <axis xyz="0 -1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
@@ -540,7 +540,7 @@
   <joint name="wheel_prav_3" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_right_3"/>
-    <origin rpy="0       0      0" xyz="0.54874 0.20499   0.15237"/>
+    <origin rpy="0       0      0" xyz="0.5832199 0.20499   0.0925"/>
     <axis xyz="0 -1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
@@ -555,14 +555,14 @@
   <joint name="chassis_hokuyo_fixed" type="revolute">
     <parent link="chassis"/>
     <child link="hokuyo"/>
-    <origin rpy="0       0       0" xyz="0.15582  0.0808   0.42783"/>
+    <origin rpy="0       0       0" xyz="0.14586  0.083   0.365"/>
     <axis xyz="0  0  1"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
   <joint name="chassis_turrel_vniz_fixed" type="fixed">
     <parent link="chassis"/>
     <child link="turrel_vniz"/>
-    <origin rpy="0 0  0" xyz="0.25857 -0.01238  0.42994"/>
+    <origin rpy="0 0  0" xyz="0.255 0  0.37358"/>
     <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
@@ -570,24 +570,64 @@
   <joint name="turrel_vniz_turrel_sered_revolute" type="revolute">
     <parent link="turrel_vniz"/>
     <child link="turrel_sered"/>
-    <origin rpy="0  0   0" xyz="0.00045 -0.00033  0.13474"/>
+    <origin rpy="0  0   0" xyz="0 0  0.13474"/>
     <axis xyz="0  0  1"/>
-    <limit effort="0" lower="0" upper="0" velocity="100"/>
+    <limit effort="1" lower="-7" upper="7" velocity="10"/>
   </joint>
   <joint name="turrel_sered_turrel_vverh_up_to_down" type="revolute">
     <parent link="turrel_sered"/>
     <child link="turrel_vverh"/>
-    <origin rpy="0   0   0" xyz="0.00306  0.00468  0.1"/>
+    <origin rpy="0   0   0" xyz="0  0.005 0.1"/>
     <axis xyz="0  1  0"/>
     <limit effort="1" lower="-1" upper="1" velocity="100"/>
   </joint>
   <!--transmitions-->
+  <transmission name="turrel_revol">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="turrel_vniz_turrel_sered_revolute">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="tl_rev">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="turrel_up_to_down">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="turrel_sered_turrel_vverh_up_to_down">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="tl_ud">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="chassis_hokuyo_fix">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="chassis_hokuyo_fixed">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="chas_hok_fix">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
   <transmission name="wheel_l_1">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="wheel_lev_1">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="wh_l_1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="wheel_l_2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_lev_2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wh_l_2">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
@@ -612,6 +652,16 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <transmission name="wheel_r_2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_prav_2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wh_r_2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
   <transmission name="wheel_r_3">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="wheel_prav_3">
@@ -622,22 +672,32 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-  <transmission name="turrel_revol">
+  <transmission name="camer_1">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="turrel_vniz_turrel_sered_revolute">
+    <joint name="turrel_vverh_camera_1_fixed">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
-    <actuator name="tl_rev">
+    <actuator name="cam_1">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-  <transmission name="turrel_up_to_down">
+  <transmission name="camer_2">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="turrel_sered_turrel_vverh_up_to_down">
+    <joint name="turrel_vverh_camera_2_fixed">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
-    <actuator name="tl_ud">
+    <actuator name="cam_2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="camera_1_ukaz_fix">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="camera_1_lazer_ukazka_fixed">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="cam_uk_fix">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
