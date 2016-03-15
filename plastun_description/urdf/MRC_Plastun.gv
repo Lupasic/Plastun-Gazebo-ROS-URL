@@ -16,9 +16,9 @@ node [shape=box];
 "wheel_right_2" [label="wheel_right_2"];
 "wheel_right_3" [label="wheel_right_3"];
 node [shape=ellipse, color=blue, fontcolor=blue];
-"base_link" -> "chassis_base_link_fixed" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
-"chassis_base_link_fixed" -> "chassis"
-"chassis" -> "chassis_hokuyo_fixed" [label="xyz: 0.14586 0.083 0.365 \nrpy: 0 -0 0"]
+"base_link" -> "base_link_chassis_fixed" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"base_link_chassis_fixed" -> "chassis"
+"chassis" -> "chassis_hokuyo_fixed" [label="xyz: 0.14586 0.083 0.465 \nrpy: 0 -0 3.14"]
 "chassis_hokuyo_fixed" -> "hokuyo"
 "chassis" -> "chassis_turrel_vniz_fixed" [label="xyz: 0.255 0 0.37358 \nrpy: 0 -0 0"]
 "chassis_turrel_vniz_fixed" -> "turrel_vniz"
@@ -28,7 +28,7 @@ node [shape=ellipse, color=blue, fontcolor=blue];
 "turrel_sered_turrel_vverh_up_to_down" -> "turrel_vverh"
 "turrel_vverh" -> "turrel_vverh_camera_1_fixed" [label="xyz: -0.07152 -0.21176 0 \nrpy: 0 -0 0"]
 "turrel_vverh_camera_1_fixed" -> "camera_1"
-"camera_1" -> "camera_1_lazer_ukazka_fixed" [label="xyz: -0.04766 0.00111 0.10548 \nrpy: 0 -0 0"]
+"camera_1" -> "camera_1_lazer_ukazka_fixed" [label="xyz: -0.04766 0.00111 0.15548 \nrpy: 0 -0 3.14"]
 "camera_1_lazer_ukazka_fixed" -> "lazer_ukazka"
 "turrel_vverh" -> "turrel_vverh_camera_2_fixed" [label="xyz: -0.07152 0.21176 0 \nrpy: 0 -0 0"]
 "turrel_vverh_camera_2_fixed" -> "camera_2"

@@ -7,24 +7,23 @@
   <!-- plugins -->
   <gazebo>
     <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-      <robotNamespace>plastun</robotNamespace>
+      <robotNamespace>/plastun</robotNamespace>
     </plugin>
   </gazebo>
   <gazebo>
     <plugin filename="libgazebo_ros_skid_steer_drive.so" name="skid_steer_drive_controller">
       <updateRate>100.0</updateRate>
-      <robotNamespace>plastun</robotNamespace>
       <leftFrontJoint>wheel_lev_1</leftFrontJoint>
       <rightFrontJoint>wheel_prav_1</rightFrontJoint>
       <leftRearJoint>wheel_lev_3</leftRearJoint>
       <rightRearJoint>wheel_prav_3</rightRearJoint>
-      <wheelSeparation>0.4</wheelSeparation>
-      <wheelDiameter>0.192</wheelDiameter>
-      <robotBaseFrame>chassis</robotBaseFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
       <torque>20</torque>
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
+      <commandTopic>/plastun/cmd_vel</commandTopic>
+      <odometryTopic>/plastun/odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
+      <wheelSeparation>0.40998</wheelSeparation>
+      <wheelDiameter>0.192</wheelDiameter>
       <broadcastTF>true</broadcastTF>
       <covariance_x>0.000100</covariance_x>
       <covariance_y>0.000100</covariance_y>
@@ -52,8 +51,7 @@
       <plugin filename="libgazebo_ros_camera.so" name="camera_with_laser_controller">
         <alwaysOn>true</alwaysOn>
         <updateRate>30</updateRate>
-        <cameraName>camera_1</cameraName>
-        <robotNamespace>plastun</robotNamespace>
+        <cameraName>/plastun/camera_1</cameraName>
         <imageTopicName>image_raw_1</imageTopicName>
         <cameraInfoTopicName>camera_info_1</cameraInfoTopicName>
         <frameName>camera_1</frameName>
@@ -86,9 +84,8 @@
       <plugin filename="libgazebo_ros_camera.so" name="camera_without_laser_controller">
         <alwaysOn>true</alwaysOn>
         <updateRate>30</updateRate>
-        <cameraName>camera_2</cameraName>
+        <cameraName>/plastun/camera_2</cameraName>
         <imageTopicName>image_raw_2</imageTopicName>
-        <robotNamespace>plastun</robotNamespace>
         <cameraInfoTopicName>camera_info_2</cameraInfoTopicName>
         <frameName>camera_2</frameName>
         <hackBaseline>0.07</hackBaseline>
@@ -102,7 +99,7 @@
   </gazebo>
   <gazebo reference="hokuyo">
     <sensor name="hokuyo_sensor" type="gpu_ray">
-      <pose>0 0 0.1 0 0 3.1416</pose>
+      <!-- <pose>0 0 0.1 0 0 -3.1416</pose> -->
       <visualize>true</visualize>
       <update_rate>40</update_rate>
       <ray>
@@ -116,25 +113,19 @@
         </scan>
         <range>
           <min>0.10</min>
-          <max>15.0</max>
+          <max>30.0</max>
           <resolution>0.01</resolution>
         </range>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
       </ray>
       <plugin filename="libgazebo_ros_gpu_laser.so" name="gazebo_ros_hokuyo_sensor">
-        <robotNamespace>plastun</robotNamespace>
-        <topicName>laser/scan</topicName>
+        <topicName>/plastun/laser/scan</topicName>
         <frameName>hokuyo</frameName>
       </plugin>
     </sensor>
   </gazebo>
   <gazebo reference="lazer_ukazka">
     <sensor name="hokuyo_laser_ukaz" type="gpu_ray">
-      <pose>-0.1 0 0.05 0 0 3.1416</pose>
+      <!-- <pose>-0.1 0 0.05 0 0 3.1416</pose> -->
       <visualize>true</visualize>
       <update_rate>40</update_rate>
       <ray>
@@ -158,9 +149,8 @@
         </noise>
       </ray>
       <plugin filename="libgazebo_ros_gpu_laser.so" name="gazebo_ros_hokuyo_laser_ukaz">
-        <robotNamespace>plastun</robotNamespace>
-        <topicName>laser/scan_ukaz</topicName>
-        <frameName>ukaz</frameName>
+        <topicName>/plastun/laser/scan_ukaz</topicName>
+        <frameName>lazer_ukazka</frameName>
       </plugin>
     </sensor>
   </gazebo>
@@ -211,7 +201,7 @@
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
   <link name="base_link"/>
-  <joint name="chassis_base_link_fixed" type="fixed">
+  <joint name="base_link_chassis_fixed" type="fixed">
     <parent link="base_link"/>
     <child link="chassis"/>
   </joint>
@@ -242,14 +232,15 @@
       <origin rpy="0  0  0" xyz="-0.017806  0  0.027446"/>
       <inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0.0"/>
     </inertial>
-    <collision>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
-      <geometry>
-        <mesh filename="package://plastun_description/meshes/STL_min/lazer_ukazka.stl" scale="1.0 1.0 1.0"/>
-      </geometry>
-    </collision>
+    <!--		<collision >
+			<origin rpy="0  0  0" xyz="0  0  0"/>
+			<geometry>
+				<mesh filename="package://plastun_description/meshes/STL_min/lazer_ukazka.stl" scale="1.0 1.0 1.0"/>
+			</geometry>
+		</collision> 
+-->
     <visual>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  3.14" xyz="0  0  -0.05"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/lazer_ukazka.stl" scale="1.0 1.0 1.0"/>
       </geometry>
@@ -262,14 +253,15 @@
       <origin rpy="0  0  0" xyz="-0.000001  0  0.053927"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
-    <collision>
-      <origin rpy="0  0  0" xyz="0    0    0.05"/>
-      <geometry>
-        <box size="0.06524 0.079833 0.102579"/>
-      </geometry>
-    </collision>
+    <!--			<collision >
+		<origin rpy="0  0  0" xyz="0    0    0.05"/>
+			<geometry>
+				<box size="0.06524 0.079833 0.102579"/>
+			</geometry>
+		</collision>
+-->
     <visual>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="0  0  -0.1"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/hokuyo.stl" scale="1 1 1"/>
       </geometry>
@@ -545,20 +537,38 @@
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
   <!--fix'es joints -->
-  <joint name="camera_1_lazer_ukazka_fixed" type="revolute">
+  <joint name="camera_1_lazer_ukazka_fixed" type="fixed">
     <parent link="camera_1"/>
     <child link="lazer_ukazka"/>
-    <origin rpy="0       0      0" xyz="-0.04766  0.00111  0.10548"/>
-    <axis xyz="0  0  1"/>
+    <origin rpy="0       0      3.14" xyz="-0.04766  0.00111  0.15548"/>
+    <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
-  <joint name="chassis_hokuyo_fixed" type="revolute">
+  <joint name="chassis_hokuyo_fixed" type="fixed">
     <parent link="chassis"/>
     <child link="hokuyo"/>
-    <origin rpy="0       0       0" xyz="0.14586  0.083   0.365"/>
-    <axis xyz="0  0  1"/>
+    <origin rpy="0       0       3.14" xyz="0.14586  0.083   0.465"/>
+    <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
+  <!--	
+	<joint name="camera_1_lazer_ukazka_fixed" type="revolute">
+		<parent link="camera_1"/>
+		<child link="lazer_ukazka"/>
+		<origin rpy="0       0      0" xyz="-0.04766  0.00111  0.10548"/>
+		<axis xyz="-1  0  0"/>
+		<limit effort="0" lower="0" upper="0" velocity="0"/>
+	</joint>
+
+
+<joint name="chassis_hokuyo_fixed" type="revolute">
+		<parent link="chassis"/>
+		<child link="hokuyo"/>
+		<origin rpy="0       0       3.14" xyz="0.14586  0.083   0.365"/>
+		<axis xyz="1  0  0"/>
+		<limit effort="0" lower="0" upper="0" velocity="0"/>
+	</joint>
+-->
   <joint name="chassis_turrel_vniz_fixed" type="fixed">
     <parent link="chassis"/>
     <child link="turrel_vniz"/>
@@ -602,16 +612,28 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-  <transmission name="chassis_hokuyo_fix">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="chassis_hokuyo_fixed">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="chas_hok_fix">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
+  <!--	<transmission name="chassis_hokuyo_fix">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="chassis_hokuyo_fixed">
+			<hardwareInterface>EffortJointInterface</hardwareInterface>
+		</joint>
+		<actuator name="chas_hok_fix">
+			<hardwareInterface>EffortJointInterface</hardwareInterface>
+			<mechanicalReduction>1</mechanicalReduction>
+		</actuator>
+	</transmission>
+
+		<transmission name="camera_1_ukaz_fix">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="camera_1_lazer_ukazka_fixed">
+			<hardwareInterface>EffortJointInterface</hardwareInterface>
+		</joint>
+		<actuator name="cam_uk_fix">
+			<hardwareInterface>EffortJointInterface</hardwareInterface>
+			<mechanicalReduction>1</mechanicalReduction>
+		</actuator>
+	</transmission>
+-->
   <transmission name="wheel_l_1">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="wheel_lev_1">
@@ -688,16 +710,6 @@
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="cam_2">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="camera_1_ukaz_fix">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="camera_1_lazer_ukazka_fixed">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="cam_uk_fix">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
