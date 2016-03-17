@@ -13,6 +13,7 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
 	respawn="false" output="screen">
     <remap from="/joint_states" to="/plastun/joint_states" />
+	<param name="use_tf_static" value="false"/>
   </node>
 
 </launch>

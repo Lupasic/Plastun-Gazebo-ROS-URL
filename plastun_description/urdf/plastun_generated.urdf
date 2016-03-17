@@ -33,7 +33,7 @@
   <!-- sensors -->
   <gazebo reference="camera_1">
     <sensor name="camera_with_laser" type="camera">
-      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose>
+      <!--      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose> -->
       <camera name="__default__">
         <horizontal_fov>1.012300</horizontal_fov>
         <image>
@@ -66,7 +66,7 @@
   </gazebo>
   <gazebo reference="camera_2">
     <sensor name="camera_without_laser" type="camera">
-      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose>
+      <!--      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose> -->
       <camera name="__default__">
         <horizontal_fov>1.012300</horizontal_fov>
         <image>
@@ -113,7 +113,7 @@
         </scan>
         <range>
           <min>0.10</min>
-          <max>30.0</max>
+          <max>20.0</max>
           <resolution>0.01</resolution>
         </range>
       </ray>
@@ -207,18 +207,18 @@
   </joint>
   <link name="chassis">
     <inertial>
-      <mass value="30"/>
-      <origin rpy="0  0  0" xyz="0.436419 -0.000612  0.228789"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <mass value="35"/>
+      <origin rpy="0  0  0" xyz="0.289120720 -0.000018254  0.186368419"/>
+      <inertia ixx="0.000000034" ixy="0" ixz="0.000000031" iyy="0.000000093" iyz="0" izz="0.000000074"/>
     </inertial>
     <collision>
-      <origin rpy="0  0  0" xyz="0 0  0"/>
+      <origin rpy="0  0  0" xyz="0 0  0.0435"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1.0 1.0 1.0"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="0  0  0" xyz="0 0  0"/>
+      <origin rpy="0  0  0" xyz="0 0  0.0435"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1 1 1"/>
       </geometry>
@@ -229,18 +229,11 @@
   <link name="lazer_ukazka">
     <inertial>
       <mass value="0.001"/>
-      <origin rpy="0  0  0" xyz="-0.017806  0  0.027446"/>
+      <origin rpy="0  0  0" xyz="0.017977372  -0.000001823  0.034613516"/>
       <inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0.0"/>
     </inertial>
-    <!--		<collision >
-			<origin rpy="0  0  0" xyz="0  0  0"/>
-			<geometry>
-				<mesh filename="package://plastun_description/meshes/STL_min/lazer_ukazka.stl" scale="1.0 1.0 1.0"/>
-			</geometry>
-		</collision> 
--->
     <visual>
-      <origin rpy="0  0  3.14" xyz="0  0  -0.05"/>
+      <origin rpy="0  0  0" xyz="-0.171  -0  -0.045"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/lazer_ukazka.stl" scale="1.0 1.0 1.0"/>
       </geometry>
@@ -250,18 +243,11 @@
   <link name="hokuyo">
     <inertial>
       <mass value="0.3"/>
-      <origin rpy="0  0  0" xyz="-0.000001  0  0.053927"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <origin rpy="0  0  0" xyz="-0.000000763  -0.000000289  0.053961822"/>
+      <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
-    <!--			<collision >
-		<origin rpy="0  0  0" xyz="0    0    0.05"/>
-			<geometry>
-				<box size="0.06524 0.079833 0.102579"/>
-			</geometry>
-		</collision>
--->
     <visual>
-      <origin rpy="0  0  0" xyz="0  0  -0.1"/>
+      <origin rpy="0  0  0" xyz="-0  -0  -0.1"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/hokuyo.stl" scale="1 1 1"/>
       </geometry>
@@ -271,7 +257,7 @@
   <link name="turrel_vniz">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="-0.000002  0  0.072908"/>
+      <origin rpy="0  0  0" xyz="0  0  0.072913938"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision>
@@ -291,7 +277,7 @@
   <link name="turrel_sered">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0.089664"/>
+      <origin rpy="0  0  0" xyz="0  -0.000000943  0.089683258"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision>
@@ -311,7 +297,7 @@
   <link name="turrel_vverh">
     <inertial>
       <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0    -0.005000   0.051671"/>
+      <origin rpy="0  0  0" xyz="0    0   0.051670046"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision>
@@ -331,60 +317,60 @@
   <link name="camera_1">
     <inertial>
       <mass value="0.001"/>
-      <origin rpy="0  0  0" xyz="-0.000018  -0.000225  0.060158"/>
+      <origin rpy="0  0  0" xyz="0.000021536  -0.000000325  0.060192452"/>
       <inertia ixx="0.00034961" ixy="0" ixz="0" iyy="0.00243426" iyz="0" izz="0.0027544"/>
     </inertial>
     <collision>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="-0.2  -0  -0.0546695"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="-0.2  -0  -0.0546695"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
       </geometry>
     </visual>
   </link>
-  <joint name="turrel_vverh_camera_1_fixed" type="revolute">
+  <joint name="turrel_vverh_camera_1_fixed" type="fixed">
     <parent link="turrel_vverh"/>
     <child link="camera_1"/>
-    <origin rpy="0       0       0" xyz="-0.07152  -0.21176 0"/>
-    <axis xyz="0  0  1"/>
+    <origin rpy="0       0       0" xyz="0.2  -0.21 0.0576695"/>
+    <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
   <link name="camera_2">
     <inertial>
       <mass value="0.001"/>
-      <origin rpy="0  0  0" xyz="-0.000018  -0.000225  0.060158"/>
+      <origin rpy="0  0  0" xyz="0.000021536  -0.000000325  0.060192452"/>
       <inertia ixx="0.00034961" ixy="0" ixz="0" iyy="0.00243426" iyz="0" izz="0.0027544"/>
     </inertial>
     <collision>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="-0.2  -0  -0.0546695"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <origin rpy="0  0  0" xyz="-0.2  -0  -0.0546695"/>
       <geometry>
         <mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
       </geometry>
     </visual>
   </link>
-  <joint name="turrel_vverh_camera_2_fixed" type="revolute">
+  <joint name="turrel_vverh_camera_2_fixed" type="fixed">
     <parent link="turrel_vverh"/>
     <child link="camera_2"/>
-    <origin rpy="0       0       0" xyz="-0.07152  0.21176 0"/>
-    <axis xyz="0  0  1"/>
+    <origin rpy="0       0       0" xyz="0.2  0.21 0.0576695"/>
+    <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
   <link name="wheel_left_1">
     <inertial>
-      <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <mass value="2"/>
+      <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
+      <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
     <collision>
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
@@ -402,15 +388,15 @@
   <joint name="wheel_lev_1" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_left_1"/>
-    <origin rpy="0       0      0" xyz="0.1405513 -0.20499   0.0925"/>
-    <axis xyz="0 -1  0"/>
+    <origin rpy="0       0      0" xyz="0.0666644 -0.20499   0.096"/>
+    <axis xyz="0 1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
   <link name="wheel_left_2">
     <inertial>
-      <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <mass value="2"/>
+      <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
+      <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
     <collision>
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
@@ -428,15 +414,15 @@
   <joint name="wheel_lev_2" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_left_2"/>
-    <origin rpy="0       0      0" xyz="0.3618856 -0.20499   0.0925"/>
-    <axis xyz="0 -1  0"/>
+    <origin rpy="0       0      0" xyz="0.2881144 -0.20499   0.096"/>
+    <axis xyz="0 1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
   <link name="wheel_left_3">
     <inertial>
-      <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <mass value="2"/>
+      <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
+      <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
     <collision>
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
@@ -454,15 +440,15 @@
   <joint name="wheel_lev_3" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_left_3"/>
-    <origin rpy="0       0      0" xyz="0.5832199 -0.20499   0.0925"/>
-    <axis xyz="0 -1  0"/>
+    <origin rpy="0       0      0" xyz="0.5095644 -0.20499   0.096"/>
+    <axis xyz="0 1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
   <link name="wheel_right_1">
     <inertial>
-      <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <mass value="2"/>
+      <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
+      <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
     <collision>
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
@@ -480,15 +466,15 @@
   <joint name="wheel_prav_1" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_right_1"/>
-    <origin rpy="0       0      0" xyz="0.1405513 0.20499   0.0925"/>
-    <axis xyz="0 -1  0"/>
+    <origin rpy="0       0      0" xyz="0.0666644 0.20499   0.096"/>
+    <axis xyz="0 1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
   <link name="wheel_right_2">
     <inertial>
-      <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <mass value="2"/>
+      <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
+      <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
     <collision>
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
@@ -506,15 +492,15 @@
   <joint name="wheel_prav_2" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_right_2"/>
-    <origin rpy="0       0      0" xyz="0.3618856 0.20499   0.0925"/>
-    <axis xyz="0 -1  0"/>
+    <origin rpy="0       0      0" xyz="0.2881144 0.20499   0.096"/>
+    <axis xyz="0 1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
   <link name="wheel_right_3">
     <inertial>
-      <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0.000008  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <mass value="2"/>
+      <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
+      <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
     <collision>
       <origin rpy="1.5708  0      0" xyz="0  0  0"/>
@@ -532,47 +518,29 @@
   <joint name="wheel_prav_3" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_right_3"/>
-    <origin rpy="0       0      0" xyz="0.5832199 0.20499   0.0925"/>
-    <axis xyz="0 -1  0"/>
+    <origin rpy="0       0      0" xyz="0.5095644 0.20499   0.096"/>
+    <axis xyz="0 1  0"/>
     <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
   </joint>
   <!--fix'es joints -->
   <joint name="camera_1_lazer_ukazka_fixed" type="fixed">
     <parent link="camera_1"/>
     <child link="lazer_ukazka"/>
-    <origin rpy="0       0      3.14" xyz="-0.04766  0.00111  0.15548"/>
+    <origin rpy="0       0      0" xyz="0.071  0  0.095"/>
     <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
   <joint name="chassis_hokuyo_fixed" type="fixed">
     <parent link="chassis"/>
     <child link="hokuyo"/>
-    <origin rpy="0       0       3.14" xyz="0.14586  0.083   0.465"/>
+    <origin rpy="0       0       0" xyz="0.4941421  -0.083  0.4685"/>
     <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
-  <!--	
-	<joint name="camera_1_lazer_ukazka_fixed" type="revolute">
-		<parent link="camera_1"/>
-		<child link="lazer_ukazka"/>
-		<origin rpy="0       0      0" xyz="-0.04766  0.00111  0.10548"/>
-		<axis xyz="-1  0  0"/>
-		<limit effort="0" lower="0" upper="0" velocity="0"/>
-	</joint>
-
-
-<joint name="chassis_hokuyo_fixed" type="revolute">
-		<parent link="chassis"/>
-		<child link="hokuyo"/>
-		<origin rpy="0       0       3.14" xyz="0.14586  0.083   0.365"/>
-		<axis xyz="1  0  0"/>
-		<limit effort="0" lower="0" upper="0" velocity="0"/>
-	</joint>
--->
   <joint name="chassis_turrel_vniz_fixed" type="fixed">
     <parent link="chassis"/>
     <child link="turrel_vniz"/>
-    <origin rpy="0 0  0" xyz="0.255 0  0.37358"/>
+    <origin rpy="0 0  0" xyz="0.395 0  0.3685"/>
     <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
@@ -580,14 +548,14 @@
   <joint name="turrel_vniz_turrel_sered_revolute" type="revolute">
     <parent link="turrel_vniz"/>
     <child link="turrel_sered"/>
-    <origin rpy="0  0   0" xyz="0 0  0.13474"/>
+    <origin rpy="0  0   0" xyz="0 0  0.1296088"/>
     <axis xyz="0  0  1"/>
     <limit effort="1" lower="-7" upper="7" velocity="10"/>
   </joint>
   <joint name="turrel_sered_turrel_vverh_up_to_down" type="revolute">
     <parent link="turrel_sered"/>
     <child link="turrel_vverh"/>
-    <origin rpy="0   0   0" xyz="0  0.005 0.1"/>
+    <origin rpy="0   0   0" xyz="0  0 0.0890008"/>
     <axis xyz="0  1  0"/>
     <limit effort="1" lower="-1" upper="1" velocity="100"/>
   </joint>
@@ -612,28 +580,6 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-  <!--	<transmission name="chassis_hokuyo_fix">
-		<type>transmission_interface/SimpleTransmission</type>
-		<joint name="chassis_hokuyo_fixed">
-			<hardwareInterface>EffortJointInterface</hardwareInterface>
-		</joint>
-		<actuator name="chas_hok_fix">
-			<hardwareInterface>EffortJointInterface</hardwareInterface>
-			<mechanicalReduction>1</mechanicalReduction>
-		</actuator>
-	</transmission>
-
-		<transmission name="camera_1_ukaz_fix">
-		<type>transmission_interface/SimpleTransmission</type>
-		<joint name="camera_1_lazer_ukazka_fixed">
-			<hardwareInterface>EffortJointInterface</hardwareInterface>
-		</joint>
-		<actuator name="cam_uk_fix">
-			<hardwareInterface>EffortJointInterface</hardwareInterface>
-			<mechanicalReduction>1</mechanicalReduction>
-		</actuator>
-	</transmission>
--->
   <transmission name="wheel_l_1">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="wheel_lev_1">
@@ -690,26 +636,6 @@
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="wh_r_3">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="camer_1">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="turrel_vverh_camera_1_fixed">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="cam_1">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="camer_2">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="turrel_vverh_camera_2_fixed">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="cam_2">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>

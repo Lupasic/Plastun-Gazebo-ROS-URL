@@ -16,9 +16,9 @@
       <leftRearJoint>wheel_lev_3</leftRearJoint>
       <rightRearJoint>wheel_prav_3</rightRearJoint>
       <robotBaseFrame>base_link</robotBaseFrame>
-      <torque>20</torque>
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
+      <commandTopic>/plastun/cmd_vel</commandTopic>
+      <torque>10</torque>
+      <odometryTopic>/plastun/odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <wheelSeparation>0.40998</wheelSeparation>
       <wheelDiameter>0.192</wheelDiameter>
@@ -32,7 +32,7 @@
   <!-- sensors -->
   <gazebo reference="camera_1">
     <sensor name='camera_with_laser' type='camera'>
-      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose>
+<!--      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose> -->
       <camera name='__default__'>
         <horizontal_fov>1.012300</horizontal_fov>
         <image>
@@ -66,7 +66,7 @@
 
   <gazebo reference="camera_2">
     <sensor name='camera_without_laser' type='camera'>
-      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose>
+<!--      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose> -->
       <camera name='__default__'>
         <horizontal_fov>1.012300</horizontal_fov>
         <image>
@@ -114,7 +114,7 @@
         </scan>
         <range>
           <min>0.10</min>
-          <max>30.0</max>
+          <max>20.0</max>
           <resolution>0.01</resolution>
         </range>
       </ray>

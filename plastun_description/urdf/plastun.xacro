@@ -8,22 +8,35 @@
 
 
 	<!-- Constants for robot dimensions -->
-	<xacro:property name="mass_wheels" value="1" />
-	<xacro:property name="y_wheel" value="0.20499" />
-	<xacro:property name="z_wheel" value=" 0.0925" />
-	<xacro:property name="between_wheels" value="0.2213343" />
+	<xacro:property name="chassis_z_offset" value="0.0435" />
 
-	<xacro:property name="x_camera" value="-0.07152" />
-	<xacro:property name="y_camera" value="0.21176" />
-	<xacro:property name="z_camera" value="0" />
+	<xacro:property name="x_camera_offset" value="0.2" />
+	<xacro:property name="y_camera_offset" value="0" />
+	<xacro:property name="z_camera_offset" value="0.0546695" />
+
+	<xacro:property name="x_lazer_ukazka_offset" value="0.171" />
+	<xacro:property name="y_lazer_ukazka_offset" value="0" />
+	<xacro:property name="z_lazer_ukazka_offset" value="0.045" />
+
+	<xacro:property name="x_hokuyo_offset" value="0" />
+	<xacro:property name="y_hokuyo_offset" value="0" />
+	<xacro:property name="z_hokuyo_offset" value="0.1" />	
+
+	<xacro:property name="y_wheel" value="0.20499" />
+	<xacro:property name="z_wheel" value=" 0.096" />
+	<xacro:property name="between_wheels" value="0.22145" />
+
+	<xacro:property name="x_camera" value="0" />
+	<xacro:property name="y_camera" value="0.21" />
+	<xacro:property name="z_camera" value="0.003" />
 
 
 	<xacro:macro name="wheel" params="prefix num side rev">
 		<link name="wheel_${prefix}_${num}">
 			<inertial>
-				<mass value="${mass_wheels}"/>
-				<origin rpy="0  0  0" xyz="0  0.000008  0"/>
-				<inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+				<mass value="2"/>
+				<origin rpy="0  0  0" xyz="0  0.000007723  0"/>
+				<inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
 			</inertial>
 			<collision >
 				<origin rpy="1.5708  0      0" xyz="0  0  0"/>
@@ -42,9 +55,9 @@
 		<joint name="wheel_${rev}_${num}" type="revolute">
 			<parent link="chassis"/>
 			<child link="wheel_${prefix}_${num}"/>
-			<origin rpy="0       0      0" xyz="${0.1405513 + (num - 1) * between_wheels} ${y_wheel * side}   ${z_wheel}"/>
-			<axis xyz="0 -1  0"/>
-			<limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
+			<origin rpy="0       0      0" xyz="${0.0666644 + (num - 1) * between_wheels} ${y_wheel * side}   ${z_wheel}"/>
+			<axis xyz="0 1  0"/>
+			<limit effort="-1" lower="-1e+100" upper="1e+100" velocity="100"/>
 		</joint>
 	</xacro:macro>
 
@@ -66,45 +79,31 @@
 		<link name="camera_${num}">
 			<inertial>
 				<mass value="0.001"/>
-				<origin rpy="0  0  0" xyz="-0.000018  -0.000225  0.060158"/>
+				<origin rpy="0  0  0" xyz="0.000021536  -0.000000325  0.060192452"/>
 				<inertia ixx="0.00034961" ixy="0" ixz="0" iyy="0.00243426" iyz="0" izz="0.0027544"/>
 			</inertial>
 			<collision >
-				<origin rpy="0  0  0" xyz="0  0  0"/>
+				<origin rpy="0  0  0" xyz="-${x_camera_offset}  -${y_camera_offset}  -${z_camera_offset}"/>
 				<geometry>
 					<mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
 				</geometry>
 			</collision>
 			<visual >
-				<origin rpy="0  0  0" xyz="0  0  0"/>
+				<origin rpy="0  0  0" xyz="-${x_camera_offset}  -${y_camera_offset}  -${z_camera_offset}"/>
 				<geometry>
 					<mesh filename="package://plastun_description/meshes/STL_min/camera.stl" scale="1 1 1"/>
 				</geometry>
 			</visual>
 		</link>
 
-		<joint name="turrel_vverh_camera_${num}_fixed" type="revolute">
+		<joint name="turrel_vverh_camera_${num}_fixed" type="fixed">
 			<parent link="turrel_vverh"/>
 			<child link="camera_${num}"/>
-			<origin rpy="0       0       0" xyz="${x_camera}  ${y_camera * side} ${z_camera}"/>
-			<axis xyz="0  0  1"/>
+			<origin rpy="0       0       0" xyz="${x_camera + x_camera_offset}  ${(y_camera_offset + y_camera) * side} ${z_camera + z_camera_offset}"/>
+			<axis xyz="0  0  0"/>
 			<limit effort="0" lower="0" upper="0" velocity="0"/>
 		</joint>
 	</xacro:macro>
-
-	<xacro:macro name="transmission_camera" params="num">
-		<transmission name="camer_${num}">
-			<type>transmission_interface/SimpleTransmission</type>
-			<joint name="turrel_vverh_camera_${num}_fixed">
-				<hardwareInterface>EffortJointInterface</hardwareInterface>
-			</joint>
-			<actuator name="cam_${num}">
-				<hardwareInterface>EffortJointInterface</hardwareInterface>
-				<mechanicalReduction>1</mechanicalReduction>
-			</actuator>
-		</transmission>
-	</xacro:macro>
-
 
 	<link name="base_link"/>
 
@@ -115,18 +114,18 @@
 
 	<link name="chassis">
 		<inertial>
-			<mass value="30"/>
-			<origin rpy="0  0  0" xyz="0.436419 -0.000612  0.228789"/>
-			<inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+			<mass value="35"/>
+			<origin rpy="0  0  0" xyz="0.289120720 -0.000018254  0.186368419"/>
+			<inertia ixx="3.1081800"  ixy="-0.25460189"  ixz="2.0318174" iyy="6.3787776" iyz="0.16417863" izz="5.3316425" />
 		</inertial>
 		<collision >
-			<origin rpy="0  0  0" xyz="0 0  0"/>
+			<origin rpy="0  0  0" xyz="0 0  ${chassis_z_offset}"/>
 			<geometry>
 				<mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1.0 1.0 1.0"/>
 			</geometry>
 		</collision>
 		<visual >
-			<origin rpy="0  0  0" xyz="0 0  0"/>
+			<origin rpy="0  0  0" xyz="0 0  ${chassis_z_offset}"/>
 			<geometry>
 				<mesh filename="package://plastun_description/meshes/STL_min/chassis.stl" scale="1 1 1"/>
 			</geometry>
@@ -139,18 +138,11 @@
 	<link name="lazer_ukazka">
 		<inertial>
 			<mass value="0.001"/>
-			<origin rpy="0  0  0" xyz="-0.017806  0  0.027446"/>
+			<origin rpy="0  0  0" xyz="0.017977372  -0.000001823  0.034613516"/>
 			<inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0.0"/>
 		</inertial>
-<!--		<collision >
-			<origin rpy="0  0  0" xyz="0  0  0"/>
-			<geometry>
-				<mesh filename="package://plastun_description/meshes/STL_min/lazer_ukazka.stl" scale="1.0 1.0 1.0"/>
-			</geometry>
-		</collision> 
--->
 		<visual >
-			<origin rpy="0  0  3.14" xyz="0  0  -0.05"/>
+			<origin rpy="0  0  0" xyz="-${x_lazer_ukazka_offset}  -${y_lazer_ukazka_offset}  -${z_lazer_ukazka_offset}"/>
 			<geometry>
 				<mesh filename="package://plastun_description/meshes/STL_min/lazer_ukazka.stl" scale="1.0 1.0 1.0"/>
 			</geometry>
@@ -161,18 +153,11 @@
 	<link name="hokuyo">
 		<inertial>
 			<mass value="0.3"/>
-			<origin rpy="0  0  0" xyz="-0.000001  0  0.053927"/>
-			<inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+			<origin rpy="0  0  0" xyz="-0.000000763  -0.000000289  0.053961822"/>
+			<inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
 		</inertial>
-<!--			<collision >
-		<origin rpy="0  0  0" xyz="0    0    0.05"/>
-			<geometry>
-				<box size="0.06524 0.079833 0.102579"/>
-			</geometry>
-		</collision>
--->
 		<visual >
-			<origin rpy="0  0  0" xyz="0  0  -0.1"/>
+			<origin rpy="0  0  0" xyz="-${x_hokuyo_offset}  -${y_hokuyo_offset}  -${z_hokuyo_offset}"/>
 			<geometry>
 				<mesh filename="package://plastun_description/meshes/STL_min/hokuyo.stl" scale="1 1 1"/>
 			</geometry>
@@ -184,7 +169,7 @@
 	<link name="turrel_vniz">
 		<inertial>
 			<mass value="1"/>
-			<origin rpy="0  0  0" xyz="-0.000002  0  0.072908"/>
+			<origin rpy="0  0  0" xyz="0  0  0.072913938"/>
 			<inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
 		</inertial>
 		<collision >
@@ -205,7 +190,7 @@
 	<link name="turrel_sered">
 		<inertial>
 			<mass value="1"/>
-			<origin rpy="0  0  0" xyz="0  0  0.089664"/>
+			<origin rpy="0  0  0" xyz="0  -0.000000943  0.089683258"/>
 			<inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
 		</inertial>
 		<collision >
@@ -226,7 +211,7 @@
 	<link name="turrel_vverh">
 		<inertial>
 			<mass value="1"/>
-			<origin rpy="0  0  0" xyz="0    -0.005000   0.051671"/>
+			<origin rpy="0  0  0" xyz="0    0   0.051670046"/>
 			<inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
 		</inertial>
 		<collision >
@@ -246,24 +231,24 @@
 
 
 	<!--cameras (links and joints(fix with turrel_verh)) -->
-	<xacro:camer num="1" side="-1"/>
-	<xacro:camer num="2" side="1"/>
+	<xacro:camer num="1" side="1"/>
+	<xacro:camer num="2" side="-1"/>
 
 
 	<!-- wheels (links and joints(revolute, parrent - chassis))-->
-	<xacro:wheel prefix="left" num="1" side="-1" rev="lev"/>
-	<xacro:wheel prefix="left" num="2" side="-1" rev="lev"/>
-	<xacro:wheel prefix="left" num="3" side="-1" rev="lev"/>
-	<xacro:wheel prefix="right" num="1" side="1" rev="prav"/>
-	<xacro:wheel prefix="right" num="2" side="1" rev="prav"/>
-	<xacro:wheel prefix="right" num="3" side="1" rev="prav"/>
+	<xacro:wheel prefix="left" num="1" side="1" rev="lev"/>
+	<xacro:wheel prefix="left" num="2" side="1" rev="lev"/>
+	<xacro:wheel prefix="left" num="3" side="1" rev="lev"/>
+	<xacro:wheel prefix="right" num="1" side="-1" rev="prav"/>
+	<xacro:wheel prefix="right" num="2" side="-1" rev="prav"/>
+	<xacro:wheel prefix="right" num="3" side="-1" rev="prav"/>
 
 
 	<!--fix'es joints -->
 	<joint name="camera_1_lazer_ukazka_fixed" type="fixed">
 		<parent link="camera_1"/>
 		<child link="lazer_ukazka"/>
-		<origin rpy="0       0      3.14" xyz="-0.04766  0.00111  0.15548"/>
+		<origin rpy="0       0      0" xyz="${x_lazer_ukazka_offset - 0.1}  ${y_lazer_ukazka_offset}  ${z_lazer_ukazka_offset + 0.05}"/>
 		<axis xyz="0  0  0"/>
 		<limit effort="0" lower="0" upper="0" velocity="0"/>
 	</joint>
@@ -271,34 +256,15 @@
 	<joint name="chassis_hokuyo_fixed" type="fixed">
 		<parent link="chassis"/>
 		<child link="hokuyo"/>
-		<origin rpy="0       0       3.14" xyz="0.14586  0.083   0.465"/>
+		<origin rpy="0       0       0" xyz="${x_hokuyo_offset + 0.4941421}  ${y_hokuyo_offset + -0.083}  ${chassis_z_offset + 0.325 + z_hokuyo_offset}"/>
 		<axis xyz="0  0  0"/>
 		<limit effort="0" lower="0" upper="0" velocity="0"/>
 	</joint>
 
-<!--	
-	<joint name="camera_1_lazer_ukazka_fixed" type="revolute">
-		<parent link="camera_1"/>
-		<child link="lazer_ukazka"/>
-		<origin rpy="0       0      0" xyz="-0.04766  0.00111  0.10548"/>
-		<axis xyz="-1  0  0"/>
-		<limit effort="0" lower="0" upper="0" velocity="0"/>
-	</joint>
-
-
-<joint name="chassis_hokuyo_fixed" type="revolute">
-		<parent link="chassis"/>
-		<child link="hokuyo"/>
-		<origin rpy="0       0       3.14" xyz="0.14586  0.083   0.365"/>
-		<axis xyz="1  0  0"/>
-		<limit effort="0" lower="0" upper="0" velocity="0"/>
-	</joint>
--->
-
 	<joint name="chassis_turrel_vniz_fixed" type="fixed">
 		<parent link="chassis"/>
 		<child link="turrel_vniz"/>
-		<origin rpy="0 0  0" xyz="0.255 0  0.37358"/>
+		<origin rpy="0 0  0" xyz="0.395 0  ${chassis_z_offset + 0.325}"/>
 		<axis xyz="0  0  0"/>
 		<limit effort="0" lower="0" upper="0" velocity="0"/>
 	</joint>
@@ -308,7 +274,7 @@
 	<joint name="turrel_vniz_turrel_sered_revolute" type="revolute">
 		<parent link="turrel_vniz"/>
 		<child link="turrel_sered"/>
-		<origin rpy="0  0   0" xyz="0 0  0.13474"/>
+		<origin rpy="0  0   0" xyz="0 0  0.1296088"/>
 		<axis xyz="0  0  1"/>
 		<limit effort="1" lower="-7" upper="7" velocity="10"/>
 	</joint>
@@ -316,8 +282,8 @@
 	<joint name="turrel_sered_turrel_vverh_up_to_down" type="revolute">
 		<parent link="turrel_sered"/>
 		<child link="turrel_vverh"/>
-		<origin rpy="0   0   0" xyz="0  0.005 0.1"/>
-		<axis xyz="0  1  0"/>
+		<origin rpy="0   0   0" xyz="0  0 0.0890008"/>
+		<axis xyz="0  -1  0"/>
 		<limit effort="1" lower="-1" upper="1" velocity="100"/>
 	</joint>
 
@@ -345,40 +311,12 @@
 		</actuator>
 	</transmission>
 
-<!--	<transmission name="chassis_hokuyo_fix">
-		<type>transmission_interface/SimpleTransmission</type>
-		<joint name="chassis_hokuyo_fixed">
-			<hardwareInterface>EffortJointInterface</hardwareInterface>
-		</joint>
-		<actuator name="chas_hok_fix">
-			<hardwareInterface>EffortJointInterface</hardwareInterface>
-			<mechanicalReduction>1</mechanicalReduction>
-		</actuator>
-	</transmission>
-
-		<transmission name="camera_1_ukaz_fix">
-		<type>transmission_interface/SimpleTransmission</type>
-		<joint name="camera_1_lazer_ukazka_fixed">
-			<hardwareInterface>EffortJointInterface</hardwareInterface>
-		</joint>
-		<actuator name="cam_uk_fix">
-			<hardwareInterface>EffortJointInterface</hardwareInterface>
-			<mechanicalReduction>1</mechanicalReduction>
-		</actuator>
-	</transmission>
--->
-
 	<xacro:transmission_wheel num="1" side_name="l" rev="lev"/>
 	<xacro:transmission_wheel num="2" side_name="l" rev="lev"/>
 	<xacro:transmission_wheel num="3" side_name="l" rev="lev"/>
 	<xacro:transmission_wheel num="1" side_name="r" rev="prav"/>
 	<xacro:transmission_wheel num="2" side_name="r" rev="prav"/>
 	<xacro:transmission_wheel num="3" side_name="r" rev="prav"/>
-
-	<xacro:transmission_camera num="1"/>
-	<xacro:transmission_camera num="2"/>
-
-
 
 
 </robot>

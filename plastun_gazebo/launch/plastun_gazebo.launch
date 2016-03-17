@@ -23,9 +23,5 @@
 <!-- ros_control rrbot launch file -->
   <include file="$(find plastun_control)/launch/plastun_control.launch"/>
 
-<!-- ros_gmapping rrbot launch file -->
-<!--   <include file="$(find plastun_global_navigation)/launch/gmapping.launch"/> -->
-
-
 
 </launch>
