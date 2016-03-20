@@ -31,19 +31,21 @@
 	<xacro:property name="z_camera" value="0.003" />
 
 
-	<xacro:macro name="wheel" params="prefix num side rev">
+	<xacro:macro name="wheel" params="prefix num side rev collision">
 		<link name="wheel_${prefix}_${num}">
 			<inertial>
 				<mass value="2"/>
 				<origin rpy="0  0  0" xyz="0  0.000007723  0"/>
 				<inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
 			</inertial>
+	<xacro:if value="${collision == 1}">
 			<collision >
 				<origin rpy="1.5708  0      0" xyz="0  0  0"/>
 				<geometry>
 					<cylinder length="0.09" radius="0.096"/>
 				</geometry>
 			</collision>
+	</xacro:if>		
 			<visual>
 				<origin rpy="0  0  0" xyz="0  0  0"/>
 				<geometry>
@@ -61,7 +63,8 @@
 		</joint>
 	</xacro:macro>
 
-	<xacro:macro name="transmission_wheel" params="rev num side_name">
+	<xacro:macro name="transmission_wheel" params="rev num side_name collision">
+	<xacro:if value="${collision == 1}">
 		<transmission name="wheel_${side_name}_${num}">
 			<type>transmission_interface/SimpleTransmission</type>
 			<joint name="wheel_${rev}_${num}">
@@ -72,6 +75,7 @@
 				<mechanicalReduction>1</mechanicalReduction>
 			</actuator>
 		</transmission>
+	</xacro:if>
 	</xacro:macro>
 
 
@@ -236,12 +240,12 @@
 
 
 	<!-- wheels (links and joints(revolute, parrent - chassis))-->
-	<xacro:wheel prefix="left" num="1" side="1" rev="lev"/>
-	<xacro:wheel prefix="left" num="2" side="1" rev="lev"/>
-	<xacro:wheel prefix="left" num="3" side="1" rev="lev"/>
-	<xacro:wheel prefix="right" num="1" side="-1" rev="prav"/>
-	<xacro:wheel prefix="right" num="2" side="-1" rev="prav"/>
-	<xacro:wheel prefix="right" num="3" side="-1" rev="prav"/>
+	<xacro:wheel prefix="left" num="1" side="1" rev="lev" collision="1"/>
+	<xacro:wheel prefix="left" num="2" side="1" rev="lev" collision="1"/>
+	<xacro:wheel prefix="left" num="3" side="1" rev="lev" collision="1"/>
+	<xacro:wheel prefix="right" num="1" side="-1" rev="prav" collision="1"/>
+	<xacro:wheel prefix="right" num="2" side="-1" rev="prav" collision="1"/>
+	<xacro:wheel prefix="right" num="3" side="-1" rev="prav" collision="1"/>
 
 
 	<!--fix'es joints -->
@@ -276,7 +280,7 @@
 		<child link="turrel_sered"/>
 		<origin rpy="0  0   0" xyz="0 0  0.1296088"/>
 		<axis xyz="0  0  1"/>
-		<limit effort="1" lower="-7" upper="7" velocity="10"/>
+		<limit effort="1" lower="-3.139" upper="3.139" velocity="100"/>
 	</joint>
 
 	<joint name="turrel_sered_turrel_vverh_up_to_down" type="revolute">
@@ -311,12 +315,12 @@
 		</actuator>
 	</transmission>
 
-	<xacro:transmission_wheel num="1" side_name="l" rev="lev"/>
-	<xacro:transmission_wheel num="2" side_name="l" rev="lev"/>
-	<xacro:transmission_wheel num="3" side_name="l" rev="lev"/>
-	<xacro:transmission_wheel num="1" side_name="r" rev="prav"/>
-	<xacro:transmission_wheel num="2" side_name="r" rev="prav"/>
-	<xacro:transmission_wheel num="3" side_name="r" rev="prav"/>
+	<xacro:transmission_wheel num="1" side_name="l" rev="lev" collision="1"/>
+	<xacro:transmission_wheel num="2" side_name="l" rev="lev" collision="1"/>
+	<xacro:transmission_wheel num="3" side_name="l" rev="lev" collision="1"/>
+	<xacro:transmission_wheel num="1" side_name="r" rev="prav" collision="1"/>
+	<xacro:transmission_wheel num="2" side_name="r" rev="prav" collision="1"/>
+	<xacro:transmission_wheel num="3" side_name="r" rev="prav" collision="1"/>
 
 
 </robot>

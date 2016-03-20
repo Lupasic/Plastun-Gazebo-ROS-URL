@@ -222,9 +222,9 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: true
       Max Color: 255; 255; 255
-      Max Intensity: -999999
+      Max Intensity: 0
       Min Color: 0; 0; 0
-      Min Intensity: 999999
+      Min Intensity: 0
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -248,7 +248,7 @@ Visualization Manager:
       Class: rviz/Path
       Color: 0; 0; 255
       Enabled: true
-      Line Style: Lines
+      Line Style: Billboards
       Line Width: 0.03
       Name: Path
       Offset:
@@ -258,78 +258,19 @@ Visualization Manager:
       Topic: /move_base_node/NavfnROS/plan
       Value: true
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        base_link:
-          Value: true
-        camera_1:
-          Value: true
-        camera_2:
-          Value: true
-        chassis:
-          Value: true
-        hokuyo:
-          Value: true
-        lazer_ukazka:
-          Value: true
-        map:
-          Value: true
-        odom:
-          Value: true
-        turrel_sered:
-          Value: true
-        turrel_vniz:
-          Value: true
-        turrel_vverh:
-          Value: true
-        wheel_left_1:
-          Value: true
-        wheel_left_2:
-          Value: true
-        wheel_left_3:
-          Value: true
-        wheel_right_1:
-          Value: true
-        wheel_right_2:
-          Value: true
-        wheel_right_3:
-          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          odom:
-            base_link:
-              chassis:
-                hokuyo:
-                  {}
-                turrel_vniz:
-                  turrel_sered:
-                    turrel_vverh:
-                      camera_1:
-                        lazer_ukazka:
-                          {}
-                      camera_2:
-                        {}
-                wheel_left_1:
-                  {}
-                wheel_left_2:
-                  {}
-                wheel_left_3:
-                  {}
-                wheel_right_1:
-                  {}
-                wheel_right_2:
-                  {}
-                wheel_right_3:
-                  {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
     - Class: rviz/Axes
       Enabled: true
       Length: 1
@@ -380,16 +321,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.98159
+      Distance: 52.051
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 7.9127
-        Y: -9.49661
-        Z: 8.83699
+        X: -4.77357
+        Y: 12.4205
+        Z: -7.12006
       Name: Current View
       Near Clip Distance: 0.01
       Pitch: 0.629797
@@ -417,5 +358,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1855
-  X: 2149
-  Y: 186
+  X: 1975
+  Y: 14
