@@ -7,10 +7,10 @@
   	</node>
 
 	<include file="$(find plastun_navigation)/launch/amcl_stage.xml">
-	    <arg name="amclscan" value="$(arg scan)" />
+	    <arg name="scan" value="$(arg scan)" />
 	</include> 
 	
-	<include file="$(find plastun_navigation)/launch/move_base/move_base.xml">
+	<include file="$(find plastun_navigation)/launch/move_base.xml">
 	    <arg name="scan" value="$(arg scan)" />
 	</include> 
 </launch>

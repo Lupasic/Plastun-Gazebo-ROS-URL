@@ -16,9 +16,9 @@
       <leftRearJoint>wheel_lev_3</leftRearJoint>
       <rightRearJoint>wheel_prav_3</rightRearJoint>
       <robotBaseFrame>base_link</robotBaseFrame>
-      <commandTopic>/plastun/cmd_vel</commandTopic>
+      <commandTopic>cmd_vel</commandTopic>
       <torque>10</torque>
-      <odometryTopic>/plastun/odom</odometryTopic>
+      <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <wheelSeparation>0.40998</wheelSeparation>
       <wheelDiameter>0.192</wheelDiameter>
