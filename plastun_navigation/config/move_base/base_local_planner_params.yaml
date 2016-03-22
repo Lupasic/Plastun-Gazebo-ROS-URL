@@ -10,10 +10,10 @@ TrajectoryPlannerROS:
   #Set the acceleration limits of the robot
   acc_lim_th: 3.2 
   acc_lim_x: 2.5
-  acc_lim_y: 2.5
+  acc_lim_y: 0
 
   #Set the velocity limits of the robot
-  max_vel_x: 0.6
+  max_vel_x: 0.3
   min_vel_x: 0.05
   max_vel_y: 0.0  # zero for a differential drive robot
   min_vel_y: 0.0
@@ -31,7 +31,7 @@ TrajectoryPlannerROS:
   #y_vels: [-0.3, -0.1, 0.1, 0.3]
 
   #Set the tolerance on achieving a goal
-  xy_goal_tolerance: 0.1
+  xy_goal_tolerance: 1
   yaw_goal_tolerance: 0.1
   latch_xy_goal_tolerance: false
   pdist_scale: 0.8
@@ -46,8 +46,6 @@ TrajectoryPlannerROS:
   vtheta_samples: 20
 
   #Parameters for scoring trajectories
-  pdist_scale: 0.8
-  gdist_scale: 0.6
   occdist_scale: 0.01
   heading_lookahead: 0.325
   publish_cost_grid_pc: false
