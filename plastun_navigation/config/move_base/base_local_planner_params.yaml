@@ -8,7 +8,7 @@ clearing_rotation_allowed: false
 
 TrajectoryPlannerROS:
   #Set the acceleration limits of the robot
-  acc_lim_th: 3.2 
+  acc_lim_th: 1 
   acc_lim_x: 2.5
   acc_lim_y: 0
 
