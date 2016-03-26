@@ -1,0 +1,9 @@
+<launch>
+<!-- launch to save map from gmapping to mapname file -->
+	<arg name="mapname" default="$(find plastun_navigation)/maps/plastun_map" />
+	
+	<node name="mapsaver" pkg="map_server" type="map_saver" args="-f $(arg mapname)" respawn="false" output="screen">
+  		
+
+  	</node>
+</launch>
