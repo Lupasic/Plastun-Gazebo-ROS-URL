@@ -1,8 +1,8 @@
 <launch>
   <!-- launch to start amcl mapping with known map  -->
 	<arg name="scan" default="/plastun/laser/scan" />
-	<!--<arg name="map"  default="$(find plastun_navigation)/maps/floor_test.yaml"/> -->
-   <arg name="map"  default="$(find plastun_navigation)/maps/Labirint.yaml"/>
+	 <!-- <arg name="map"  default="$(find plastun_navigation)/maps/floor_test.yaml"/> -->
+   <arg name="map"  default="$(find plastun_navigation)/maps/Labirint.yaml"/> 
     
 
         <!-- launch map server -->

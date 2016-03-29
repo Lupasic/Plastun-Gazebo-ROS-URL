@@ -36,8 +36,8 @@
       <camera name='__default__'>
         <horizontal_fov>1.012300</horizontal_fov>
         <image>
-          <width>320</width>
-          <height>200</height>
+          <width>800</width>
+          <height>600</height>
         </image>
         <clip>
           <near>0.001000</near>
@@ -186,5 +186,41 @@
   <gazebo reference="camera_2">
     <material>Gazebo/Grey</material>
   </gazebo>
+<!--
+  <gazebo reference="wheel_right_1">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Blue</material>
+  </gazebo>
 
+    <gazebo reference="wheel_right_2">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <gazebo reference="wheel_right_3">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <gazebo reference="wheel_left_1">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <gazebo reference="wheel_left_2">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+    <gazebo reference="wheel_left_3">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Blue</material>
+  </gazebo>
+-->
 </robot>

@@ -34,7 +34,7 @@
 	<xacro:macro name="wheel" params="prefix num side rev collision">
 		<link name="wheel_${prefix}_${num}">
 			<inertial>
-				<mass value="2"/>
+				<mass value="0.03"/>
 				<origin rpy="0  0  0" xyz="0  0.000007723  0"/>
 				<inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
 			</inertial>
@@ -241,10 +241,10 @@
 
 	<!-- wheels (links and joints(revolute, parrent - chassis))-->
 	<xacro:wheel prefix="left" num="1" side="1" rev="lev" collision="1"/>
-	<xacro:wheel prefix="left" num="2" side="1" rev="lev" collision="1"/>
+	<xacro:wheel prefix="left" num="2" side="1" rev="lev" collision="0"/>
 	<xacro:wheel prefix="left" num="3" side="1" rev="lev" collision="1"/>
 	<xacro:wheel prefix="right" num="1" side="-1" rev="prav" collision="1"/>
-	<xacro:wheel prefix="right" num="2" side="-1" rev="prav" collision="1"/>
+	<xacro:wheel prefix="right" num="2" side="-1" rev="prav" collision="0"/>
 	<xacro:wheel prefix="right" num="3" side="-1" rev="prav" collision="1"/>
 
 
