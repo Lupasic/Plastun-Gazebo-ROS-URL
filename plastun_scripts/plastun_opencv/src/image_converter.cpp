@@ -1,61 +1,48 @@
-#include <ros/ros.h>
-#include <image_transport/image_transport.h>
-#include <cv_bridge/cv_bridge.h>
-#include <sensor_msgs/image_encodings.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include "opencv2/objdetect//objdetect.hpp"
-#include <algorithm>
-#include <iostream>
-#include <math.h>
+#include "image_converter.h"
+
 
 
 static const std::string OPENCV_WINDOW = "Image window";
 
-class ImageConverter
-{
-  ros::NodeHandle nh_;
-  image_transport::ImageTransport it_;
-  image_transport::Subscriber image_sub_;
-  image_transport::Publisher image_pub_;
 
-public:
-  ImageConverter()
+ImageConverter::ImageConverter()
     : it_(nh_)
-  {
+{
+    //ros::NodeHandle n;
     // Subscrive to input video feed and publish output video feed
-    image_sub_ = it_.subscribe("/plastun/camera_2/image_raw_2", 1,
-      &ImageConverter::imageCb, this);
+    image_sub_ = it_.subscribe("/plastun/camera_1/image_raw_1", 1,
+                               &ImageConverter::imageCb, this);
     image_pub_ = it_.advertise("/image_converter/output_video", 1);
+    pub_point = nh_.advertise<geometry_msgs::Pose>("/image_converter/rectangle_center",1000);
 
     cv::namedWindow(OPENCV_WINDOW);
-  }
+}
 
-  ~ImageConverter()
-  {
+ImageConverter::~ImageConverter()
+{
     cv::destroyWindow(OPENCV_WINDOW);
-  }
+}
 
-  void imageCb(const sensor_msgs::ImageConstPtr& msg)
-  {
+void ImageConverter::imageCb(const sensor_msgs::ImageConstPtr& msg)
+{
     cv_bridge::CvImagePtr cv_ptr;
     try
     {
-      cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+        cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
     }
     catch (cv_bridge::Exception& e)
     {
-      ROS_ERROR("cv_bridge exception: %s", e.what());
-      return;
+        ROS_ERROR("cv_bridge exception: %s", e.what());
+        return;
     }
 
     // Draw an example circle on the video stream
-//    if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
-//      cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
+    //    if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
+    //      cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
     cv::Mat gray;
     cvtColor(cv_ptr->image, gray, cv::COLOR_BGR2GRAY); // Перевод в чёрно-белое
     cv::CascadeClassifier cascadeSymbol; // Объявление каскада
-    bool cascadeSymbolLoad = cascadeSymbol.load("/home/lupasic/Programs/Learn/gazebo_plafon/plafon_gazebo/cascade.xml"); // Загрузка каскада
+    bool cascadeSymbolLoad = cascadeSymbol.load("/home/lupasic/Programs/catkin_ws/src/plastun_gazebo/plastun_scripts/plastun_opencv/cascads/plafon_gazebo/cascade.xml"); // Загрузка каскада
 
     if(!cascadeSymbolLoad)
     {
@@ -64,14 +51,16 @@ public:
 
     std::vector<cv::Rect> symbols;
     cascadeSymbol.detectMultiScale(gray, symbols); // Поиск с помощью каскада
-
+    geometry_msgs::Pose a;
     for(auto& p : symbols)
     {
         cv::Point symbolBegin	= cv::Point(p.x, p.y);
         cv::Point symbolEnd		= cv::Point(p.x+p.width, p.y+p.height);
 
         std::cout << "X: " << p.x << " Y: " << p.y << " Width: " << p.width << " Height: " << p.height << std::endl;
-
+        a.position.x=p.x;
+        a.position.y=p.y;
+        center.push_back(a);
 
         rectangle(cv_ptr->image, symbolBegin, symbolEnd, cv::Scalar(0,255,0), 2);
         break; //Для Каскада газебо
@@ -79,18 +68,11 @@ public:
 
 
     // Update GUI Window
-    cv::imshow(OPENCV_WINDOW, cv_ptr->image);
+    //cv::imshow(OPENCV_WINDOW, cv_ptr->image);
     cv::waitKey(3);
 
     // Output modified video stream
     image_pub_.publish(cv_ptr->toImageMsg());
-  }
-};
-
-int main(int argc, char** argv)
-{
-  ros::init(argc, argv, "image_converter");
-  ImageConverter ic;
-  ros::spin();
-  return 0;
+    pub_point.publish(center[0]);
+    center.clear();
 }

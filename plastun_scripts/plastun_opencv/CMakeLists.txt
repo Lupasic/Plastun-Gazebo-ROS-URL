@@ -3,7 +3,7 @@ project(plastun_opencv)
 
 
 
-
+SET (CMAKE_BUILD_TYPE Debug)
 find_package(catkin REQUIRED COMPONENTS
 sensor_msgs
 cv_bridge
@@ -25,6 +25,6 @@ include_directories(
   ${cv_bridge_INCLUDE_DIRS}
 )
 
-add_executable(image_converter src/image_converter.cpp)
+add_executable(image_converter src/image_converter.cpp src/image_converter.h src/main.cpp)
 target_link_libraries(image_converter ${catkin_LIBRARIES} ${cv_bridge_LIBRARIES})
 add_dependencies(image_converter image_converter_cpp)
