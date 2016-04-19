@@ -16,6 +16,7 @@
 
 class ImageConverter
 {
+protected:
     ros::NodeHandle nh_;
     image_transport::ImageTransport it_;
     image_transport::Subscriber image_sub_;

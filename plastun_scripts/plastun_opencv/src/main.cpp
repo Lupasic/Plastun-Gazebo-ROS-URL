@@ -1,4 +1,4 @@
-#include "image_converter.h"   
+#include "image_converter.h"
 
 int main(int argc, char** argv)
     {

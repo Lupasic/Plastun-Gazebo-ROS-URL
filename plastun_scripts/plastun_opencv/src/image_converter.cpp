@@ -40,6 +40,7 @@ void ImageConverter::imageCb(const sensor_msgs::ImageConstPtr& msg)
     //    if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
     //      cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
     cv::Mat gray;
+    cv::Point centar(cv_ptr->image.cols/2, cv_ptr->image.rows/2);
     cvtColor(cv_ptr->image, gray, cv::COLOR_BGR2GRAY); // Перевод в чёрно-белое
     cv::CascadeClassifier cascadeSymbol; // Объявление каскада
     bool cascadeSymbolLoad = cascadeSymbol.load("/home/lupasic/Programs/catkin_ws/src/plastun_gazebo/plastun_scripts/plastun_opencv/cascads/plafon_gazebo/cascade.xml"); // Загрузка каскада
@@ -48,7 +49,6 @@ void ImageConverter::imageCb(const sensor_msgs::ImageConstPtr& msg)
     {
         std::cerr << "Cascade not load. Check your directory \"haarcascade_russian_plate_number_symbol.xml\"" << std::endl;
     }
-
     std::vector<cv::Rect> symbols;
     cascadeSymbol.detectMultiScale(gray, symbols); // Поиск с помощью каскада
     geometry_msgs::Pose a;
@@ -56,11 +56,12 @@ void ImageConverter::imageCb(const sensor_msgs::ImageConstPtr& msg)
     {
         cv::Point symbolBegin	= cv::Point(p.x, p.y);
         cv::Point symbolEnd		= cv::Point(p.x+p.width, p.y+p.height);
-
-        std::cout << "X: " << p.x << " Y: " << p.y << " Width: " << p.width << " Height: " << p.height << std::endl;
-        a.position.x=p.x;
-        a.position.y=p.y;
+        //std::cout << centar.x <<" " << centar.y << std::endl;
+        //std::cout << "X: " << p.x << " Y: " << p.y << " Width: " << p.width << " Height: " << p.height << std::endl;
+        a.position.x=centar.x-(p.x + p.width/2);
+        a.position.y=centar.y-(p.y + p.height/2);
         center.push_back(a);
+        std::cout << "X_smesh: " << a.position.x << " Y_smesh: " << a.position.y << std::endl;
 
         rectangle(cv_ptr->image, symbolBegin, symbolEnd, cv::Scalar(0,255,0), 2);
         break; //Для Каскада газебо
