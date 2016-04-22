@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(plastun_rotate_turrel)
+project(plastun_control_turret)
+
 
 find_package(catkin REQUIRED COMPONENTS
   actionlib
@@ -10,8 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
-add_executable(rotate_turret src/rotate_turret.cpp src/rotate_turret.h src/main.cpp)
-target_link_libraries(rotate_turret ${catkin_LIBRARIES} ${cv_bridge_LIBRARIES})
+#add_executable(rotate_turret src/rotate_turret.cpp src/rotate_turret.h src/main.cpp)
+#target_link_libraries(rotate_turret ${catkin_LIBRARIES})
 
 add_action_files(
   DIRECTORY action
@@ -21,3 +22,4 @@ add_action_files(
 generate_messages(
   DEPENDENCIES actionlib_msgs std_msgs  # Or other packages containing msgs
 )
+
