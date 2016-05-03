@@ -5,17 +5,23 @@
 static const std::string OPENCV_WINDOW = "Image window";
 
 
-ImageConverter::ImageConverter()
+ImageConverter::ImageConverter(std::string name)
     : it_(nh_)
 {
+    action_name = name;
     //ros::NodeHandle n;
     // Subscrive to input video feed and publish output video feed
     image_sub_ = it_.subscribe("/plastun/camera_1/image_raw_1", 1,
                                &ImageConverter::imageCb, this);
     image_pub_ = it_.advertise("/image_converter/output_video", 1);
     pub_point = nh_.advertise<geometry_msgs::Pose>("/image_converter/rectangle_center",1000);
-
+    angl = new actionlib::SimpleActionServer<plastun_image_detect::access_detectAction>(nh_,name,false);
+    angl->registerGoalCallback(boost::bind(&ImageConverter::goal_R,this));
+    angl->registerPreemptCallback(boost::bind(&ImageConverter::preempt_R,this));
     cv::namedWindow(OPENCV_WINDOW);
+    fl = false;
+
+    angl->start();
 }
 
 ImageConverter::~ImageConverter()
@@ -23,8 +29,26 @@ ImageConverter::~ImageConverter()
     //cv::destroyWindow(OPENCV_WINDOW);
 }
 
+void ImageConverter::goal_R()
+{
+    int a;
+    goal = angl->acceptNewGoal();
+    a = goal->access;
+    if(a == 2)
+        fl = true;
+}
+
+void ImageConverter::preempt_R()
+{
+    ROS_INFO("%s: Preempted", action_name.c_str());
+    // set the action state to preempted
+    angl->setPreempted();
+}
+
 void ImageConverter::imageCb(const sensor_msgs::ImageConstPtr& msg)
 {
+    if(fl == true)
+    {
     cv_bridge::CvImagePtr cv_ptr;
     try
     {
@@ -75,4 +99,6 @@ void ImageConverter::imageCb(const sensor_msgs::ImageConstPtr& msg)
     image_pub_.publish(cv_ptr->toImageMsg());
     pub_point.publish(center[0]);
     center.clear();
+    fl = false;
+    }
 }

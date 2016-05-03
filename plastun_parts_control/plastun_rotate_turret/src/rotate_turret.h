@@ -22,6 +22,7 @@ protected:
     ros::Publisher turret_x_command, turret_y_command;
     const static double eps = 0.01;
     std_msgs::Float64 check;
+    bool fl_x, fl_y;
 
 public:
     Rotate_turret(std::string name);

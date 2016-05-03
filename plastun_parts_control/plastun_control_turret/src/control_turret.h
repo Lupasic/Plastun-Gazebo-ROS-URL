@@ -1,3 +1,6 @@
+#ifndef CONTROL_TURRET_H
+#define CONTROL_TURRET_H
+
 #include <ros/ros.h>
 #include "geometry_msgs/Pose.h"
 #include "std_msgs/Float64.h"
@@ -12,7 +15,6 @@
 class Control_turret
 {
 protected:
-    ros::NodeHandle nh;
     ros::Subscriber target_pose_im, current_pose, camera_info;
     ros::Publisher turret_camera_x, turret_camera_y;
     geometry_msgs::Pose target, im_target, cur_pose, im_target_last;
@@ -33,3 +35,5 @@ public:
     void camera_info_Callback(const sensor_msgs::CameraInfo &msg);
 
 };
+
+#endif // CONTROL_TURRET_H

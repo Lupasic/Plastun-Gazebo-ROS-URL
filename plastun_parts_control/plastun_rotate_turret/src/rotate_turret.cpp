@@ -16,6 +16,8 @@ Rotate_turret::Rotate_turret(std::string name)
     turret_x_command = nh.advertise<std_msgs::Float64>("/plastun/turrel_revol_position_controller/command",1000);
     turret_y_command = nh.advertise<std_msgs::Float64>("/plastun/turrel_up_to_down_position_controller/command",1000);
 
+    fl_x = false;
+    fl_y = false;
     angl->start();
 
 }
@@ -24,10 +26,11 @@ void Rotate_turret::goal_R()
 {
     goal = angl->acceptNewGoal();
     //goal.alpha_y = angl->acceptNewGoal()->alpha_y;
-    check.data = goal->alpha_x;
+    check.data = goal->alpha_x + feedback.cur_alpha_x;
+
     std::cout << check << std::endl;
     turret_x_command.publish(check);
-    check.data = goal->alpha_y;
+    check.data = goal->alpha_y + feedback.cur_alpha_y;
     turret_y_command.publish(check);
 
 }
@@ -41,6 +44,12 @@ void Rotate_turret::preempt_R()
 
 void Rotate_turret::turret_x_pos(const control_msgs::JointControllerState &msg)
 {
+    if(fl_x == false)
+    {
+        feedback.cur_alpha_x = msg.process_value;
+        std::cout << feedback.cur_alpha_x << std::endl;
+        fl_x = true;
+    }
     // make sure that the action hasn't been canceled
     if (!angl->isActive())
       return;
@@ -50,6 +59,12 @@ void Rotate_turret::turret_x_pos(const control_msgs::JointControllerState &msg)
 
 void Rotate_turret::turret_y_pos(const control_msgs::JointControllerState &msg)
 {
+    if(fl_y == false)
+    {
+        feedback.cur_alpha_y = msg.process_value;
+        std::cout << feedback.cur_alpha_y << std::endl;
+        fl_y = true;
+    }
     // make sure that the action hasn't been canceled
     if (!angl->isActive())
       return;

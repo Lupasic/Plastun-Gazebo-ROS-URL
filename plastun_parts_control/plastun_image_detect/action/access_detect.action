@@ -1,0 +1,6 @@
+#goal definition
+int32 access
+---
+#result definition
+bool result
+---

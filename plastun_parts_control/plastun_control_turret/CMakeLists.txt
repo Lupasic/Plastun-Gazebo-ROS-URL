@@ -13,10 +13,6 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
-#add_action_files(
-#  DIRECTORY ../plastun_rotate_turret/action
-#  FILES angle.action
-#)
 
 generate_messages(
   DEPENDENCIES actionlib_msgs std_msgs  # Or other packages containing msgs
@@ -28,7 +24,3 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_executable(control_turret src/control_turret.cpp src/main.cpp)
 target_link_libraries(control_turret ${catkin_LIBRARIES})
-
-#add_dependencies(
-#  control_turret
-#  ${plastun_control_turret_EXPORTED_TARGETS}
