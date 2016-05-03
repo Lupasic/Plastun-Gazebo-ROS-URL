@@ -1,0 +1,10 @@
+#goal definition
+std_msgs/Float64 alpha_x
+std_msgs/Float64 alpha_y
+---
+#result definition
+int8 STATUS
+---
+#feedback
+std_msgs/Float64 cur_alpha_x
+std_msgs/Float64 cur_alpha_y

@@ -1,0 +1,9 @@
+#goal definition
+int32 fire_duration
+---
+#result definition
+bool result
+---
+#feedback
+int32 elapsed_time
+

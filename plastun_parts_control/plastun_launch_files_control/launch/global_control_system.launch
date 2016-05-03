@@ -1,0 +1,17 @@
+<launch>
+
+<!-- activate amcl + move base + others -->
+  <include file="$(find plastun_navigation)/launch/amcl.launch"/>
+
+<!-- activate system control -->
+<!--  <node name="image_converter" pkg="plastun_image_detect" type="image_converter" respawn="false" output="screen"></node> -->
+
+
+ <!-- activate image detect -->
+<!--  <node name="image_converter" pkg="plastun_image_detect" type="image_converter" respawn="false" output="screen"></node> -->
+
+<!-- activate actionlib server and client for rotate -->
+  <include file="$(find plastun_launch_files_control)/launch/rotate_control_system.launch"/>
+
+
+</launch>

@@ -1,0 +1,8 @@
+<launch>
+  
+
+<!-- Spawn a robot into Gazebo -->
+<node name="control_turret" pkg="plastun_control_turret" type="control_turret" respawn="false" output="screen" />
+<node name="rotate_turret" pkg="plastun_rotate_turret" type="rotate_turret" respawn="false" output="screen"/>
+
+</launch>
