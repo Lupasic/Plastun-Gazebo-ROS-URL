@@ -2,7 +2,7 @@
 
 
 
-//static const std::string OPENCV_WINDOW = "Image window";
+static const std::string OPENCV_WINDOW = "Image window";
 
 
 ImageConverter::ImageConverter()
@@ -15,7 +15,7 @@ ImageConverter::ImageConverter()
     image_pub_ = it_.advertise("/image_converter/output_video", 1);
     pub_point = nh_.advertise<geometry_msgs::Pose>("/image_converter/rectangle_center",1000);
 
-    //cv::namedWindow(OPENCV_WINDOW);
+    cv::namedWindow(OPENCV_WINDOW);
 }
 
 ImageConverter::~ImageConverter()
@@ -42,7 +42,7 @@ void ImageConverter::imageCb(const sensor_msgs::ImageConstPtr& msg)
     cv::Point centar(cv_ptr->image.cols/2, cv_ptr->image.rows/2);
     cvtColor(cv_ptr->image, gray, cv::COLOR_BGR2GRAY); // Перевод в чёрно-белое
     cv::CascadeClassifier cascadeSymbol; // Объявление каскада
-    bool cascadeSymbolLoad = cascadeSymbol.load("/home/lupasic/Programs/catkin_ws/src/plastun_gazebo/plastun_scripts/plastun_image_detect/cascads/plafon_gazebo/cascade.xml"); // Загрузка каскада
+    bool cascadeSymbolLoad = cascadeSymbol.load("/home/lupasic/Programs/catkin_ws/src/plastun_gazebo/plastun_parts_control/plastun_image_detect/cascads/plafon_gazebo/cascade.xml"); // Загрузка каскада
 
     if(!cascadeSymbolLoad)
     {
