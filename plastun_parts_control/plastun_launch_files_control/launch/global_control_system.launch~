@@ -3,16 +3,16 @@
 <!-- activate amcl + move base + others -->
   <include file="$(find plastun_navigation)/launch/amcl.launch"/>
 
-<!-- activate move control -->
-  <node name="move_control" pkg="plastun_move_control" type="move_control" respawn="false" output="screen"></node>
+<!-- activate move global_control_system (clients for all servers) -->
+  <node name="global_control_system" pkg="plastun_global_control_system" type="global_control_system" respawn="false" output="screen"></node>
 
- <!-- activate image detect -->
-  <node name="image_converter" pkg="plastun_image_detect" type="image_converter" respawn="false" output="screen"></node>
+ <!-- activate image detect server -->
+  <node name="image_detect" pkg="plastun_image_detect" type="image_detect" respawn="false" output="screen"></node>
 
-<!-- activate actionlib server and client for rotate -->
-  <include file="$(find plastun_launch_files_control)/launch/rotate_control_system.launch"/>
+<!-- activate rotate turret server-->
+  <node name="rotate_turret" pkg="plastun_rotate_turret" type="rotate_turret" respawn="false" output="screen"/>
 
-<!-- activate laser -->
+<!-- activate activating laser server -->
 <!--  <node name="activate_laser" pkg="plastun_activate_laser" type="activate_laser" respawn="false" output="screen"></node> -->
 
 

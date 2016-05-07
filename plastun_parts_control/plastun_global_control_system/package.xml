@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>plastun_move_control</name>
+  <name>plastun_global_control_system</name>
   <version>0.0.0</version>
-  <description>The plastun_move_control package</description>
+  <description>The plastun_global_control_system package</description>
 
 
 

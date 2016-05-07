@@ -20,7 +20,7 @@ protected:
     plastun_rotate_turret::angleGoal::ConstPtr goal;
     ros::Subscriber turret_x_cur_pos, turret_y_cur_pos;
     ros::Publisher turret_x_command, turret_y_command;
-    const static double eps = 0.01;
+    const static double eps = 0.02;
     std_msgs::Float64 check;
     bool fl_x, fl_y;
 

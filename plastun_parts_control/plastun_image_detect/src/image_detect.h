@@ -16,7 +16,7 @@
 #include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_image_detect/access_detectAction.h"
 
 
-class ImageConverter
+class Image_detect
 {
 protected:
     ros::NodeHandle nh_;
@@ -34,10 +34,10 @@ protected:
 
 
 public:
-    ImageConverter(std::string name);
-    ~ImageConverter();
+    Image_detect(std::string name);
+    ~Image_detect();
     void goal_R();
     void preempt_R();
-    void imageCb(const sensor_msgs::ImageConstPtr& msg);
+    void imageCallback(const sensor_msgs::ImageConstPtr& msg);
 
 };

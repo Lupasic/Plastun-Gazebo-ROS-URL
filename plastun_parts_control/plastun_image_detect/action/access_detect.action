@@ -3,4 +3,6 @@ int32 access
 ---
 #result definition
 bool result
+int32 x_smesh
+int32 y_smesh
 ---

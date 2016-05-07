@@ -34,12 +34,9 @@ include_directories(
 
 #catkin_package()
 include_directories(src)
-add_executable(image_converter src/image_converter.cpp src/main.cpp)
-target_link_libraries(image_converter ${catkin_LIBRARIES} ${cv_bridge_LIBRARIES})
+add_executable(image_detect src/image_detect.cpp src/main.cpp)
+target_link_libraries(image_detect ${catkin_LIBRARIES} ${cv_bridge_LIBRARIES})
 
-add_dependencies(
-  image_converter
-  ${plastun_image_detect_EXPORTED_TARGETS}
-)
+add_dependencies(image_detect ${plastun_image_detect_EXPORTED_TARGETS})
 
 

@@ -25,14 +25,12 @@ Rotate_turret::Rotate_turret(std::string name)
 void Rotate_turret::goal_R()
 {
     goal = angl->acceptNewGoal();
-    //goal.alpha_y = angl->acceptNewGoal()->alpha_y;
     check.data = goal->alpha_x + feedback.cur_alpha_x;
-
-    std::cout << check << std::endl;
+    std::cout <<"Первоначальный угол по 'x': "<< feedback.cur_alpha_x << " по 'y': "<< feedback.cur_alpha_y <<std::endl;
+    std::cout <<"Угол поворота по 'x': "<< goal->alpha_x << " по 'y': "<< goal->alpha_y <<std::endl;
     turret_x_command.publish(check);
     check.data = goal->alpha_y + feedback.cur_alpha_y;
     turret_y_command.publish(check);
-
 }
 
 void Rotate_turret::preempt_R()
@@ -68,10 +66,11 @@ void Rotate_turret::turret_y_pos(const control_msgs::JointControllerState &msg)
     // make sure that the action hasn't been canceled
     if (!angl->isActive())
       return;
+
     feedback.cur_alpha_y = msg.process_value;
+    angl->publishFeedback(feedback);
     if(( feedback.cur_alpha_x - goal->alpha_x)< eps && (feedback.cur_alpha_y -  goal->alpha_y)< eps)
     {
-        ROS_INFO("%s: Succeeded", action_name.c_str());
         plastun_rotate_turret::angleResult a;
         a.status = 1;
         angl->setSucceeded(a);
