@@ -6,5 +6,4 @@ float64 alpha_y
 int32 status
 ---
 #feedback
-float64 cur_alpha_x
-float64 cur_alpha_y
+

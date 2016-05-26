@@ -1,0 +1,7 @@
+#goal definition
+int32 access_targeting
+---
+float64 angle_x
+float64 angle_y
+---
+#feedback

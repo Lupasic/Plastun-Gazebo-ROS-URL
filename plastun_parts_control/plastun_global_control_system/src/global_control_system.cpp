@@ -7,18 +7,21 @@ Global_control_system::Global_control_system()
     //Action clients
     mb = new actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>("move_base", false);
     id = new actionlib::SimpleActionClient<plastun_image_detect::access_detectAction>("image_detect", false);
+    gt = new actionlib::SimpleActionClient<plastun_general_targeting::access_targetingAction>("general_targeting", false);
     rt = new actionlib::SimpleActionClient<plastun_rotate_turret::angleAction>("rotate_turret", false);
+    al = new actionlib::SimpleActionClient<plastun_activate_laser::FireAction>("activate_laser", false);
     //Читаем топики
     pr = n.subscribe("/move_base_simple1/goal",1000,&Global_control_system::goal_Callback, this); //Чтение идет из Rviz, с замененым там топиком, чтобы не слал его сразу move_base -у
     current_pose = n.subscribe("/tf",1000,&Global_control_system::cur_pose_Callback, this);
     camera_info = n.subscribe("/plastun/camera_1/camera_info_1",1000,&Global_control_system::camera_info_Callback, this);
 
     //Ждем сервера
-    while(!mb->isServerConnected() && !id->isServerConnected() && !rt->isServerConnected())
+    while(!mb->isServerConnected() && !id->isServerConnected() && !rt->isServerConnected() && !gt->isServerConnected() && al->isServerConnected())
         ros::spinOnce();
     //Задаем флаги
     fl_rotate_status = false;
     fl_camera_info = false;
+    fl_first_rotate = true;
 }
 //Деструктор
 Global_control_system::~Global_control_system()
@@ -61,8 +64,18 @@ void Global_control_system::cur_pose_Callback(const tf2_msgs::TFMessage &msg)
 void Global_control_system::move_base_finishedCb(const actionlib::SimpleClientGoalState &state)
 {
     ROS_INFO("Robot in position status: [%s]", state.toString().c_str());
-    goal_access.access = 2;
-    id->sendGoal(goal_access, boost::bind(&Global_control_system::image_detect_finishedCb, this ,_1,_2));
+    goal_targeting.access_targeting = 1;
+    gt->sendGoal(goal_targeting, boost::bind(&Global_control_system::general_targeting_finishedCb, this ,_1,_2));
+}
+
+void Global_control_system::general_targeting_finishedCb(const actionlib::SimpleClientGoalState &state, const plastun_general_targeting::access_targetingResultConstPtr &result)
+{
+    ROS_INFO("General_targeting status: [%s]", state.toString().c_str());
+    std::cout << "Нужно повернуть туррель по 'x': " << result->angle_x <<" по 'y': " << result->angle_y << std::endl;
+    goal_rotate.alpha_x = result->angle_x;
+    goal_rotate.alpha_y = result->angle_y;
+    fl_first_rotate = true;
+    rt->sendGoal(goal_rotate, boost::bind(&Global_control_system::rotate_turret_finishedCb, this ,_1,_2));
 }
 
 
@@ -74,11 +87,10 @@ void Global_control_system::image_detect_finishedCb(const actionlib::SimpleClien
         x_sm = result->x_smesh;
         y_sm = result->y_smesh;
         std::cout << "Смещение от центра по 'x': " << x_sm <<" по 'y': " << y_sm << std::endl;
-        this->angle_count();
+        this->angle_count(); //Перевод в углы
+        fl_first_rotate = false;
 
-        rt->sendGoal(goal_rotate, boost::bind(&Global_control_system::rotate_turret_finishedCb, this ,_1,_2),
-                                  actionlib::SimpleActionClient<plastun_rotate_turret::angleAction>::SimpleActiveCallback(),
-                                  boost::bind(&Global_control_system::rotate_turret_feedbackCb, this, _1));
+        rt->sendGoal(goal_rotate, boost::bind(&Global_control_system::rotate_turret_finishedCb, this ,_1,_2));
         fl_rotate_status = true;
     }
     else
@@ -87,13 +99,27 @@ void Global_control_system::image_detect_finishedCb(const actionlib::SimpleClien
 
 void Global_control_system::rotate_turret_finishedCb(const actionlib::SimpleClientGoalState &state, const plastun_rotate_turret::angleResultConstPtr &result)
 {
+
     ROS_INFO("Rotate turret status: [%s]", state.toString().c_str());
-    //Лазер
+    if(fl_first_rotate == true)
+    {
+
+        goal_access.access = 2;
+        id->sendGoal(goal_access, boost::bind(&Global_control_system::image_detect_finishedCb, this ,_1,_2));
+    }
+    else
+    {
+        //Лазер
+        goal_laser.fire_duration = 5; //Добавить чтение из лаунч файла
+        al->sendGoal(goal_laser, boost::bind(&Global_control_system::activate_laser_finishedCb, this ,_1));
+    }
+
 }
-//Реализация функции приема фидбека
-void Global_control_system::rotate_turret_feedbackCb(const plastun_rotate_turret::angleFeedbackConstPtr &feedback)
+
+void Global_control_system::activate_laser_finishedCb(const actionlib::SimpleClientGoalState &state)
 {
-    feedback_rotate = feedback;
+    ROS_INFO("Activate_laser status: [%s]", state.toString().c_str());
+    std::cout << "Поздравляю, цель поражена" << std::endl;
 }
 
 
@@ -106,10 +132,11 @@ void Global_control_system::move_base_sending_goal()
     {
 
         //rt->cancelGoal();
-        goal_rotate.alpha_x = -feedback_rotate->cur_alpha_x;
-        goal_rotate.alpha_y = -feedback_rotate->cur_alpha_y;
+        goal_rotate.alpha_x = 0;
+        goal_rotate.alpha_y = 0;
         rt->sendGoal(goal_rotate, boost::bind(&Global_control_system::rotate_turret_finishedCb, this ,_1,_2));
         fl_rotate_status = false;
+        fl_first_rotate = true;
     }
 }
 
