@@ -1,0 +1,7 @@
+<launch>
+<!-- activate cascad testing program -->
+  <node name="cascad_testing" pkg="plastun_cascad_testing" type="cascad_testing" respawn="false" output="screen">
+  	<param name="cascad" value="$(find plastun_cascad_testing)/cascads/plafon_gazebo/cascade.xml" />
+  	<param name="suscribe_camera_topic" value="/plastun/camera_1/image_raw_1" />
+</node>
+</launch>

@@ -8,9 +8,12 @@ static const std::string OPENCV_WINDOW = "Image window";
 CascadTesting::CascadTesting()
     : it_(nh_)
 {
-    //ros::NodeHandle n;
+//Получаем топик для камеры из launch файла
+        std::string suscribe_camera_topic;
+        nh_.getParam("/cascad_testing/suscribe_camera_topic",suscribe_camera_topic);
     // Subscrive to input video feed and publish output video feed
-    image_sub_ = it_.subscribe("/plastun/camera_1/image_raw_1", 1,
+
+    image_sub_ = it_.subscribe(suscribe_camera_topic, 1,
                                &CascadTesting::imageCb, this);
     image_pub_ = it_.advertise("/cascad_testing/output_video", 1);
     pub_point = nh_.advertise<geometry_msgs::Pose>("/cascad_testing/rectangle_center",1000);
@@ -25,6 +28,10 @@ CascadTesting::~CascadTesting()
 
 void CascadTesting::imageCb(const sensor_msgs::ImageConstPtr& msg)
 {
+	//Получаем xml с каскадом из launch файла
+        std::string cascad;
+        nh_.getParam("/cascad_testing/cascad",cascad);
+
     cv_bridge::CvImagePtr cv_ptr;
     try
     {
@@ -40,7 +47,7 @@ void CascadTesting::imageCb(const sensor_msgs::ImageConstPtr& msg)
     cv::Point centar(cv_ptr->image.cols/2, cv_ptr->image.rows/2);
     cvtColor(cv_ptr->image, gray, cv::COLOR_BGR2GRAY); // Перевод в чёрно-белое
     cv::CascadeClassifier cascadeSymbol; // Объявление каскада
-    bool cascadeSymbolLoad = cascadeSymbol.load("/home/lupasic/Programs/catkin_ws/src/plastun_gazebo/plastun_parts_control/plastun_cascad_testing/cascads/plafon_gazebo/cascade.xml"); // Загрузка каскада
+    bool cascadeSymbolLoad = cascadeSymbol.load(cascad); // Загрузка каскада
 
     if(!cascadeSymbolLoad)
     {
