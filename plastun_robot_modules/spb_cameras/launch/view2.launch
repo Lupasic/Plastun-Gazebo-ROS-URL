@@ -1,0 +1,12 @@
+<launch>
+	<arg name="prefix" default="/stereo/" />
+	<arg name="transport" default="compressed" />
+	<node name="image_view_left" pkg="image_view" type="image_view">
+		<remap from="image" to="$(arg prefix)/left/image_raw" />
+		<param name="image_transport" value="$(arg transport)"/>
+	</node>
+	<node name="image_view_right" pkg="image_view" type="image_view">
+		<remap from="image" to="$(arg prefix)/right/image_raw" />
+		<param name="image_transport" value="$(arg transport)"/>
+	</node>
+</launch>

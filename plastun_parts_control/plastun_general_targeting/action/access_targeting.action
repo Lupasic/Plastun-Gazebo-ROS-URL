@@ -1,5 +1,6 @@
 #goal definition
-int32 access_targeting
+float64 target_x
+float64 target_y
 ---
 float64 angle_x
 float64 angle_y

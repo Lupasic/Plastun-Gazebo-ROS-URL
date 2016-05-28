@@ -1,0 +1,16 @@
+<launch>
+	<node ns="stereo" name="attach_left" pkg="spb_cameras" type="attach_info.py" output="screen">
+		<param name="prefix" value="left"/>
+		<param name="image" value="/image_raw" />
+		<param name="info prefix" value="left"/>
+		<param name="uri" value="file:///home/user/local/tmp/left.yaml"/>
+
+	</node>
+	<node ns="stereo" name="attach_right" pkg="spb_cameras" type="attach_info.py" output="screen">
+		<param name="prefix" value="right"/>
+		<param name="image" value="/image_raw" />
+		<param name="info prefix" value="right"/>
+		<param name="uri" value="file:///home/user/local/tmp/right.yaml"/>
+
+	</node>
+</launch>

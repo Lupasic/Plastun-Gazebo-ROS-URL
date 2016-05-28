@@ -1,0 +1,8 @@
+<launch>
+	<node ns="stereo/left" name="image_proc_left" pkg="image_proc" type="image_proc" >
+		<param name="image_transport" value="compressed"/>
+        </node>
+	<node ns="stereo/right" name="image_proc_right" pkg="image_proc" type="image_proc" >
+		<param name="image_transport" value="compressed"/>
+        </node>
+</launch>

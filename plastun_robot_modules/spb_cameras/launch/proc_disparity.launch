@@ -1,0 +1,14 @@
+<launch>
+	<!-- <node ns="stereo/left" name="image_proc_left" pkg="image_proc" type="image_proc" >
+        </node>
+	<node ns="stereo/right" name="image_proc_right" pkg="image_proc" type="image_proc" >
+        </node>
+	-->
+	<node ns="stereo" name="disparity" pkg="stereo_image_proc" type="stereo_image_proc" output="screen"> 
+		<param name="queue_size" value="10" />
+		<param name="approximate_sync" value="True" />
+	</node>
+	<node name="disparity_view" pkg="image_view" type="disparity_view" >
+		<remap from="image" to="/stereo/disparity"/>
+	</node>
+</launch>

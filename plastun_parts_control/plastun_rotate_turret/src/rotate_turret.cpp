@@ -1,9 +1,106 @@
 #include "rotate_turret.h"
+#define COUT(x) std::cout<<"SpbNPUMR:"<<x<<std::endl
+
+using namespace boost::interprocess;
 
 
+void Rotate_turret::connectUDP()
+{
+    socket_.open(boost::asio::ip::udp::v4());
+    boost::asio::ip::udp::endpoint endpoint(
+                boost::asio::ip::address::from_string(ip), port);
+    boost::system::error_code ec;
+    socket_.connect(endpoint, ec);
+    if (ec)
+    {
+        COUT("error connect to udp "<<ip<<":"<<port);
+    }
+    socket_.async_receive(
+                boost::asio::buffer(data_, max_length),
+                boost::bind(&Rotate_turret::handleReceiveUDP, this,
+                            boost::asio::placeholders::error,
+                            boost::asio::placeholders::bytes_transferred));
+    io_service_thread =
+            boost::thread(boost::bind(&boost::asio::io_service::run,
+                                      &io_service_) );
+    io_service_thread.detach();
+}
 
+bool Rotate_turret::dispatchReply()
+{
+    uint16_t val;
+    uint8_t addr;
+    pelcode::PelcoDE cam;
+    if ( cam.getMaxPan((unsigned char*)data_, val, addr) )
+    {
+        COUT("max pan "<<val);
+        pan = val;
+        return true;
+    }
+    if ( cam.getMaxTilt((unsigned char*)data_, val, addr) )
+    {
+        COUT("max tilt "<<val);
+        tilt = val;
+        return true;
+    }
+    if ( cam.getTilt((unsigned char*)data_, val, addr) )
+    {
+        COUT("tilt "<<val);
+        tilt = val;
+        return true;
+    }
+    if ( cam.getPan((unsigned char*)data_, val, addr) )
+    {
+        COUT("pan "<<val);
+        pan = val;
+        return true;
+    }
+    if ( cam.getCmdComplete((unsigned char*)data_, addr) )
+    {
+        COUT("udp cmd complete ");
+        pantilt_completed = true;
+        //		if ( pantilt_cmd )
+        //		{
+        //			setPanTilt(cmdpan, cmdtilt);
+        //		}
 
-Rotate_turret::Rotate_turret(std::string name)
+        return true;
+    }
+    return false;
+}
+
+void Rotate_turret::handleReceiveUDP(const boost::system::error_code &error, size_t bytes_recvd)
+{
+    COUT("handle receive UDP");
+    if ( ! error && bytes_recvd > 0)
+    {
+        scoped_lock<interprocess_mutex> lock(udp_mutex);
+        dispatchReply();
+        udp_cond.notify_all();
+        memset(data_, 0, max_length);
+    }
+    socket_.async_receive(
+                boost::asio::buffer(data_, max_length),
+                boost::bind(&Rotate_turret::handleReceiveUDP, this,
+                            boost::asio::placeholders::error,
+                            boost::asio::placeholders::bytes_transferred));
+}
+
+bool Rotate_turret::waitUDP(int ms)
+{
+    boost::system_time const timeout=
+            boost::get_system_time()+ boost::posix_time::milliseconds(ms);
+    scoped_lock<interprocess_mutex> lock(udp_mutex);
+    //free mutex wile waiting
+    return udp_cond.timed_wait(lock, timeout);
+}
+
+Rotate_turret::Rotate_turret(std::string name):
+    ip("192.168.1.93"), port(6000), dest_port(port), dev_id(1), aux_id(1), pan(0), tilt(0),
+    pantilt_cmd(false),
+    pantilt_completed(true),
+    completed(true),
+    socket_(io_service_)
 {
     action_name = name;
     angl = new  actionlib::SimpleActionServer<plastun_rotate_turret::angleAction>(nh,name,false);
@@ -11,26 +108,30 @@ Rotate_turret::Rotate_turret(std::string name)
     angl->registerGoalCallback(boost::bind(&Rotate_turret::goal_R,this));
     angl->registerPreemptCallback(boost::bind(&Rotate_turret::preempt_R,this));
     // Add your ros communications here.
-//    turret_x_cur_pos = nh.subscribe("/plastun/turrel_revol_position_controller/state",1000,&Rotate_turret::turret_x_pos, this);
-//    turret_y_cur_pos = nh.subscribe("/plastun/turrel_up_to_down_position_controller/state",1000,&Rotate_turret::turret_y_pos, this);
-//    turret_x_command = nh.advertise<std_msgs::Float64>("/plastun/turrel_revol_position_controller/command",1000);
-//    turret_y_command = nh.advertise<std_msgs::Float64>("/plastun/turrel_up_to_down_position_controller/command",1000);
 
-    fl_x = false;
-    fl_y = false;
     angl->start();
+    //
+    connectUDP();
+    setNPU(0,0);
+
+}
+
+Rotate_turret::~Rotate_turret()
+{
+    io_service_.stop();
+    COUT("wait io_service");
+    io_service_thread.join();
+    COUT("udp stopped");
 
 }
 
 void Rotate_turret::goal_R()
 {
     goal = angl->acceptNewGoal();
-//    check.data = goal->alpha_x + feedback.cur_alpha_x;
-//    std::cout <<"Первоначальный угол по 'x': "<< feedback.cur_alpha_x << " по 'y': "<< feedback.cur_alpha_y <<std::endl;
-//    std::cout <<"Угол поворота по 'x': "<< goal->alpha_x << " по 'y': "<< goal->alpha_y <<std::endl;
-//    turret_x_command.publish(check);
-//    check.data = goal->alpha_y + feedback.cur_alpha_y;
-//    turret_y_command.publish(check);
+    setNPU(goal->alpha_x, goal->alpha_y);
+    result.status = 1;
+    //сюда прога попадет, только как выполнит установку
+    angl->setSucceeded(result);
 }
 
 void Rotate_turret::preempt_R()
@@ -40,39 +141,90 @@ void Rotate_turret::preempt_R()
     angl->setPreempted();
 }
 
-//void Rotate_turret::turret_x_pos(const control_msgs::JointControllerState &msg)
-//{
-//    if(fl_x == false)
-//    {
-//        feedback.cur_alpha_x = msg.process_value;
-//        std::cout << feedback.cur_alpha_x << std::endl;
-//        fl_x = true;
-//    }
-//    // make sure that the action hasn't been canceled
-//    if (!angl->isActive())
-//      return;
+void Rotate_turret::setNPU(float hor, float ver)
+{
+    COUT("setNPU "<<hor<<" "<<ver);
+    hor_angle = hor;
+    ver_angle = ver;
+    if ( hor > hor_max) hor = hor_max;
+    else 	if ( hor < hor_min ) hor = hor_min;
+    if ( ver > ver_max ) ver = ver_max;
+    else	if ( ver < ver_min ) ver = ver_min;
+    int cmd_pan = hor * pan_scale * pan_sign + pan_zero;
+    int cmd_tilt = ver*tilt_scale * tilt_sign + tilt_zero;
+    setPanTilt(cmd_pan, cmd_tilt, true);
+}
 
-//    feedback.cur_alpha_x = msg.process_value;
-//}
 
-//void Rotate_turret::turret_y_pos(const control_msgs::JointControllerState &msg)
-//{
-//    if(fl_y == false)
-//    {
-//        feedback.cur_alpha_y = msg.process_value;
-//        std::cout << feedback.cur_alpha_y << std::endl;
-//        fl_y = true;
-//    }
-//    // make sure that the action hasn't been canceled
-//    if (!angl->isActive())
-//      return;
+void Rotate_turret::setPanTilt(int32_t p, int32_t t, bool nonblock)
+{
+    if (!pantilt_completed)
+    {
+        COUT("Previous command hasn't completed");
+        cmdpan = p;
+        cmdtilt = t;
+        pantilt_cmd = true;
+        return;
+    }
+    if ( p < 0 )
+        p = panMax + p;
+    else
+        if ( p >= panMax )
+            p = p - panMax;
+    if ( t < 0 )
+        t = 0;
+    else
+        if ( t> tiltMax)
+            t = tiltMax;
+    COUT("goto pan tilt "<<p<<" "<<t);
+    pantilt_completed = false;
+    completed = false;
+    pantilt_cmd = false;
+    pelcode::PelcoDE cam;
+    socket_.send(boost::asio::buffer(
+                     cam.LoadPan(dev_id, p),	7) );
 
-//    feedback.cur_alpha_y = msg.process_value;
-//    angl->publishFeedback(feedback);
-//    if(( feedback.cur_alpha_x - goal->alpha_x)< eps && (feedback.cur_alpha_y -  goal->alpha_y)< eps)
-//    {
-//        plastun_rotate_turret::angleResult a;
-//        a.status = 1;
-//        angl->setSucceeded(a);
-//    }
-//}
+    socket_.send(boost::asio::buffer(
+                     cam.LoadTilt(dev_id, t),7) );
+
+    socket_.send(boost::asio::buffer(
+                     cam.SetLoad(dev_id), 7) );
+    if ( ! nonblock)
+        if ( waitUDP(15000) )
+        {
+            COUT("received answer");
+        }
+}
+
+void Rotate_turret::getPan()
+{
+    pelcode::PelcoDE cam;
+    socket_.send(boost::asio::buffer(cam.PanRequest(dev_id),7));
+
+    if ( waitUDP(15000) )
+    {
+        COUT("received answer");
+    }
+}
+
+void Rotate_turret::getTilt()
+{
+    pelcode::PelcoDE cam;
+    socket_.send(boost::asio::buffer(cam.TiltRequest(dev_id),7));
+    if ( waitUDP(15000) )
+    {
+        COUT("received answer");
+    }
+}
+
+void Rotate_turret::reset()
+{
+    pelcode::PelcoDE cam;
+    socket_.send(boost::asio::buffer(cam.ResetCamera(dev_id),7));
+
+    if ( waitUDP(15000) )
+    {
+        COUT("received answer");
+    }
+}
+

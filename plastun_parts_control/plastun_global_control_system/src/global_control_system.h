@@ -28,7 +28,7 @@ protected:
     actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> *mb;
     actionlib::SimpleActionClient<plastun_activate_laser::FireAction> *al;
     //Сускрайберы
-    ros::Subscriber pr, current_pose, camera_info;
+    ros::Subscriber pr, camera_info, clicked_point;
     //Погрешность
     const static double eps = 0.1;
     //Goals
@@ -46,7 +46,7 @@ protected:
     //
     float focal_length_x,focal_length_y, a_x, a_y;
     std_msgs::Float64 angle_x,angle_y;
-    geometry_msgs::Pose target, cur_pose;
+    geometry_msgs::Point cur_target;
     int x_sm, y_sm;
     bool fl_rotate_status, fl_camera_info, fl_first_rotate;
     //Вспомогательные функции
@@ -59,9 +59,10 @@ public:
     ~Global_control_system();
     //Колбеки
     void goal_Callback(const geometry_msgs::PoseStamped &msg);
-    void cur_pose_Callback(const tf2_msgs::TFMessage &msg);
     void target_pose_im_Callback(const geometry_msgs::Pose &msg);
     void camera_info_Callback(const sensor_msgs::CameraInfo &msg);
+    void target_points_Callback(const geometry_msgs::PointStamped &msg);
+
 };
 
 #endif // GLOBAL_CONTROL_SYSTEM_H

@@ -1,0 +1,16 @@
+<launch>
+  <!-- launch to start amcl mapping with known map  -->
+	<arg name="scan" default="scan" />
+	<arg name="map"  default="$(find plastun_scripts)/launch/biamap.yaml"/>
+        <!-- launch map server -->
+	<node name="mapserver" pkg="map_server" type="map_server" args="$(arg map)" respawn="false" output="screen">
+  	</node>
+
+	<include file="$(find plastun_scripts)/launch/amcl_stage.xml">
+	    <arg name="amclscan" value="$(arg scan)" />
+	</include> 
+	
+	<include file="$(find plastun_scripts)/launch/move_base/move_base.xml">
+	    <arg name="scan" value="$(arg scan)" />
+	</include> 
+</launch>

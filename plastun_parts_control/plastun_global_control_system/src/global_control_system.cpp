@@ -12,8 +12,8 @@ Global_control_system::Global_control_system()
     al = new actionlib::SimpleActionClient<plastun_activate_laser::FireAction>("activate_laser", false);
     //Читаем топики
     pr = n.subscribe("/move_base_simple1/goal",1000,&Global_control_system::goal_Callback, this); //Чтение идет из Rviz, с замененым там топиком, чтобы не слал его сразу move_base -у
-    current_pose = n.subscribe("/tf",1000,&Global_control_system::cur_pose_Callback, this);
     camera_info = n.subscribe("/plastun/camera_1/camera_info_1",1000,&Global_control_system::camera_info_Callback, this);
+    clicked_point = n.subscribe("/target_points",1000,&Global_control_system::target_points_Callback, this);//Чтение координат Published point
 
     //Ждем сервера
     while(!mb->isServerConnected() && !id->isServerConnected() && !rt->isServerConnected() && !gt->isServerConnected() && al->isServerConnected())
@@ -51,11 +51,9 @@ void Global_control_system::camera_info_Callback(const sensor_msgs::CameraInfo &
     }
 }
 
-void Global_control_system::cur_pose_Callback(const tf2_msgs::TFMessage &msg)
+void Global_control_system::target_points_Callback(const geometry_msgs::PointStamped &msg)
 {
-    //ROS_INFO("TF: [%f]", msg.transforms[0].transform.translation.x);
-    cur_pose.position.x = msg.transforms[0].transform.translation.x;
-    cur_pose.position.y = msg.transforms[0].transform.translation.y;
+    cur_target = msg.point;
 }
 
 
@@ -64,8 +62,17 @@ void Global_control_system::cur_pose_Callback(const tf2_msgs::TFMessage &msg)
 void Global_control_system::move_base_finishedCb(const actionlib::SimpleClientGoalState &state)
 {
     ROS_INFO("Robot in position status: [%s]", state.toString().c_str());
-    goal_targeting.access_targeting = 1;
-    gt->sendGoal(goal_targeting, boost::bind(&Global_control_system::general_targeting_finishedCb, this ,_1,_2));
+    if(&cur_target != NULL)
+    {
+        goal_targeting.target_x = cur_target.x;
+        goal_targeting.target_y = cur_target.y;
+        gt->sendGoal(goal_targeting, boost::bind(&Global_control_system::general_targeting_finishedCb, this ,_1,_2));
+    }
+    else
+    {
+        ROS_INFO("Need to give a target, abort command");
+    }
+
 }
 
 void Global_control_system::general_targeting_finishedCb(const actionlib::SimpleClientGoalState &state, const plastun_general_targeting::access_targetingResultConstPtr &result)
