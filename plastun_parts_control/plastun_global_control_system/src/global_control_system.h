@@ -7,8 +7,8 @@
 #include "geometry_msgs/PoseStamped.h"
 #include "move_base_msgs/MoveBaseAction.h"
 #include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_image_detect/access_detectAction.h"
+#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_general_targeting/access_targetingAction.h"
 #include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_rotate_turret/angleAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_activate_laser/FireAction.h"
 #include "std_msgs/Float64.h"
 #include "sensor_msgs/CameraInfo.h"
 #include <tf/transform_broadcaster.h>
@@ -22,14 +22,16 @@ class Global_control_system
 protected:
     //клиенты
     actionlib::SimpleActionClient<plastun_image_detect::access_detectAction> *id;
+    actionlib::SimpleActionClient<plastun_general_targeting::access_targetingAction> *gt;
     actionlib::SimpleActionClient<plastun_rotate_turret::angleAction> *rt;
     actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> *mb;
     //Сускрайберы
-    ros::Subscriber pr, current_pose, camera_info;
+    ros::Subscriber pr, current_pose, camera_info, clicked_point;
     //Погрешность
     const static double eps = 0.1;
     //Goals
     plastun_image_detect::access_detectGoal goal_access;
+    plastun_general_targeting::access_targetingGoal goal_targeting;
     plastun_rotate_turret::angleGoal goal_rotate;
     move_base_msgs::MoveBaseGoal prov;
     //Feedbacks
@@ -37,15 +39,16 @@ protected:
     //Функции при завершении работы сервера
     void move_base_finishedCb(const actionlib::SimpleClientGoalState& state);
     void image_detect_finishedCb(const actionlib::SimpleClientGoalState& state, const plastun_image_detect::access_detectResultConstPtr &result);
+    void general_targeting_finishedCb(const actionlib::SimpleClientGoalState& state, const plastun_general_targeting::access_targetingResultConstPtr &result);
     void rotate_turret_finishedCb(const actionlib::SimpleClientGoalState& state, const plastun_rotate_turret::angleResultConstPtr &result);
     //Функции чтения фидбека
     void rotate_turret_feedbackCb(const plastun_rotate_turret::angleFeedbackConstPtr &feedback);
     //
     float focal_length_x,focal_length_y, a_x, a_y;
     std_msgs::Float64 angle_x,angle_y;
-    geometry_msgs::Pose target, cur_pose;
+    geometry_msgs::Point cur_target;
     int x_sm, y_sm;
-    bool fl_rotate_status, fl_camera_info;
+    bool fl_rotate_status, fl_camera_info, fl_first_rotate;
     //Вспомогательные функции
     void angle_count();
     void move_base_sending_goal();
@@ -59,6 +62,7 @@ public:
     void cur_pose_Callback(const tf2_msgs::TFMessage &msg);
     void target_pose_im_Callback(const geometry_msgs::Pose &msg);
     void camera_info_Callback(const sensor_msgs::CameraInfo &msg);
+    void target_points_Callback(const geometry_msgs::PointStamped &msg);
 };
 
 #endif // GLOBAL_CONTROL_SYSTEM_H

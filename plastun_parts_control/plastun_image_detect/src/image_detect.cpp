@@ -11,7 +11,7 @@ Image_detect::Image_detect(std::string name)
     action_name = name;
     //Получаем топик для камеры из launch файла
     std::string suscribe_camera_topic;
-    nh_.getParam("/cascad_testing/suscribe_camera_topic",suscribe_camera_topic);
+    nh_.getParam("/image_detect/suscribe_camera_topic",suscribe_camera_topic);
     // Subscrive to input video feed and publish output video feed
     image_sub_ = it_.subscribe(suscribe_camera_topic, 1, &Image_detect::imageCallback, this);
     image_pub_ = it_.advertise("/image_converter/output_video", 1);
@@ -31,11 +31,12 @@ Image_detect::~Image_detect()
 
 void Image_detect::goal_R()
 {
-    int a;
+    //    int a;
+    std::cout << "Смотрим где же цель у нас " << std::endl;
     goal = angl->acceptNewGoal();
-    a = goal->access;
-    if(a == 2)
-        fl = true;
+    //    a = goal->access;
+    //    if(a == 2)
+    fl = true;
 }
 
 void Image_detect::preempt_R()
