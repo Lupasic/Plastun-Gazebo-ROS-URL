@@ -7,7 +7,10 @@
   <node name="global_control_system" pkg="plastun_global_control_system" type="global_control_system" respawn="false" output="screen"></node>
 
 <!-- activate general targeting server -->
-  <node name="general_targeting" pkg="plastun_general_targeting" type="general_targeting" respawn="false" output="screen"></node>
+  <node name="general_targeting" pkg="plastun_general_targeting" type="general_targeting" respawn="false" output="screen">
+  	<param name="lengh_to_cam_xy" value="0.21" />
+  	<param name="lengh_to_cam_yz" value="0.1" />
+  </node>
 
  <!-- activate image detect server -->
   <node name="image_detect" pkg="plastun_image_detect" type="image_detect" respawn="false" output="screen">
@@ -17,9 +20,6 @@
 
 <!-- activate rotate turret server-->
   <node name="rotate_turret" pkg="plastun_rotate_turret" type="rotate_turret" respawn="false" output="screen"/>
-
-<!-- activate activating laser server -->
-<!--  <node name="activate_laser" pkg="plastun_activate_laser" type="activate_laser" respawn="false" output="screen"></node> -->
 
 
 </launch>

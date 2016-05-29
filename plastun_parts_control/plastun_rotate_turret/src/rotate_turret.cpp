@@ -4,97 +4,90 @@
 
 
 Rotate_turret::Rotate_turret(std::string name):
-    eps(0.01)
+    eps(0.02)
 {
     action_name = name;
-    angl = new  actionlib::SimpleActionServer<plastun_rotate_turret::angleAction>(nh,name,false);
+    rt_server = new  actionlib::SimpleActionServer<plastun_rotate_turret::angleAction>(nh,name,false);
     //register the goal and feeback callbacks
-    angl->registerGoalCallback(boost::bind(&Rotate_turret::goal_R,this));
-    angl->registerPreemptCallback(boost::bind(&Rotate_turret::preempt_R,this));
+    rt_server->registerGoalCallback(boost::bind(&Rotate_turret::goal_R,this));
+    rt_server->registerPreemptCallback(boost::bind(&Rotate_turret::preempt_R,this));
     // Add your ros communications here.
-    turret_x_cur_pos = nh.subscribe("/plastun/turrel_revol_position_controller/state",1000,&Rotate_turret::turret_x_pos, this);
-    turret_y_cur_pos = nh.subscribe("/plastun/turrel_up_to_down_position_controller/state",1000,&Rotate_turret::turret_y_pos, this);
-    turret_x_command = nh.advertise<std_msgs::Float64>("/plastun/turrel_revol_position_controller/command",1000);
-    turret_y_command = nh.advertise<std_msgs::Float64>("/plastun/turrel_up_to_down_position_controller/command",1000);
-    fl_x = false;
-    fl_y = false;
+    turret_yaw_cur_pos = nh.subscribe("/plastun/turrel_revol_position_controller/state",1000,&Rotate_turret::turret_yaw_pos, this);
+    turret_pitch_cur_pos = nh.subscribe("/plastun/turrel_up_to_down_position_controller/state",1000,&Rotate_turret::turret_pitch_pos, this);
+    turret_yaw_command = nh.advertise<std_msgs::Float64>("/plastun/turrel_revol_position_controller/command",1000);
+    turret_pitch_command = nh.advertise<std_msgs::Float64>("/plastun/turrel_up_to_down_position_controller/command",1000);
+    fl_yaw = false;
+    fl_pitch = false;
 
-    angl->start();
+    rt_server->start();
 
 }
 
 void Rotate_turret::goal_R()
 {
 
-    goal = angl->acceptNewGoal();
-    check.data = goal->alpha_x + feedback.cur_alpha_x;
-    std::cout <<"Первоначальный угол по 'x': "<< feedback.cur_alpha_x << " по 'y': "<< feedback.cur_alpha_y <<std::endl;
-    std::cout <<"Угол поворота по 'x': "<< goal->alpha_x << " по 'y': "<< goal->alpha_y <<std::endl;
-    turret_x_command.publish(check);
-    check.data = goal->alpha_y + feedback.cur_alpha_y;
-    turret_y_command.publish(check);
+    goal = rt_server->acceptNewGoal();
+    check.data = goal->alpha_yaw + feedback.cur_alpha_yaw;
+    analysis_yaw = goal->alpha_yaw + feedback.cur_alpha_yaw;
+    std::cout <<"Первоначальный угол по вертикальной оси: "<< feedback.cur_alpha_yaw << " по поперечной: "<< feedback.cur_alpha_pitch <<std::endl;
+    std::cout <<"Угол поворота вокруг вертикальной оси: "<< goal->alpha_yaw << " вокруг поперечной оси: "<< goal->alpha_pitch <<std::endl;
+    turret_yaw_command.publish(check);
+    check.data = goal->alpha_pitch + feedback.cur_alpha_pitch;
+    analysis_pitch = goal->alpha_pitch + feedback.cur_alpha_pitch;
+    turret_pitch_command.publish(check);
     timer = nh.createTimer(ros::Duration(1), &Rotate_turret::timer_callback, this);
     timer.start();
-    kostil = 0;
 }
 
 void Rotate_turret::preempt_R()
 {
     ROS_INFO("%s: Preempted", action_name.c_str());
     // set the action state to preempted
-    angl->setPreempted();
+    rt_server->setPreempted();
 }
 
-void Rotate_turret::turret_x_pos(const control_msgs::JointControllerState &msg)
+void Rotate_turret::turret_yaw_pos(const control_msgs::JointControllerState &msg)
 {
-    if(fl_x == false)
+    if(fl_yaw == false)
     {
-        feedback.cur_alpha_x = msg.process_value;
-        std::cout << feedback.cur_alpha_x << std::endl;
-        fl_x = true;
+        feedback.cur_alpha_yaw = msg.process_value;
+        std::cout << feedback.cur_alpha_yaw << std::endl;
+        fl_yaw = true;
     }
     // make sure that the action hasn't been canceled
-    if (!angl->isActive())
+    if (!rt_server->isActive())
         return;
-    feedback.cur_alpha_x = msg.process_value;
+    feedback.cur_alpha_yaw = msg.process_value;
 
 
 }
 
-void Rotate_turret::turret_y_pos(const control_msgs::JointControllerState &msg)
+void Rotate_turret::turret_pitch_pos(const control_msgs::JointControllerState &msg)
 {
-    if(fl_y == false)
+    if(fl_pitch == false)
     {
-        feedback.cur_alpha_y = msg.process_value;
-        std::cout << feedback.cur_alpha_y << std::endl;
-        fl_y = true;
+        feedback.cur_alpha_pitch = msg.process_value;
+        std::cout << feedback.cur_alpha_pitch << std::endl;
+        fl_pitch = true;
     }
     // make sure that the action hasn't been canceled
-    if (!angl->isActive())
+    if (!rt_server->isActive())
         return;
 
-    feedback.cur_alpha_y = msg.process_value;
-    angl->publishFeedback(feedback);
+    feedback.cur_alpha_pitch = msg.process_value;
+    rt_server->publishFeedback(feedback);
 
 
 }
 
 void Rotate_turret::timer_callback(const ros::TimerEvent &event)
 {
-    std::cout << "Разница по x " << std::abs(feedback.cur_alpha_x - goal->alpha_x) << " по y " << std::abs(feedback.cur_alpha_y - goal->alpha_y) << std::endl;
-    if((std::abs(feedback.cur_alpha_x - goal->alpha_x)< eps) && (std::abs(feedback.cur_alpha_y - goal->alpha_y)< eps))
-    {
-        kostil++;
-        std::cout << "Угол фидбек x " << feedback.cur_alpha_x << " Угол цели по x " << goal->alpha_x << std::endl;
-        std::cout << "Угол фидбек y " << feedback.cur_alpha_y << " Угол цели по y " << goal->alpha_y << std::endl;
-        std::cout << "//////////////////" << std::endl;
-    }
-
-    if(kostil == 2)
+    std::cout <<std::abs(feedback.cur_alpha_yaw - analysis_yaw)<< "  тик  " <<std::abs(feedback.cur_alpha_pitch - analysis_pitch) <<std::endl;
+    if((std::abs(feedback.cur_alpha_yaw - analysis_yaw)< eps) && (std::abs(feedback.cur_alpha_pitch - analysis_pitch)< eps))
     {
         plastun_rotate_turret::angleResult a;
         a.status = 1;
-        angl->setSucceeded(a);
+        rt_server->setSucceeded(a);
         timer.stop();
     }
 }

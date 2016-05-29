@@ -14,14 +14,14 @@ Image_detect::Image_detect(std::string name)
     nh_.getParam("/image_detect/suscribe_camera_topic",suscribe_camera_topic);
     // Subscrive to input video feed and publish output video feed
     image_sub_ = it_.subscribe(suscribe_camera_topic, 1, &Image_detect::imageCallback, this);
-    image_pub_ = it_.advertise("/image_converter/output_video", 1);
-    angl = new actionlib::SimpleActionServer<plastun_image_detect::access_detectAction>(nh_,name,false);
-    angl->registerGoalCallback(boost::bind(&Image_detect::goal_R,this));
-    angl->registerPreemptCallback(boost::bind(&Image_detect::preempt_R,this));
+    image_pub_ = it_.advertise("/image_detect/output_video", 1);
+    id_server = new actionlib::SimpleActionServer<plastun_image_detect::access_detectAction>(nh_,name,false);
+    id_server->registerGoalCallback(boost::bind(&Image_detect::goal_R,this));
+    id_server->registerPreemptCallback(boost::bind(&Image_detect::preempt_R,this));
     cv::namedWindow(OPENCV_WINDOW);
 
     fl = false;
-    angl->start();
+    id_server->start();
 }
 
 Image_detect::~Image_detect()
@@ -31,19 +31,18 @@ Image_detect::~Image_detect()
 
 void Image_detect::goal_R()
 {
-    //    int a;
-    std::cout << "Смотрим где же цель у нас " << std::endl;
-    goal = angl->acceptNewGoal();
-    //    a = goal->access;
-    //    if(a == 2)
-    fl = true;
+    int a;
+    goal = id_server->acceptNewGoal();
+    a = goal->access;
+    if(a == 2)
+        fl = true;
 }
 
 void Image_detect::preempt_R()
 {
     ROS_INFO("%s: Preempted", action_name.c_str());
     // set the action state to preempted
-    angl->setPreempted();
+    id_server->setPreempted();
     fl = false;
 }
 
@@ -101,14 +100,14 @@ void Image_detect::imageCallback(const sensor_msgs::ImageConstPtr& msg)
             res.result = true;
             res.x_smesh = center[0].position.x;
             res.y_smesh = center[0].position.y;
-            angl->setSucceeded(res);
+            id_server->setSucceeded(res);
             image_pub_.publish(cv_ptr->toImageMsg());
             center.clear();
         }
         else
         {
             res.result = false;
-            angl->setSucceeded(res);
+            id_server->setSucceeded(res);
         }
 
         fl = false;

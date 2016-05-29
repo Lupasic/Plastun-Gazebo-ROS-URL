@@ -2,7 +2,7 @@
 float64 target_x
 float64 target_y
 ---
-float64 angle_x
-float64 angle_y
+float64 angle_yaw
+float64 angle_pitch
 ---
 #feedback

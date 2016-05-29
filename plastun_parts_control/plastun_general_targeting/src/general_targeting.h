@@ -15,10 +15,10 @@ class General_targeting
 protected:
     ros::NodeHandle nh;
     tf::TransformListener *listener;
-    actionlib::SimpleActionServer<plastun_general_targeting::access_targetingAction> *target;
+    actionlib::SimpleActionServer<plastun_general_targeting::access_targetingAction> *gt_server;
     std::string action_name;
-    plastun_general_targeting::access_targetingResult result;
     plastun_general_targeting::access_targetingGoal::ConstPtr goal;
+    plastun_general_targeting::access_targetingResult result;
     float lengh_to_cam_xy, lengh_to_cam_yz;
     float lengh_to_target;
     float cur_pos_x, cur_pos_y;
