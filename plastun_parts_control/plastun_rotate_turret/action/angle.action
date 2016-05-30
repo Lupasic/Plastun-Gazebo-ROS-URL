@@ -1,9 +1,8 @@
 #goal definition
 #std_msgs/Float64 alpha_x
-float64 alpha_x
-float64 alpha_y
+float64 alpha_yaw
+float64 alpha_pitch
 ---
 int32 status
 ---
 #feedback
-

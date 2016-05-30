@@ -9,19 +9,19 @@ Image_detect::Image_detect(std::string name)
     : it_(nh_)
 {
     action_name = name;
-//Получаем топик для камеры из launch файла
-        std::string suscribe_camera_topic;
-        nh_.getParam("/cascad_testing/suscribe_camera_topic",suscribe_camera_topic);
+    //Получаем топик для камеры из launch файла
+    std::string suscribe_camera_topic;
+    nh_.getParam("/cascad_testing/suscribe_camera_topic",suscribe_camera_topic);
     // Subscrive to input video feed and publish output video feed
     image_sub_ = it_.subscribe(suscribe_camera_topic, 1, &Image_detect::imageCallback, this);
     image_pub_ = it_.advertise("/image_converter/output_video", 1);
-    angl = new actionlib::SimpleActionServer<plastun_image_detect::access_detectAction>(nh_,name,false);
-    angl->registerGoalCallback(boost::bind(&Image_detect::goal_R,this));
-    angl->registerPreemptCallback(boost::bind(&Image_detect::preempt_R,this));
+    id_server = new actionlib::SimpleActionServer<plastun_image_detect::access_detectAction>(nh_,name,false);
+    id_server->registerGoalCallback(boost::bind(&Image_detect::goal_R,this));
+    id_server->registerPreemptCallback(boost::bind(&Image_detect::preempt_R,this));
     cv::namedWindow(OPENCV_WINDOW);
 
     fl = false;
-    angl->start();
+    id_server->start();
 }
 
 Image_detect::~Image_detect()
@@ -32,7 +32,7 @@ Image_detect::~Image_detect()
 void Image_detect::goal_R()
 {
     int a;
-    goal = angl->acceptNewGoal();
+    goal = id_server->acceptNewGoal();
     a = goal->access;
     if(a == 2)
         fl = true;
@@ -42,7 +42,7 @@ void Image_detect::preempt_R()
 {
     ROS_INFO("%s: Preempted", action_name.c_str());
     // set the action state to preempted
-    angl->setPreempted();
+    id_server->setPreempted();
     fl = false;
 }
 
@@ -83,8 +83,8 @@ void Image_detect::imageCallback(const sensor_msgs::ImageConstPtr& msg)
         geometry_msgs::Pose a;
         for(auto& p : symbols)
         {
-            cv::Point symbolBegin	= cv::Point(p.x, p.y);
-            cv::Point symbolEnd		= cv::Point(p.x+p.width, p.y+p.height);
+            cv::Point symbolBegin = cv::Point(p.x, p.y);
+            cv::Point symbolEnd = cv::Point(p.x+p.width, p.y+p.height);
             a.position.x=centar.x-(p.x + p.width/2);
             a.position.y=centar.y-(p.y + p.height/2);
             center.push_back(a);
@@ -100,14 +100,14 @@ void Image_detect::imageCallback(const sensor_msgs::ImageConstPtr& msg)
             res.result = true;
             res.x_smesh = center[0].position.x;
             res.y_smesh = center[0].position.y;
-            angl->setSucceeded(res);
+            id_server->setSucceeded(res);
             image_pub_.publish(cv_ptr->toImageMsg());
             center.clear();
         }
         else
         {
             res.result = false;
-            angl->setSucceeded(res);
+            id_server->setSucceeded(res);
         }
 
         fl = false;

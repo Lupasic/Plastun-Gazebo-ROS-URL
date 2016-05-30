@@ -3,7 +3,7 @@
 //Конструктор
 Global_control_system::Global_control_system()
 {
-    ros::NodeHandle n;
+
     //Action clients
     mb = new actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>("move_base", false);
     id = new actionlib::SimpleActionClient<plastun_image_detect::access_detectAction>("image_detect", false);
@@ -22,6 +22,9 @@ Global_control_system::Global_control_system()
     fl_rotate_status = false;
     fl_camera_info = false;
     fl_first_rotate = true;
+    //Проверка на присутствие координаты цели
+    cur_target.x = 0;
+    cur_target.y = 0;
 }
 //Деструктор
 Global_control_system::~Global_control_system()
@@ -62,7 +65,7 @@ void Global_control_system::target_points_Callback(const geometry_msgs::PointSta
 void Global_control_system::move_base_finishedCb(const actionlib::SimpleClientGoalState &state)
 {
     ROS_INFO("Robot in position status: [%s]", state.toString().c_str());
-    if(&cur_target != NULL)
+    if(cur_target.x != 0 || cur_target.y != 0) //Проверка на присутствие координат цели
     {
         goal_targeting.target_x = cur_target.x;
         goal_targeting.target_y = cur_target.y;
@@ -78,9 +81,9 @@ void Global_control_system::move_base_finishedCb(const actionlib::SimpleClientGo
 void Global_control_system::general_targeting_finishedCb(const actionlib::SimpleClientGoalState &state, const plastun_general_targeting::access_targetingResultConstPtr &result)
 {
     ROS_INFO("General_targeting status: [%s]", state.toString().c_str());
-    std::cout << "Нужно повернуть туррель по 'x': " << result->angle_x <<" по 'y': " << result->angle_y << std::endl;
-    goal_rotate.alpha_x = result->angle_x;
-    goal_rotate.alpha_y = result->angle_y;
+    std::cout << "Нужно повернуть туррель вокруг вертикальной оси: " << result->angle_yaw <<" вокруг поперечной оси: " << result->angle_pitch << std::endl;
+    goal_rotate.alpha_yaw = result->angle_yaw;
+    goal_rotate.alpha_pitch = result->angle_pitch;
     fl_first_rotate = true;
     rt->sendGoal(goal_rotate, boost::bind(&Global_control_system::rotate_turret_finishedCb, this ,_1,_2));
 }
@@ -101,7 +104,13 @@ void Global_control_system::image_detect_finishedCb(const actionlib::SimpleClien
         fl_rotate_status = true;
     }
     else
+    {
         ROS_INFO("No image detected.");
+        //Вернуть турель в начальное положение
+        goal_rotate.alpha_yaw = 0;
+        goal_rotate.alpha_pitch = 0;
+        rt->sendGoal(goal_rotate, boost::bind(&Global_control_system::rotate_turret_finishedCb, this ,_1,_2));
+    }
 }
 
 void Global_control_system::rotate_turret_finishedCb(const actionlib::SimpleClientGoalState &state, const plastun_rotate_turret::angleResultConstPtr &result)
@@ -110,14 +119,16 @@ void Global_control_system::rotate_turret_finishedCb(const actionlib::SimpleClie
     ROS_INFO("Rotate turret status: [%s]", state.toString().c_str());
     if(fl_first_rotate == true)
     {
-
+        std::cout << "Активируем донаведение " << std::endl;
         goal_access.access = 2;
         id->sendGoal(goal_access, boost::bind(&Global_control_system::image_detect_finishedCb, this ,_1,_2));
     }
     else
     {
         //Лазер
-        goal_laser.fire_duration = 5; //Добавить чтение из лаунч файла
+        float laser_duration;
+        n.getParam("/global_control_system/laser_duration", laser_duration);
+        goal_laser.fire_duration = laser_duration;
         al->sendGoal(goal_laser, boost::bind(&Global_control_system::activate_laser_finishedCb, this ,_1));
     }
 
@@ -127,6 +138,7 @@ void Global_control_system::activate_laser_finishedCb(const actionlib::SimpleCli
 {
     ROS_INFO("Activate_laser status: [%s]", state.toString().c_str());
     std::cout << "Поздравляю, цель поражена" << std::endl;
+    fl_rotate_status = true;
 }
 
 
@@ -139,8 +151,8 @@ void Global_control_system::move_base_sending_goal()
     {
 
         //rt->cancelGoal();
-        goal_rotate.alpha_x = 0;
-        goal_rotate.alpha_y = 0;
+        goal_rotate.alpha_yaw = 0;
+        goal_rotate.alpha_pitch = 0;
         rt->sendGoal(goal_rotate, boost::bind(&Global_control_system::rotate_turret_finishedCb, this ,_1,_2));
         fl_rotate_status = false;
         fl_first_rotate = true;
@@ -151,8 +163,9 @@ void Global_control_system::move_base_sending_goal()
 
 void Global_control_system::angle_count()
 {
-    a_x = std::atan(x_sm/focal_length_x);
-    a_y = std::atan(y_sm/focal_length_y);
-    goal_rotate.alpha_x = a_x;
-    goal_rotate.alpha_y = a_y;
+    //Пересчет смещения цели на камере в углы
+    a_yaw = std::atan(x_sm/focal_length_x);
+    a_pitch = std::atan(y_sm/focal_length_y);
+    goal_rotate.alpha_yaw = a_yaw;
+    goal_rotate.alpha_pitch = a_pitch;
 }

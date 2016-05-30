@@ -80,12 +80,11 @@ protected:
     uint8_t data_[max_length];
     //
     ros::NodeHandle nh;
-    actionlib::SimpleActionServer<plastun_rotate_turret::angleAction> *angl;
+    actionlib::SimpleActionServer<plastun_rotate_turret::angleAction> *rt_server;
     std::string action_name;
     //plastun_rotate_turret::angleFeedback feedback;
     plastun_rotate_turret::angleResult result;
     plastun_rotate_turret::angleGoal::ConstPtr goal;
-    const static double eps = 0.02;
     //Работа с удп
     void connectUDP();
     bool dispatchReply();

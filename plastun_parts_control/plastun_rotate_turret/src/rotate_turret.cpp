@@ -103,13 +103,13 @@ Rotate_turret::Rotate_turret(std::string name):
     socket_(io_service_)
 {
     action_name = name;
-    angl = new  actionlib::SimpleActionServer<plastun_rotate_turret::angleAction>(nh,name,false);
+    rt_server = new  actionlib::SimpleActionServer<plastun_rotate_turret::angleAction>(nh,name,false);
     //register the goal and feeback callbacks
-    angl->registerGoalCallback(boost::bind(&Rotate_turret::goal_R,this));
-    angl->registerPreemptCallback(boost::bind(&Rotate_turret::preempt_R,this));
+    rt_server->registerGoalCallback(boost::bind(&Rotate_turret::goal_R,this));
+    rt_server->registerPreemptCallback(boost::bind(&Rotate_turret::preempt_R,this));
     // Add your ros communications here.
 
-    angl->start();
+    rt_server->start();
     //
     connectUDP();
     setNPU(0,0);
@@ -127,18 +127,18 @@ Rotate_turret::~Rotate_turret()
 
 void Rotate_turret::goal_R()
 {
-    goal = angl->acceptNewGoal();
-    setNPU(goal->alpha_x, goal->alpha_y);
+    goal = rt_server->acceptNewGoal();
+    setNPU(goal->alpha_yaw, goal->alpha_pitch);
     result.status = 1;
     //сюда прога попадет, только как выполнит установку
-    angl->setSucceeded(result);
+    rt_server->setSucceeded(result);
 }
 
 void Rotate_turret::preempt_R()
 {
     ROS_INFO("%s: Preempted", action_name.c_str());
     // set the action state to preempted
-    angl->setPreempted();
+    rt_server->setPreempted();
 }
 
 void Rotate_turret::setNPU(float hor, float ver)

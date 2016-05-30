@@ -26,7 +26,7 @@ protected:
     image_transport::Publisher image_pub_;
     ros::Publisher pub_point; // отправка топика
     std::vector<geometry_msgs::Pose> center;
-    actionlib::SimpleActionServer<plastun_image_detect::access_detectAction> *angl;
+    actionlib::SimpleActionServer<plastun_image_detect::access_detectAction> *id_server;
     plastun_image_detect::access_detectFeedback feedback;
     plastun_image_detect::access_detectResult result;
     plastun_image_detect::access_detectGoal::ConstPtr goal;
