@@ -1,8 +1,0 @@
-<launch>
-<!-- activate cascad testing program -->
-  <node name="cascad_testing" pkg="plastun_cascad_testing" type="cascad_testing" respawn="false" output="screen">
-  	<param name="cascad" value="$(find plastun_cascad_testing)/cascads/plafon_url_new/cascade.xml" />
-  	<param name="suscribe_camera_topic" value="/wide_camera/image_raw" />
-	<param name="image_transport" value="compressed"/>
-</node>
-</launch>

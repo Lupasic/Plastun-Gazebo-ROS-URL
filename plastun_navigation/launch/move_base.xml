@@ -14,8 +14,5 @@
     <rosparam file="$(find plastun_navigation)/config/move_base/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find plastun_navigation)/config/move_base/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find plastun_navigation)/config/move_base/base_local_planner_params.yaml" command="load" />
-    <!--
-    <rosparam file="$(find plastun_navigation)/config/move_base/dwa_local_planner_params.yaml" command="load" />
-    -->
   </node>
 </launch>

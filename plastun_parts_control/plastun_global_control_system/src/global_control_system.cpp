@@ -12,8 +12,10 @@ Global_control_system::Global_control_system()
     al = new actionlib::SimpleActionClient<plastun_activate_laser::FireAction>("activate_laser", false);
     //Читаем топики
     pr = n.subscribe("/move_base_simple1/goal",1000,&Global_control_system::goal_Callback, this); //Чтение идет из Rviz, с замененым там топиком, чтобы не слал его сразу move_base -у
-    camera_info = n.subscribe("/plastun/camera_1/camera_info_1",1000,&Global_control_system::camera_info_Callback, this);
-    clicked_point = n.subscribe("/target_points",1000,&Global_control_system::target_points_Callback, this);//Чтение координат Published point
+    n.getParam("/global_control_system/camera_info_topic",camera_info_topic);
+    camera_info = n.subscribe(camera_info_topic, 1000,&Global_control_system::camera_info_Callback, this);
+    n.getParam("/global_control_system/target_points_topic",target_points_topic);
+    clicked_point = n.subscribe(target_points_topic,1000,&Global_control_system::target_points_Callback, this);//Чтение координат Published point
 
     //Ждем сервера
     while(!mb->isServerConnected() && !id->isServerConnected() && !rt->isServerConnected() && !gt->isServerConnected() && al->isServerConnected())

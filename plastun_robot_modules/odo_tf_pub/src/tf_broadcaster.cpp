@@ -41,9 +41,9 @@ void imuCallback(const sensor_msgs::ImuPtr & msg)
 //      msg->linear_acceleration.x<<" "<<msg->linear_acceleration.y<<" "<<msg->linear_acceleration.z<<" "<<
 //      msg->angular_velocity.x<<" "<<msg->angular_velocity.y<<" "<<msg->angular_velocity.z);
   q.setValue(
-      msg->orientation.x,
-      msg->orientation.y,
       0,
+      0,
+      msg->orientation.z,
       msg->orientation.w);
 
 //  ROS_INFO_STREAM("get q = "<<q.x()<<" "<<q.y()<<" "<<q.z()<<" "<<q.w());
@@ -110,7 +110,7 @@ int main(int argc, char** argv)
       node.param("imu_yaw", imu_yaw, 0.0);
       //q0.setRPY(M_PI/2,0,M_PI/2); //values for koblenz
       q0.setRPY(imu_roll*M_PI/180.0, imu_pitch*M_PI/180.0, imu_yaw*M_PI/180.0);
-      ROS_INFO_STREAM("q0 = "<<q0.x()<<" "<<q0.y()<<" "<<0<<" "<<q0.w());
+      ROS_INFO_STREAM("q0 = "<<q0.x()<<" "<<q0.y()<<" "<<q0.z()<<" "<<q0.w());
     }
     tf3d.setIdentity();
 

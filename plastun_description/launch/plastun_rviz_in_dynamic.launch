@@ -1,7 +1,7 @@
 <launch>
 
 <!--<param name="robot_description" textfile="$(find plastun_description)/urdf/plastun.urdf" />-->
-
+	 command="$(find xacro)/xacro.py '$(find plastun_description)/urdf/plastun.xacro'" />
 
   <arg name="gui" default="true" />
   <arg name="rvizconfig" default="$(find plastun_description)/rviz/map.rviz" />
@@ -9,6 +9,7 @@
 
 <param name="use_gui" value="$(arg gui)"/>
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
-
+<!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> -->
 
 </launch>

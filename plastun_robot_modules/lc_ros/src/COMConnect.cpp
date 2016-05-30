@@ -132,7 +132,7 @@ bool COMConnect::Init(TINIFile & CFG)
 	}
 
 	  // Set up publishers
-	  lc_odo_publisher_ = node.advertise<nav_msgs::Odometry>("odo", 10);
+          lc_odo_publisher_ = node.advertise<nav_msgs::Odometry>("odo", 10);
 
 	return true;
 }
@@ -344,7 +344,7 @@ void COMConnect::publish_data()
     odom_trans.transform.rotation = odom_quat;
 
     //send the transform
-    odom_broadcaster.sendTransform(odom_trans);
+   // odom_broadcaster.sendTransform(odom_trans);
 
     //next, we'll publish the odometry message over ROS
     odo_data.header.stamp = current_time;

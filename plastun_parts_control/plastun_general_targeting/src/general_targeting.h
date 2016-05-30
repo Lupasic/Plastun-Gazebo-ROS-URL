@@ -6,8 +6,7 @@
 #include <tf/tf.h>
 #include <tf2_msgs/TFMessage.h>
 #include <actionlib/server/simple_action_server.h>
-//#include "../../../../devel/include/plastun_rotate_turret/angleAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_general_targeting/access_targetingAction.h"
+#include <plastun_general_targeting/access_targetingAction.h>
 #include <cmath>
 
 class General_targeting

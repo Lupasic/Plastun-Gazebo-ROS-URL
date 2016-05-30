@@ -1,6 +1,6 @@
 <launch>
   <!-- launch to start gmapping to build map from scans -->
-	<arg name="scan" default="/plastun/laser/scan" />
+	<arg name="scan" default="/scan" />
 	
 	<node name="mapper" pkg="gmapping" type="slam_gmapping" args="scan:=$(arg scan)" respawn="false" output="screen">
   		<param name="throttle_scans" value="1"/>

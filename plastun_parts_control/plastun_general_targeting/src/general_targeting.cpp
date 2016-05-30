@@ -58,7 +58,7 @@ void General_targeting::main_calculation()
     std::cout << "Угол альфа: " << alpha << std::endl;
     beta = std::acos(lengh_to_cam_xy/lengh_to_target);
     std::cout << "Угол бета: " << beta << std::endl;
-    if((goal->target_y - cur_pos_y) < 0)
+    if((goal->target_y - (cur_pos_y + lengh_to_cam_xy)) < 0)
     {
         std::cout << "Y цели меньше Y робота " << (goal->target_y - cur_pos_y) << std::endl;
         result.angle_yaw = -(1.57 - (beta - alpha));

@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 #include <actionlib/server/simple_action_server.h>
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_image_detect/access_detectAction.h"
+#include <plastun_image_detect/access_detectAction.h>
 
 
 class Image_detect

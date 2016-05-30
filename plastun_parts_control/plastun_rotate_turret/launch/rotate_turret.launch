@@ -1,0 +1,23 @@
+<launch>
+<!-- activate rotate turret server-->
+  <node name="rotate_turret" pkg="plastun_rotate_turret" type="rotate_turret" respawn="false" output="screen">
+	<param name="rotate_topic" value="/rotate_angle" />
+
+	<param name="ip" value="192.168.1.68" />
+	<param name="port" value="6000" />
+	<param name="dest_port" value="6000" />
+
+	<param name="panMax" value="40000" />
+	<param name="pan_zero" value="395" />
+	<param name="tiltMax" value="30000" />
+	<param name="tilt_zero" value="14940" />
+	<param name="pan_sign" value="1" />
+	<param name="tilt_sign" value="-1" />
+
+	<param name="hor_max" value="1.57" />
+	<param name="hor_min" value="-1.57" />
+	<param name="ver_max" value="0.35" />
+	<param name="ver_min" value="-0.35" />
+  </node>
+
+</launch>

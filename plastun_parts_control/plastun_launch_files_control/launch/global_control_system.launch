@@ -6,6 +6,8 @@
 <!-- activate move global_control_system (clients for all servers) -->
   <node name="global_control_system" pkg="plastun_global_control_system" type="global_control_system" respawn="false" output="screen">
   	<param name="laser_duration" value="5"/>
+    <param name="camera_info_topic" value="/plastun/camera_1/camera_info_1"/>
+    <param name="target_points_topic" value="/target_points" />
   </node>
 
 <!-- activate general targeting server -->
@@ -22,10 +24,16 @@
 </node>
 
 <!-- activate rotate turret server-->
-  <node name="rotate_turret" pkg="plastun_rotate_turret" type="rotate_turret" respawn="false" output="screen"/>
+<!--  <include file="$(find plastun_rotate_turret)/launch/rotate_turret.launch" /> -->
 
 <!-- activate activating laser server -->
   <node name="activate_laser" pkg="plastun_activate_laser" type="activate_laser" respawn="false" output="screen"></node>
+
+<!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms 
+or
+static_transform_publisher x y z qx qy qz qw frame_id child_frame_id  period_in_ms -->
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_turrel_vniz_broadcaster" args="1 0 0 0 0 0 base_link turrel_vniz 100" />
 
 
 </launch>

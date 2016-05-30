@@ -6,10 +6,10 @@
 #include <actionlib/client/terminal_state.h>
 #include "geometry_msgs/PoseStamped.h"
 #include "move_base_msgs/MoveBaseAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_image_detect/access_detectAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_general_targeting/access_targetingAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_rotate_turret/angleAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_activate_laser/FireAction.h"
+#include <plastun_image_detect/access_detectAction.h>
+#include <plastun_general_targeting/access_targetingAction.h>
+#include <plastun_rotate_turret/angleAction.h>
+#include <plastun_activate_laser/FireAction.h>
 #include "std_msgs/Float64.h"
 #include "sensor_msgs/CameraInfo.h"
 #include <tf/transform_broadcaster.h>
@@ -48,6 +48,7 @@ protected:
     geometry_msgs::Point cur_target;
     int x_sm, y_sm;
     bool fl_rotate_status, fl_camera_info, fl_first_rotate; //1 - за возврат туррели, 2 - чтобы самера инфо считалась 1 раз и все, 3 - работает 2 раза, разбиение логики
+    std::string camera_info_topic, target_points_topic;
     //Вспомогательные функции
     void angle_count(); //пересчет смещения на изоюражении в углы
     void move_base_sending_goal();  //начало конечного автомата

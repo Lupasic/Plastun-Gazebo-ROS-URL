@@ -3,6 +3,107 @@
 
 using namespace boost::interprocess;
 
+Rotate_turret::Rotate_turret(std::string name):
+    //ip("192.168.1.68"), port(6000), dest_port(port),
+    dev_id(1),
+    aux_id(1),
+    pan(0),
+    tilt(0),
+    pantilt_cmd(false),
+    pantilt_completed(true),
+    completed(true),
+    socket_(io_service_)
+//    robotX(0),
+//    robotY(0),
+//    robotFi(0),
+//    panMax(40000),
+//    tiltMax(30000),
+//    exc_a(0.07831),
+//    exc_b(0.455),
+//    exc_c(0.030),
+//    exc_d(0.165),
+//    exc_e(0.195),
+//    add_ver_angle(0),
+//    add_hor_angle(0),
+//    pan_scale(1.0 / (M_PI*2.0) * panMax),
+//    tilt_scale(pan_scale)
+//    pan_zero(395),
+//    tilt_zero(14940),
+//    pan_sign(1),
+//    tilt_sign(1),
+//    hor_max(90*M_PI/180.0),
+//    hor_min(-90*M_PI/180.0),
+//    ver_max(20*M_PI/180.0),
+//    ver_min(-20*M_PI/180.0)
+{
+    //Инициализация переменных
+    nh.getParam("/rotate_turret/ip",ip);
+    nh.getParam("/rotate_turret/port", port);
+    nh.getParam("/rotate_turret/dest_port",dest_port);
+
+    int a;
+    nh.getParam("/rotate_turret/panMax",a);
+    panMax = a;
+    nh.getParam("/rotate_turret/pan_zero",pan_zero);
+    nh.getParam("/rotate_turret/tiltMax",a);
+    tiltMax = a;
+    nh.getParam("/rotate_turret/tilt_zero",tilt_zero);
+    nh.getParam("/rotate_turret/pan_sign",pan_sign);
+    nh.getParam("/rotate_turret/tilt_sign",tilt_sign);
+    pan_scale = 1.0 / (M_PI*2.0) * panMax;
+    tilt_scale = pan_scale;
+
+    nh.getParam("/rotate_turret/hor_max",hor_max);
+    nh.getParam("/rotate_turret/hor_min",hor_min);
+    nh.getParam("/rotate_turret/ver_max",ver_max);
+    nh.getParam("/rotate_turret/ver_min",ver_min);
+    //
+    action_name = name;
+    rt_server = new  actionlib::SimpleActionServer<plastun_rotate_turret::angleAction>(nh,name,false);
+    //register the goal and feeback callbacks
+    rt_server->registerGoalCallback(boost::bind(&Rotate_turret::goal_R,this));
+    rt_server->registerPreemptCallback(boost::bind(&Rotate_turret::preempt_R,this));
+    // Add your ros communications here.
+    nh.getParam("/rotate_turret/rotate_topic", rotate_topic);
+    rotate_angle = nh.subscribe(rotate_topic, 1000,&Rotate_turret::rotate_angle_Callback, this);
+    rt_server->start();
+    //
+    connectUDP();
+    setNPU(0,0);
+
+}
+
+Rotate_turret::~Rotate_turret()
+{
+    io_service_.stop();
+    COUT("wait io_service");
+    io_service_thread.join();
+    COUT("udp stopped");
+
+}
+
+void Rotate_turret::goal_R()
+{
+    goal = rt_server->acceptNewGoal();
+    setNPU(goal->alpha_yaw, goal->alpha_pitch);
+    result.status = 1;
+    //сюда прога попадет, только как выполнит установку
+    rt_server->setSucceeded(result);
+}
+
+void Rotate_turret::preempt_R()
+{
+    ROS_INFO("%s: Preempted", action_name.c_str());
+    // set the action state to preempted
+    rt_server->setPreempted();
+}
+
+void Rotate_turret::rotate_angle_Callback(const geometry_msgs::Point &msg)
+{
+    setNPU(msg.x, msg.y);
+    ROS_INFO("Rotate turret complete");
+}
+
 
 void Rotate_turret::connectUDP()
 {
@@ -95,51 +196,6 @@ bool Rotate_turret::waitUDP(int ms)
     return udp_cond.timed_wait(lock, timeout);
 }
 
-Rotate_turret::Rotate_turret(std::string name):
-    ip("192.168.1.93"), port(6000), dest_port(port), dev_id(1), aux_id(1), pan(0), tilt(0),
-    pantilt_cmd(false),
-    pantilt_completed(true),
-    completed(true),
-    socket_(io_service_)
-{
-    action_name = name;
-    rt_server = new  actionlib::SimpleActionServer<plastun_rotate_turret::angleAction>(nh,name,false);
-    //register the goal and feeback callbacks
-    rt_server->registerGoalCallback(boost::bind(&Rotate_turret::goal_R,this));
-    rt_server->registerPreemptCallback(boost::bind(&Rotate_turret::preempt_R,this));
-    // Add your ros communications here.
-
-    rt_server->start();
-    //
-    connectUDP();
-    setNPU(0,0);
-
-}
-
-Rotate_turret::~Rotate_turret()
-{
-    io_service_.stop();
-    COUT("wait io_service");
-    io_service_thread.join();
-    COUT("udp stopped");
-
-}
-
-void Rotate_turret::goal_R()
-{
-    goal = rt_server->acceptNewGoal();
-    setNPU(goal->alpha_yaw, goal->alpha_pitch);
-    result.status = 1;
-    //сюда прога попадет, только как выполнит установку
-    rt_server->setSucceeded(result);
-}
-
-void Rotate_turret::preempt_R()
-{
-    ROS_INFO("%s: Preempted", action_name.c_str());
-    // set the action state to preempted
-    rt_server->setPreempted();
-}
 
 void Rotate_turret::setNPU(float hor, float ver)
 {
@@ -150,8 +206,10 @@ void Rotate_turret::setNPU(float hor, float ver)
     else 	if ( hor < hor_min ) hor = hor_min;
     if ( ver > ver_max ) ver = ver_max;
     else	if ( ver < ver_min ) ver = ver_min;
+    std::cout << pan_scale << "  " << pan_sign << "  " << hor << std::endl;
     int cmd_pan = hor * pan_scale * pan_sign + pan_zero;
-    int cmd_tilt = ver*tilt_scale * tilt_sign + tilt_zero;
+    int cmd_tilt = ver * tilt_scale * tilt_sign + tilt_zero;
+    std::cout << cmd_pan << "  tilt  " << cmd_tilt << std::endl;
     setPanTilt(cmd_pan, cmd_tilt, true);
 }
 
@@ -176,7 +234,7 @@ void Rotate_turret::setPanTilt(int32_t p, int32_t t, bool nonblock)
     else
         if ( t> tiltMax)
             t = tiltMax;
-    COUT("goto pan tilt "<<p<<" "<<t);
+    COUT("goto pan: "<<p<<" tilt: "<<t);
     pantilt_completed = false;
     completed = false;
     pantilt_cmd = false;
@@ -227,4 +285,3 @@ void Rotate_turret::reset()
         COUT("received answer");
     }
 }
-

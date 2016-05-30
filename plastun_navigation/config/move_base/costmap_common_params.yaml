@@ -21,4 +21,4 @@ lethal_cost_threshold: 100
 
 #Configuration for the sensors that the costmap will use to update a map
 observation_sources: scan
-scan: {data_type: LaserScan, topic: /plastun/laser/scan, marking: true, clearing: true, expected_update_rate: 0}
+scan: {data_type: LaserScan, topic: /scan, marking: true, clearing: true, expected_update_rate: 0}

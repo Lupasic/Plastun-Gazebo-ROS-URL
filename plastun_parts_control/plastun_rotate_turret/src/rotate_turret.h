@@ -6,8 +6,7 @@
 #include <tf/tf.h>
 #include <tf2_msgs/TFMessage.h>
 #include <actionlib/server/simple_action_server.h>
-//#include "../../../../devel/include/plastun_rotate_turret/angleAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_rotate_turret/angleAction.h"
+#include <plastun_rotate_turret/angleAction.h>
 //новые инклуды
 #include <vector>
 #include <boost/asio.hpp>
@@ -15,7 +14,6 @@
 #include <boost/interprocess/sync/interprocess_mutex.hpp>
 #include <boost/interprocess/sync/interprocess_condition.hpp>
 #include <boost/interprocess/sync/scoped_lock.hpp>
-//#include <inifile.h>
 //из си
 #include <list>
 #include "pelco/PelcoDE.h"
@@ -30,16 +28,19 @@ class Rotate_turret
 {
 protected:
     //
-    float exc_a ;
-    float exc_b ;
-    float exc_c ;
-    float exc_d ;
-    float exc_e ;
-    float add_ver_angle;
-    float add_hor_angle;
-    float robotX ;
-    float robotY ;
-    float robotFi;
+    uint16_t panMax;
+    uint16_t tiltMax;
+    ros::Subscriber rotate_angle;
+//    float exc_a ;
+//    float exc_b ;
+//    float exc_c ;
+//    float exc_d ;
+//    float exc_e ;
+//    float add_ver_angle;
+//    float add_hor_angle;
+//    float robotX ;
+//    float robotY ;
+//    float robotFi;
     float pan_scale;
     float tilt_scale;
     int pan_sign;
@@ -50,7 +51,6 @@ protected:
     float hor_min;
     float ver_max;
     float ver_min;
-    int fire_counter;
     std::string ip;
     int port;
     int dest_port;
@@ -66,8 +66,6 @@ protected:
     uint16_t tilt;
     int16_t  addTilt;
     int16_t	 addPan;
-    uint16_t panMax;
-    uint16_t tiltMax;
     uint16_t cmdpan;
     uint16_t cmdtilt;
     bool pantilt_cmd ;
@@ -81,8 +79,7 @@ protected:
     //
     ros::NodeHandle nh;
     actionlib::SimpleActionServer<plastun_rotate_turret::angleAction> *rt_server;
-    std::string action_name;
-    //plastun_rotate_turret::angleFeedback feedback;
+    std::string action_name, rotate_topic;
     plastun_rotate_turret::angleResult result;
     plastun_rotate_turret::angleGoal::ConstPtr goal;
     //Работа с удп
@@ -102,4 +99,6 @@ public:
     void getPan();
     void getTilt();
     void reset();
+    //Колбеки
+    void rotate_angle_Callback(const geometry_msgs::Point &msg);
 };
