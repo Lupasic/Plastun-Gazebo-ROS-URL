@@ -9,4 +9,10 @@
   
     <param name="intensity" type="bool" value="false"/>
   </node>
+
+<!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms 
+or
+static_transform_publisher x y z qx qy qz qw frame_id child_frame_id  period_in_ms -->
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_hokuyo_broadcaster" args="0.2 -0.083 0 0 0 0 base_link laser 100" />
+
  </launch>

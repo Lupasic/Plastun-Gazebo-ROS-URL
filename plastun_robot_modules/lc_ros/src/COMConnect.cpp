@@ -344,7 +344,7 @@ void COMConnect::publish_data()
     odom_trans.transform.rotation = odom_quat;
 
     //send the transform
-   // odom_broadcaster.sendTransform(odom_trans);
+    //odom_broadcaster.sendTransform(odom_trans);
 
     //next, we'll publish the odometry message over ROS
     odo_data.header.stamp = current_time;

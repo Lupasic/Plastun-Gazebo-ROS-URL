@@ -4,7 +4,6 @@
 using namespace boost::interprocess;
 
 Rotate_turret::Rotate_turret(std::string name):
-    //ip("192.168.1.68"), port(6000), dest_port(port),
     dev_id(1),
     aux_id(1),
     pan(0),
@@ -13,28 +12,6 @@ Rotate_turret::Rotate_turret(std::string name):
     pantilt_completed(true),
     completed(true),
     socket_(io_service_)
-//    robotX(0),
-//    robotY(0),
-//    robotFi(0),
-//    panMax(40000),
-//    tiltMax(30000),
-//    exc_a(0.07831),
-//    exc_b(0.455),
-//    exc_c(0.030),
-//    exc_d(0.165),
-//    exc_e(0.195),
-//    add_ver_angle(0),
-//    add_hor_angle(0),
-//    pan_scale(1.0 / (M_PI*2.0) * panMax),
-//    tilt_scale(pan_scale)
-//    pan_zero(395),
-//    tilt_zero(14940),
-//    pan_sign(1),
-//    tilt_sign(1),
-//    hor_max(90*M_PI/180.0),
-//    hor_min(-90*M_PI/180.0),
-//    ver_max(20*M_PI/180.0),
-//    ver_min(-20*M_PI/180.0)
 {
     //Инициализация переменных
     nh.getParam("/rotate_turret/ip",ip);

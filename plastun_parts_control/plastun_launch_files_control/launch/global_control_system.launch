@@ -33,7 +33,7 @@
 or
 static_transform_publisher x y z qx qy qz qw frame_id child_frame_id  period_in_ms -->
 
-<node pkg="tf" type="static_transform_publisher" name="base_link_to_turrel_vniz_broadcaster" args="1 0 0 0 0 0 base_link turrel_vniz 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_turrel_vniz_broadcaster" args="0.15 0 0 0 0 0 base_link turrel_vniz 100" />
 
 
 </launch>

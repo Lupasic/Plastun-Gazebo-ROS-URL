@@ -31,16 +31,6 @@ protected:
     uint16_t panMax;
     uint16_t tiltMax;
     ros::Subscriber rotate_angle;
-//    float exc_a ;
-//    float exc_b ;
-//    float exc_c ;
-//    float exc_d ;
-//    float exc_e ;
-//    float add_ver_angle;
-//    float add_hor_angle;
-//    float robotX ;
-//    float robotY ;
-//    float robotFi;
     float pan_scale;
     float tilt_scale;
     int pan_sign;

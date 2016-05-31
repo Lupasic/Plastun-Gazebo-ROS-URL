@@ -3,6 +3,9 @@
 <!-- cmd_vel + odom-->
 <include file="$(find plastun_modules_launches)/launches/driving.launch"/>
 
+<!-- imu-->
+<include file="$(find plastun_modules_launches)/launches/bins.launch"/>
+
 <!-- tf odom to base_link-->
 <include file="$(find plastun_modules_launches)/launches/odo_tf.launch"/>
 

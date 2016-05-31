@@ -9,6 +9,8 @@ double y = 0.0;
 double th = 0.0;
 ros::Time last_time;
 bool use_imu = false;
+bool fl_moving = false;
+float eps =0.001;
 
 tf::Quaternion q;
 tf::Vector3 v(0,0,0);
@@ -21,8 +23,11 @@ void odoCallback(const nav_msgs::OdometryPtr & msg)
   //ROS_INFO_STREAM("odo");
   //printf("odo %d %d %f\n", msg->header.stamp.sec, msg->header.stamp.nsec, msg->twist.twist.linear.x);
   tf::vector3MsgToTF(msg->twist.twist.linear, v);
+if( !use_imu)
   tf::vector3MsgToTF(msg->twist.twist.angular, w);
-
+if(fabs(msg->twist.twist.linear.x) <eps && fabs(msg->twist.twist.angular.z) <eps)
+	fl_moving =false;
+else fl_moving = true;
 }
 
 
@@ -30,12 +35,14 @@ void odoCallback(const nav_msgs::OdometryPtr & msg)
 void twistCallback(const geometry_msgs::TwistStamped & msg)
 {
   tf::vector3MsgToTF(msg.twist.linear, v);
+if( !use_imu)
   tf::vector3MsgToTF(msg.twist.angular, w);
 }
 
 
 void imuCallback(const sensor_msgs::ImuPtr & msg)
 {
+tf::vector3MsgToTF(msg->angular_velocity, w);
 //  ROS_INFO_STREAM("imu "<<msg->header.stamp.sec<<" "<<msg->header.stamp.nsec<<" "<<
 //      msg->orientation.w<<" "<<msg->orientation.x<<" "<<msg->orientation.y<<" "<<msg->orientation.z <<" "<<
 //      msg->linear_acceleration.x<<" "<<msg->linear_acceleration.y<<" "<<msg->linear_acceleration.z<<" "<<
@@ -61,17 +68,13 @@ void update_tf(const ros::TimerEvent&)
   //first, we'll publish the transform over tf
   static tf::Transform odom_trans;
 
-  if ( !use_imu ) //calculate quaternion from odometry
-  {
-    static double yaw = 0;
+//calculate quaternion from odometry
+static double yaw = 0;
+if(fl_moving)
+{
     yaw += w[2]*dt;
-    tf3d.setRPY(0, 0, yaw);
-  }
-  else
-  {
-    tf3d.setRotation(q);
-  }
-
+}
+tf3d.setRPY(0, 0, yaw);
   odom_trans.setOrigin(odom_trans.getOrigin() + tf3d*v*dt);
   odom_trans.getOrigin().setZ(0);
 
