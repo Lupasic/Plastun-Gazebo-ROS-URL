@@ -1,0 +1,22 @@
+<launch>
+
+<!-- cmd_vel + odom-->
+<include file="$(find plastun_modules_launches)/launch/driving.launch"/>
+
+<!-- imu-->
+<include file="$(find plastun_modules_launches)/launch/bins.launch"/>
+
+<!-- tf odom to base_link-->
+<include file="$(find plastun_modules_launches)/launch/odo_tf.launch"/>
+
+<!-- hokuyo node-->
+<include file="$(find plastun_modules_launches)/launch/hokuyo.launch"/>
+
+<!-- rotate turret by topic or action-->
+<include file="$(find plastun_modules_launches)/launch/rotate_turret.launch"/>
+
+<!-- camera -->
+<include file="$(find plastun_modules_launches)/launch/cam.launch"/>
+
+
+</launch>

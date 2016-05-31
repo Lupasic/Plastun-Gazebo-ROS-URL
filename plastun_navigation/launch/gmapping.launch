@@ -6,6 +6,7 @@
   		<param name="throttle_scans" value="1"/>
 		<param name="base_frame" value="base_link"/>
 		<param name="odom_frame" value="odom"/>
+		<param name="map_update_interval" value="3"/>
 		<param name="maxUrange" value="15"/>
 		<param name="iterations" value="5"/>
 		<param name="lskip" value="0"/>
@@ -13,13 +14,14 @@
 		<param name="srt" value="0.02"/>
 		<param name="str" value="0.01"/>
 		<param name="stt" value="0.02"/>
-		<param name="linearUpdate" value="0.5"/>
-		<param name="angularUpdate" value="0.436"/>
-		<param name="particles" value="90"/>
-		<param name="xmin" value="-100"/>
-		<param name="xmax" value="100"/>
-		<param name="ymin" value="-100"/>
-		<param name="ymax" value="100"/>
-        <param name="maxRange" value="25"/>
+		<param name="linearUpdate" value="0.2"/>
+		<param name="angularUpdate" value="0.2"/>
+		<param name="particles" value="50"/>
+		<param name="delta" value="0.05"/>
+		<param name="xmin" value="-20"/>
+		<param name="xmax" value="20"/>
+		<param name="ymin" value="-20"/>
+		<param name="ymax" value="20"/>
+        <param name="maxRange" value="65"/>
   	</node>
 </launch>

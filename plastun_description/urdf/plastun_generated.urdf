@@ -4,178 +4,6 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="MRC_Plastun" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <!-- plugins -->
-  <gazebo>
-    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-      <robotNamespace>/plastun</robotNamespace>
-    </plugin>
-  </gazebo>
-  <gazebo>
-    <plugin filename="libgazebo_ros_skid_steer_drive.so" name="skid_steer_drive_controller">
-      <updateRate>100.0</updateRate>
-      <leftFrontJoint>wheel_lev_1</leftFrontJoint>
-      <rightFrontJoint>wheel_prav_1</rightFrontJoint>
-      <leftRearJoint>wheel_lev_3</leftRearJoint>
-      <rightRearJoint>wheel_prav_3</rightRearJoint>
-      <robotBaseFrame>base_link</robotBaseFrame>
-      <torque>20</torque>
-      <commandTopic>/plastun/cmd_vel</commandTopic>
-      <odometryTopic>/plastun/odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <wheelSeparation>0.40998</wheelSeparation>
-      <wheelDiameter>0.192</wheelDiameter>
-      <broadcastTF>true</broadcastTF>
-      <covariance_x>0.000100</covariance_x>
-      <covariance_y>0.000100</covariance_y>
-      <covariance_yaw>0.000100</covariance_yaw>
-    </plugin>
-  </gazebo>
-  <!-- sensors -->
-  <gazebo reference="camera_1">
-    <sensor name="camera_with_laser" type="camera">
-      <!--      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose> -->
-      <camera name="__default__">
-        <horizontal_fov>1.012300</horizontal_fov>
-        <image>
-          <width>320</width>
-          <height>200</height>
-        </image>
-        <clip>
-          <near>0.001000</near>
-          <far>100.000000</far>
-        </clip>
-      </camera>
-      <always_on>1</always_on>
-      <update_rate>30.000000</update_rate>
-      <visualize>true</visualize>
-      <plugin filename="libgazebo_ros_camera.so" name="camera_with_laser_controller">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>30</updateRate>
-        <cameraName>/plastun/camera_1</cameraName>
-        <imageTopicName>image_raw_1</imageTopicName>
-        <cameraInfoTopicName>camera_info_1</cameraInfoTopicName>
-        <frameName>camera_1</frameName>
-        <hackBaseline>0.07</hackBaseline>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <gazebo reference="camera_2">
-    <sensor name="camera_without_laser" type="camera">
-      <!--      <pose>-0.14 0 0.06 0 0.000000 3.1416</pose> -->
-      <camera name="__default__">
-        <horizontal_fov>1.012300</horizontal_fov>
-        <image>
-          <width>320</width>
-          <height>200</height>
-        </image>
-        <clip>
-          <near>0.001000</near>
-          <far>100.000000</far>
-        </clip>
-      </camera>
-      <always_on>1</always_on>
-      <update_rate>30.000000</update_rate>
-      <visualize>false</visualize>
-      <plugin filename="libgazebo_ros_camera.so" name="camera_without_laser_controller">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>30</updateRate>
-        <cameraName>/plastun/camera_2</cameraName>
-        <imageTopicName>image_raw_2</imageTopicName>
-        <cameraInfoTopicName>camera_info_2</cameraInfoTopicName>
-        <frameName>camera_2</frameName>
-        <hackBaseline>0.07</hackBaseline>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <gazebo reference="hokuyo">
-    <sensor name="hokuyo_sensor" type="gpu_ray">
-      <!-- <pose>0 0 0.1 0 0 -3.1416</pose> -->
-      <visualize>true</visualize>
-      <update_rate>40</update_rate>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>720</samples>
-            <resolution>1</resolution>
-            <min_angle>-1.470796</min_angle>
-            <max_angle>1.470796</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.10</min>
-          <max>20.0</max>
-          <resolution>0.01</resolution>
-        </range>
-      </ray>
-      <plugin filename="libgazebo_ros_gpu_laser.so" name="gazebo_ros_hokuyo_sensor">
-        <topicName>/plastun/laser/scan</topicName>
-        <frameName>hokuyo</frameName>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <gazebo reference="lazer_ukazka">
-    <sensor name="hokuyo_laser_ukaz" type="gpu_ray">
-      <!-- <pose>-0.1 0 0.05 0 0 3.1416</pose> -->
-      <visualize>true</visualize>
-      <update_rate>40</update_rate>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>6</samples>
-            <resolution>1</resolution>
-            <min_angle>-0.005</min_angle>
-            <max_angle>0.005</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.10</min>
-          <max>10.0</max>
-          <resolution>0.01</resolution>
-        </range>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
-      </ray>
-      <plugin filename="libgazebo_ros_gpu_laser.so" name="gazebo_ros_hokuyo_laser_ukaz">
-        <topicName>/plastun/laser/scan_ukaz</topicName>
-        <frameName>lazer_ukazka</frameName>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <!--Import Gazebo colors -->
-  <gazebo reference="chassis">
-    <material>Gazebo/Grey</material>
-  </gazebo>
-  <gazebo reference="turrel_vniz">
-    <material>Gazebo/Grey</material>
-  </gazebo>
-  <gazebo reference="turrel_sered">
-    <material>Gazebo/Grey</material>
-  </gazebo>
-  <gazebo reference="turrel_vverh">
-    <material>Gazebo/Grey</material>
-  </gazebo>
-  <gazebo reference="hokuyo">
-    <material>Gazebo/Grey</material>
-  </gazebo>
-  <gazebo reference="camera_1">
-    <material>Gazebo/Grey</material>
-  </gazebo>
-  <gazebo reference="camera_2">
-    <material>Gazebo/Grey</material>
-  </gazebo>
   <material name="black">
     <color rgba="0.0 0.0 0.0 1.0"/>
   </material>
@@ -209,7 +37,7 @@
     <inertial>
       <mass value="35"/>
       <origin rpy="0  0  0" xyz="0.289120720 -0.000018254  0.186368419"/>
-      <inertia ixx="0.000000034" ixy="0" ixz="0.000000031" iyy="0.000000093" iyz="0" izz="0.000000074"/>
+      <inertia ixx="3.1081800" ixy="-0.25460189" ixz="2.0318174" iyy="6.3787776" iyz="0.16417863" izz="5.3316425"/>
     </inertial>
     <collision>
       <origin rpy="0  0  0" xyz="0 0  0.0435"/>
@@ -336,7 +164,7 @@
   <joint name="turrel_vverh_camera_1_fixed" type="fixed">
     <parent link="turrel_vverh"/>
     <child link="camera_1"/>
-    <origin rpy="0       0       0" xyz="0.2  -0.21 0.0576695"/>
+    <origin rpy="0       0       0" xyz="0.2  0.21 0.0576695"/>
     <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
@@ -362,13 +190,13 @@
   <joint name="turrel_vverh_camera_2_fixed" type="fixed">
     <parent link="turrel_vverh"/>
     <child link="camera_2"/>
-    <origin rpy="0       0       0" xyz="0.2  0.21 0.0576695"/>
+    <origin rpy="0       0       0" xyz="0.2  -0.21 0.0576695"/>
     <axis xyz="0  0  0"/>
     <limit effort="0" lower="0" upper="0" velocity="0"/>
   </joint>
   <link name="wheel_left_1">
     <inertial>
-      <mass value="2"/>
+      <mass value="0.03"/>
       <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
       <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
@@ -388,22 +216,16 @@
   <joint name="wheel_lev_1" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_left_1"/>
-    <origin rpy="0       0      0" xyz="0.0666644 -0.20499   0.096"/>
+    <origin rpy="0       0      0" xyz="0.0666644 0.20499   0.096"/>
     <axis xyz="0 1  0"/>
-    <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
+    <limit effort="-1" lower="-1e+100" upper="1e+100" velocity="100"/>
   </joint>
   <link name="wheel_left_2">
     <inertial>
-      <mass value="2"/>
+      <mass value="0.03"/>
       <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
       <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
-    <collision>
-      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
-      <geometry>
-        <cylinder length="0.09" radius="0.096"/>
-      </geometry>
-    </collision>
     <visual>
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
@@ -414,13 +236,13 @@
   <joint name="wheel_lev_2" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_left_2"/>
-    <origin rpy="0       0      0" xyz="0.2881144 -0.20499   0.096"/>
+    <origin rpy="0       0      0" xyz="0.2881144 0.20499   0.096"/>
     <axis xyz="0 1  0"/>
-    <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
+    <limit effort="-1" lower="-1e+100" upper="1e+100" velocity="100"/>
   </joint>
   <link name="wheel_left_3">
     <inertial>
-      <mass value="2"/>
+      <mass value="0.03"/>
       <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
       <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
@@ -440,13 +262,13 @@
   <joint name="wheel_lev_3" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_left_3"/>
-    <origin rpy="0       0      0" xyz="0.5095644 -0.20499   0.096"/>
+    <origin rpy="0       0      0" xyz="0.5095644 0.20499   0.096"/>
     <axis xyz="0 1  0"/>
-    <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
+    <limit effort="-1" lower="-1e+100" upper="1e+100" velocity="100"/>
   </joint>
   <link name="wheel_right_1">
     <inertial>
-      <mass value="2"/>
+      <mass value="0.03"/>
       <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
       <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
@@ -466,22 +288,16 @@
   <joint name="wheel_prav_1" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_right_1"/>
-    <origin rpy="0       0      0" xyz="0.0666644 0.20499   0.096"/>
+    <origin rpy="0       0      0" xyz="0.0666644 -0.20499   0.096"/>
     <axis xyz="0 1  0"/>
-    <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
+    <limit effort="-1" lower="-1e+100" upper="1e+100" velocity="100"/>
   </joint>
   <link name="wheel_right_2">
     <inertial>
-      <mass value="2"/>
+      <mass value="0.03"/>
       <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
       <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
-    <collision>
-      <origin rpy="1.5708  0      0" xyz="0  0  0"/>
-      <geometry>
-        <cylinder length="0.09" radius="0.096"/>
-      </geometry>
-    </collision>
     <visual>
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
@@ -492,13 +308,13 @@
   <joint name="wheel_prav_2" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_right_2"/>
-    <origin rpy="0       0      0" xyz="0.2881144 0.20499   0.096"/>
+    <origin rpy="0       0      0" xyz="0.2881144 -0.20499   0.096"/>
     <axis xyz="0 1  0"/>
-    <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
+    <limit effort="-1" lower="-1e+100" upper="1e+100" velocity="100"/>
   </joint>
   <link name="wheel_right_3">
     <inertial>
-      <mass value="2"/>
+      <mass value="0.03"/>
       <origin rpy="0  0  0" xyz="0  0.000007723  0"/>
       <inertia ixx="0.000000000" ixy="0" ixz="0" iyy="0.000000000" iyz="0" izz="0.000000000"/>
     </inertial>
@@ -518,9 +334,9 @@
   <joint name="wheel_prav_3" type="revolute">
     <parent link="chassis"/>
     <child link="wheel_right_3"/>
-    <origin rpy="0       0      0" xyz="0.5095644 0.20499   0.096"/>
+    <origin rpy="0       0      0" xyz="0.5095644 -0.20499   0.096"/>
     <axis xyz="0 1  0"/>
-    <limit effort="-1" lower="-1e+50" upper="1e+50" velocity="100"/>
+    <limit effort="-1" lower="-1e+100" upper="1e+100" velocity="100"/>
   </joint>
   <!--fix'es joints -->
   <joint name="camera_1_lazer_ukazka_fixed" type="fixed">
@@ -550,13 +366,13 @@
     <child link="turrel_sered"/>
     <origin rpy="0  0   0" xyz="0 0  0.1296088"/>
     <axis xyz="0  0  1"/>
-    <limit effort="1" lower="-7" upper="7" velocity="10"/>
+    <limit effort="1" lower="-3.139" upper="3.139" velocity="100"/>
   </joint>
   <joint name="turrel_sered_turrel_vverh_up_to_down" type="revolute">
     <parent link="turrel_sered"/>
     <child link="turrel_vverh"/>
     <origin rpy="0   0   0" xyz="0  0 0.0890008"/>
-    <axis xyz="0  1  0"/>
+    <axis xyz="0  -1  0"/>
     <limit effort="1" lower="-1" upper="1" velocity="100"/>
   </joint>
   <!--transmitions-->
