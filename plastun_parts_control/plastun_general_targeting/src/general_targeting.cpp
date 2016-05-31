@@ -54,29 +54,12 @@ void General_targeting::main_calculation()
     std::cout << "Текущие координаты робота: " << cur_pos_y << " ; " << cur_pos_x << std::endl;
     std::cout << "Текущие координаты цели: " << goal->target_y << " ; " << goal->target_x << std::endl;
     std::cout << "Расстояние до цели: " << lengh_to_target << std::endl;
-    alpha = std::asin(std::abs(goal->target_y - cur_pos_y)/lengh_to_target);
+    alpha = std::asin((goal->target_y - cur_pos_y)/lengh_to_target);
     std::cout << "Угол альфа: " << alpha << std::endl;
     beta = std::acos(lengh_to_cam_xy/lengh_to_target);
     std::cout << "Угол бета: " << beta << std::endl;
-    if((goal->target_y - (cur_pos_y + lengh_to_cam_xy)) < 0)
-    {
-        std::cout << "Y цели меньше Y робота " << (goal->target_y - cur_pos_y) << std::endl;
-        result.angle_yaw = -(1.57 - (beta - alpha));
-    }
-    else
-    {
-        std::cout << "Y цели больше Y робота " << (goal->target_y - cur_pos_y) << std::endl;
-        result.angle_yaw = beta - (1.57 - alpha);
-
-    }
+    result.angle_yaw = beta - (1.57 - alpha);
     std::cout << "Полученный угол в радианах: " << result.angle_yaw  << std::endl;
-    //Расчет угла поворота по поперечной оси
-    //    result.angle_pitch = std::acos(lengh_to_cam_yz/lengh_to_target) - 1.57 + std::asin(abs(goal->target_x - cur_pos_x)/lengh_to_target);
-    //    if((goal->target_x - cur_pos_x) < 0)
-    //    {
-    //        float a = result.angle_pitch;
-    //        result.angle_pitch = -a;
-    //    }
     result.angle_pitch = 0;
     gt_server->setSucceeded(result);
 }

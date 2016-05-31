@@ -4,7 +4,7 @@
 <!--	 <param name="robot_description" command="$(find xacro)/xacro.py '$(find plastun_description)/urdf/plastun.xacro'" /> -->
 
   <arg name="gui" default="true" />
-  <arg name="rvizconfig" default="$(find plastun_description)/rviz/move_base.rviz" />
+  <arg name="rvizconfig" default="$(find plastun_description)/rviz/gmapping.rviz" />
 
 
 <param name="use_gui" value="$(arg gui)"/>

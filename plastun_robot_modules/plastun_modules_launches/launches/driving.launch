@@ -1,9 +1,0 @@
-<launch>
-	<arg name="cfg" default="$(find plastun_modules_launches)/launches/config/mobile.cfg"/>
-	
-    <param name="cfgfile" value="$(arg cfg)"/>
- 	<node name="drive" pkg="lc_ros" type="lc_ros" respawn="false" output="screen">
-  
-
-  	</node>
- </launch>

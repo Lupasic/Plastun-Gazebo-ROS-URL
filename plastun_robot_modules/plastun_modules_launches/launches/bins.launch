@@ -1,9 +1,0 @@
-<launch>
-	<arg name="cfg" default="$(find plastun_modules_launches)/launches/config/mobile.cfg"/>
-	
-    <param name="cfgfile" value="$(arg cfg)"/>
-    <param name="verbose" type="bool" value="1"/>
- 	<node name="bins" pkg="bins" type="bins" respawn="false" output="screen">
-  	</node>
-	<node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_broadcaster" args="0 0 0 0 0 0 base_link imu 100" />
- </launch>

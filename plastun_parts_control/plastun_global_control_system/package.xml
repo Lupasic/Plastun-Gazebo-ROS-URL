@@ -20,6 +20,12 @@
   <build_depend>message_generation</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
+<!-- dependence by servers -->
+   <build_depend>plastun_activate_laser</build_depend>
+   <build_depend>plastun_general_targeting</build_depend>
+   <build_depend>plastun_image_detect</build_depend>
+   <build_depend>plastun_rotate_turret</build_depend>
+
   <build_depend>std_msgs</build_depend>
   <run_depend>actionlib</run_depend>
   <run_depend>actionlib_msgs</run_depend>

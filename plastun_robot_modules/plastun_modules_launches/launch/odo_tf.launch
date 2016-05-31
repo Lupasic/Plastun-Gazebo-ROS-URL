@@ -1,0 +1,3 @@
+<launch>
+	<node name="odo_tf" pkg="odo_tf_pub" type="odo_tf_pub" output="screen"></node>
+</launch>

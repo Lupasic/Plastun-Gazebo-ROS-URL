@@ -26,22 +26,22 @@ node [shape=ellipse, color=blue, fontcolor=blue];
 "turrel_vniz_turrel_sered_revolute" -> "turrel_sered"
 "turrel_sered" -> "turrel_sered_turrel_vverh_up_to_down" [label="xyz: 0 0 0.0890008 \nrpy: 0 -0 0"]
 "turrel_sered_turrel_vverh_up_to_down" -> "turrel_vverh"
-"turrel_vverh" -> "turrel_vverh_camera_1_fixed" [label="xyz: 0.2 -0.21 0.0576695 \nrpy: 0 -0 0"]
+"turrel_vverh" -> "turrel_vverh_camera_1_fixed" [label="xyz: 0.2 0.21 0.0576695 \nrpy: 0 -0 0"]
 "turrel_vverh_camera_1_fixed" -> "camera_1"
 "camera_1" -> "camera_1_lazer_ukazka_fixed" [label="xyz: 0.071 0 0.095 \nrpy: 0 -0 0"]
 "camera_1_lazer_ukazka_fixed" -> "lazer_ukazka"
-"turrel_vverh" -> "turrel_vverh_camera_2_fixed" [label="xyz: 0.2 0.21 0.0576695 \nrpy: 0 -0 0"]
+"turrel_vverh" -> "turrel_vverh_camera_2_fixed" [label="xyz: 0.2 -0.21 0.0576695 \nrpy: 0 -0 0"]
 "turrel_vverh_camera_2_fixed" -> "camera_2"
-"chassis" -> "wheel_lev_1" [label="xyz: 0.0666644 -0.20499 0.096 \nrpy: 0 -0 0"]
+"chassis" -> "wheel_lev_1" [label="xyz: 0.0666644 0.20499 0.096 \nrpy: 0 -0 0"]
 "wheel_lev_1" -> "wheel_left_1"
-"chassis" -> "wheel_lev_2" [label="xyz: 0.288114 -0.20499 0.096 \nrpy: 0 -0 0"]
+"chassis" -> "wheel_lev_2" [label="xyz: 0.288114 0.20499 0.096 \nrpy: 0 -0 0"]
 "wheel_lev_2" -> "wheel_left_2"
-"chassis" -> "wheel_lev_3" [label="xyz: 0.509564 -0.20499 0.096 \nrpy: 0 -0 0"]
+"chassis" -> "wheel_lev_3" [label="xyz: 0.509564 0.20499 0.096 \nrpy: 0 -0 0"]
 "wheel_lev_3" -> "wheel_left_3"
-"chassis" -> "wheel_prav_1" [label="xyz: 0.0666644 0.20499 0.096 \nrpy: 0 -0 0"]
+"chassis" -> "wheel_prav_1" [label="xyz: 0.0666644 -0.20499 0.096 \nrpy: 0 -0 0"]
 "wheel_prav_1" -> "wheel_right_1"
-"chassis" -> "wheel_prav_2" [label="xyz: 0.288114 0.20499 0.096 \nrpy: 0 -0 0"]
+"chassis" -> "wheel_prav_2" [label="xyz: 0.288114 -0.20499 0.096 \nrpy: 0 -0 0"]
 "wheel_prav_2" -> "wheel_right_2"
-"chassis" -> "wheel_prav_3" [label="xyz: 0.509564 0.20499 0.096 \nrpy: 0 -0 0"]
+"chassis" -> "wheel_prav_3" [label="xyz: 0.509564 -0.20499 0.096 \nrpy: 0 -0 0"]
 "wheel_prav_3" -> "wheel_right_3"
 }
