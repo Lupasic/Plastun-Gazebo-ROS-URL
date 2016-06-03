@@ -1,0 +1,7 @@
+<launch>  
+
+<node name="activate_laser" pkg="plastun_activate_laser" type="activate_laser" respawn="false" output="screen">
+ <param name="activate_topic" value="/plastun/activate_laser_manual" />
+</node>
+
+</launch>

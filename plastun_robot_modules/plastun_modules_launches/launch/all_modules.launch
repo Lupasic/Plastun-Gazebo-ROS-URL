@@ -18,5 +18,8 @@
 <!-- camera -->
 <include file="$(find plastun_modules_launches)/launch/cam.launch"/>
 
+<!-- activate_laser -->
+<include file="$(find plastun_modules_launches)/launch/activate_laser.launch"/>
+
 
 </launch>

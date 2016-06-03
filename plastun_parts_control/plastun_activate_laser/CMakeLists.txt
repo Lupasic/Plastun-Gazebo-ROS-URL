@@ -27,7 +27,7 @@ include_directories(src)
 include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 
-add_executable(activate_laser src/activate_laser.cpp src/main.cpp)
+add_executable(activate_laser src/activate_laser.cpp src/main.cpp src/dioAurora/ecram.cc src/dioAurora/dioport.cpp)
 target_link_libraries(activate_laser ${catkin_LIBRARIES})
 
 add_dependencies(

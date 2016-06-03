@@ -27,7 +27,7 @@
 <!--  <include file="$(find plastun_rotate_turret)/launch/rotate_turret.launch" /> -->
 
 <!-- activate activating laser server -->
-  <node name="activate_laser" pkg="plastun_activate_laser" type="activate_laser" respawn="false" output="screen"></node>
+<!--  <include file="$(find plastun_activate_laser)/launch/activate_laser.launch" /> -->
 
 <!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms 
 or
