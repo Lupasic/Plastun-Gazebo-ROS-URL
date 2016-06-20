@@ -1,10 +1,10 @@
 #For full documentation of the parameters in this file, and a list of all the
 #parameters available for TrajectoryPlannerROS, please see
 #http://www.ros.org/wiki/base_local_planner
-controller_frequency: 20.0
-#planner_frequency: 0.0
-#recovery_behavior_enabled: false
-#clearing_rotation_allowed: false
+controller_frequency: 3.0
+planner_frequency: 0.0
+recovery_behavior_enabled: false
+clearing_rotation_allowed: false
 
 
 TrajectoryPlannerROS:
@@ -18,12 +18,12 @@ TrajectoryPlannerROS:
   min_vel_x: 0.1
   max_vel_y: 0.0  # zero for a differential drive robot
   min_vel_y: 0.0
-  max_vel_theta: 0.5
-  min_vel_theta: -0.5
+  max_vel_theta: 1
+  min_vel_theta: -1
   min_in_place_vel_theta: 0.1
 
   #The velocity the robot will command when trying to escape from a stuck situation
-  escape_vel: -0.2
+  escape_vel: -0.1
   
   #For this example, we'll use a holonomic robot
   holonomic_robot: false
@@ -36,11 +36,11 @@ TrajectoryPlannerROS:
   yaw_goal_tolerance: 0.1
   latch_xy_goal_tolerance: false
   pdist_scale: 0.8
-  gdist_scale: 0.6
+  gdist_scale: 0.4
   meter_scoring: true
 
   #We'll configure how long and with what granularity we'll forward simulate trajectories
-  sim_time: 1.3
+  sim_time: 1
   sim_granularity: 0.025
   vx_samples: 5
   vy_samples: 0 # zero for a differential drive robot

@@ -9,11 +9,11 @@
 	<node name="mapserver" pkg="map_server" type="map_server" args="$(arg map)" respawn="false" output="screen">
   	</node>
 
-	<include file="$(find plastun_navigation)/config/amcl_stage.xml">
+	<include file="$(find plastun_navigation)/launch/amcl_stage.xml">
 	    <arg name="scan" value="$(arg scan)" />
 	</include> 
 	
-	<include file="$(find plastun_navigation)/config/move_base.xml">
+	<include file="$(find plastun_navigation)/launch/move_base.xml">
 	    <arg name="scan" value="$(arg scan)" />
 	</include> 
 </launch>
