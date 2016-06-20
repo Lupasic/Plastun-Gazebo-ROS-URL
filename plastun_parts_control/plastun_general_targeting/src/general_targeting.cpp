@@ -35,7 +35,7 @@ void General_targeting::main_calculation()
     tf::StampedTransform transform;
     ros::Rate rate(10.0);
     try{
-        listener->lookupTransform("/map", "/turrel_vniz",
+        listener->lookupTransform("/turrel_vniz", "/map",
                                   ros::Time(0), transform);
 
     }
@@ -46,20 +46,29 @@ void General_targeting::main_calculation()
     }
     cur_pos_x = transform.getOrigin().x();
     cur_pos_y = transform.getOrigin().y();
+
+
+
+    tf::Vector3 targ = transform(tf::Vector3(goal->target_x,goal->target_y,0)); //трансформим координаты
+
+    std::cout << "Текущее положение относительно map по x: " << cur_pos_x <<" по y: " << cur_pos_y  << std::endl;
+    std::cout << "Текущее положение относительно turrel_vniz по х: " << targ.x() <<" по y: " << targ.y()  << std::endl;
+    std::cout << "Положение цели относительно map по x: " << goal->target_x <<" по y: " << goal->target_y  << std::endl;
+    std::cout << "Положение цели относительно turrel_vniz по x: "  << targ.x() <<" по y: " << targ.y()  << std::endl;
+
     nh.getParam("/general_targeting/lengh_to_cam_xy",lengh_to_cam_xy); //длина плеча в лаунч файле задается
     nh.getParam("/general_targeting/lengh_to_cam_yz",lengh_to_cam_yz); //длина плеча в лаунч файле задается
-    lengh_to_target = std::sqrt(std::pow((goal->target_y - cur_pos_y),2) + std::pow((goal->target_x - cur_pos_x),2));
-    //1.57 это 90 град
+    lengh_to_target = std::sqrt(std::pow((targ.getY()),2) + std::pow((targ.getX()),2));
+
+    std::cout << "Расстояние до цели, преобразованные коорд: "  << lengh_to_target <<" от мап: " << std::sqrt(std::pow((goal->target_y - cur_pos_y),2) + std::pow((goal->target_x - cur_pos_x),2))  << std::endl;
+
     //расчет угла поворота по вертикальной оси (y; x)
-    std::cout << "Текущие координаты робота: " << cur_pos_y << " ; " << cur_pos_x << std::endl;
-    std::cout << "Текущие координаты цели: " << goal->target_y << " ; " << goal->target_x << std::endl;
-    std::cout << "Расстояние до цели: " << lengh_to_target << std::endl;
-    alpha = std::asin((goal->target_y - cur_pos_y)/lengh_to_target);
+    alpha = std::asin(targ.getY()/lengh_to_target);
     std::cout << "Угол альфа: " << alpha << std::endl;
-    beta = std::acos(lengh_to_cam_xy/lengh_to_target);
+    beta = std::asin(lengh_to_cam_xy/lengh_to_target);
     std::cout << "Угол бета: " << beta << std::endl;
-    result.angle_yaw = beta - (1.57 - alpha);
-    std::cout << "Полученный угол в радианах: " << result.angle_yaw  << std::endl;
+    result.angle_yaw = beta + alpha;
+    std::cout << "Полученный угол в градусах: " << result.angle_yaw * 57.3 << std::endl;
     result.angle_pitch = 0;
     gt_server->setSucceeded(result);
 }

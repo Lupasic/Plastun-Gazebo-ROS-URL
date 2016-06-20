@@ -99,7 +99,7 @@
   </gazebo>
 
   <gazebo reference="hokuyo">
-    <sensor type="gpu_ray" name="hokuyo_sensor">
+    <sensor type="ray" name="hokuyo_sensor">
       <!-- <pose>0 0 0.1 0 0 -3.1416</pose> -->
       <visualize>true</visualize>
       <update_rate>40</update_rate>
@@ -118,7 +118,7 @@
           <resolution>0.01</resolution>
         </range>
       </ray>
-      <plugin name="gazebo_ros_hokuyo_sensor" filename="libgazebo_ros_gpu_laser.so">
+      <plugin name="gazebo_ros_hokuyo_sensor" filename="libgazebo_ros_laser.so">
         <topicName>/plastun/laser/scan</topicName>
         <frameName>hokuyo</frameName>
       </plugin>
@@ -126,7 +126,7 @@
   </gazebo>
 
   <gazebo reference="lazer_ukazka">
-    <sensor type="gpu_ray" name="hokuyo_laser_ukaz">
+    <sensor type="ray" name="hokuyo_laser_ukaz">
      <!-- <pose>-0.1 0 0.05 0 0 3.1416</pose> -->
       <visualize>true</visualize>
       <update_rate>40</update_rate>
@@ -150,7 +150,7 @@
           <stddev>0.01</stddev>
         </noise>
       </ray>
-      <plugin name="gazebo_ros_hokuyo_laser_ukaz" filename="libgazebo_ros_gpu_laser.so">
+      <plugin name="gazebo_ros_hokuyo_laser_ukaz" filename="libgazebo_ros_laser.so">
         <topicName>/plastun/laser/scan_ukaz</topicName>
         <frameName>lazer_ukazka</frameName>
       </plugin>

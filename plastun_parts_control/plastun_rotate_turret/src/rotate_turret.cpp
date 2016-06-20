@@ -27,13 +27,13 @@ void Rotate_turret::goal_R()
 {
 
     goal = rt_server->acceptNewGoal();
-    check.data = goal->alpha_yaw + feedback.cur_alpha_yaw;
-    analysis_yaw = goal->alpha_yaw + feedback.cur_alpha_yaw;
+    check.data = goal->alpha_yaw;
+    analysis_yaw = goal->alpha_yaw;
     std::cout <<"Первоначальный угол по вертикальной оси: "<< feedback.cur_alpha_yaw << " по поперечной: "<< feedback.cur_alpha_pitch <<std::endl;
     std::cout <<"Угол поворота вокруг вертикальной оси: "<< goal->alpha_yaw << " вокруг поперечной оси: "<< goal->alpha_pitch <<std::endl;
     turret_yaw_command.publish(check);
-    check.data = goal->alpha_pitch + feedback.cur_alpha_pitch;
-    analysis_pitch = goal->alpha_pitch + feedback.cur_alpha_pitch;
+    check.data = goal->alpha_pitch;
+    analysis_pitch = goal->alpha_pitch;
     turret_pitch_command.publish(check);
     timer = nh.createTimer(ros::Duration(1), &Rotate_turret::timer_callback, this);
     timer.start();

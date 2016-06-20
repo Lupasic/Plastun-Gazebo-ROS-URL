@@ -118,7 +118,7 @@ void Global_control_system::rotate_turret_finishedCb(const actionlib::SimpleClie
         std::cout << "Активируем донаведение " << std::endl;
         goal_access.access = 2;
         fl_first_rotate = false;
-        id->sendGoal(goal_access, boost::bind(&Global_control_system::image_detect_finishedCb, this ,_1,_2));
+        //id->sendGoal(goal_access, boost::bind(&Global_control_system::image_detect_finishedCb, this ,_1,_2));
     }
     else
     {
