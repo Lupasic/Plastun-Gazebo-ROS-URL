@@ -85,7 +85,9 @@ void Global_control_system::general_targeting_finishedCb(const actionlib::Simple
     ROS_INFO("General_targeting status: [%s]", state.toString().c_str());
     std::cout << "Нужно повернуть туррель вокруг вертикальной оси: " << result->angle_yaw <<" вокруг поперечной оси: " << result->angle_pitch << std::endl;
     goal_rotate.alpha_yaw = result->angle_yaw;
+    firstly_yaw = goal_rotate.alpha_yaw;
     goal_rotate.alpha_pitch = result->angle_pitch;
+    firstly_pitch = goal_rotate.alpha_pitch;
     fl_first_rotate = true;
     rt->sendGoal(goal_rotate, boost::bind(&Global_control_system::rotate_turret_finishedCb, this ,_1,_2));
 }
@@ -108,10 +110,6 @@ void Global_control_system::image_detect_finishedCb(const actionlib::SimpleClien
     else
     {
         ROS_INFO("No image detected.");
-        //Вернуть турель в начальное положение
-        goal_rotate.alpha_yaw = 0;
-        goal_rotate.alpha_pitch = 0;
-        rt->sendGoal(goal_rotate, boost::bind(&Global_control_system::rotate_turret_finishedCb, this ,_1,_2));
     }
 }
 
@@ -124,7 +122,7 @@ void Global_control_system::rotate_turret_finishedCb(const actionlib::SimpleClie
         std::cout << "Активируем донаведение " << std::endl;
         goal_access.access = 2;
         id->sendGoal(goal_access, boost::bind(&Global_control_system::image_detect_finishedCb, this ,_1,_2));
-    }
+}
     else
     {
         //Лазер
@@ -168,6 +166,10 @@ void Global_control_system::angle_count()
     //Пересчет смещения цели на камере в углы
     a_yaw = std::atan(x_sm/focal_length_x);
     a_pitch = std::atan(y_sm/focal_length_y);
-    goal_rotate.alpha_yaw = a_yaw;
-    goal_rotate.alpha_pitch = a_pitch;
+    std::cout << "углы от смещения по yaw: " << a_yaw << " по pitch: " << a_pitch << std::endl;
+    std::cout << " предыдущие углы " << firstly_yaw << " ; " << firstly_pitch << std::endl;
+    goal_rotate.alpha_yaw = a_yaw + firstly_yaw;
+    goal_rotate.alpha_pitch = a_pitch + firstly_pitch;
+    firstly_yaw = 0;
+    firstly_pitch = 0;
 }

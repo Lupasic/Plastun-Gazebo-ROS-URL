@@ -14,13 +14,15 @@
   <node name="general_targeting" pkg="plastun_general_targeting" type="general_targeting" respawn="false" output="screen">
   	<param name="lengh_to_cam_xy" value="0.21" />
   	<param name="lengh_to_cam_yz" value="0.1" />
+  	<param name="target_height" value="1.5" />
+  	<param name="MRK_height" value="1" />
   </node>
 
 <!-- activate image detect server -->
   <node name="image_detect" pkg="plastun_image_detect" type="image_detect" respawn="false" output="screen">
   	<param name="cascad" value="$(find plastun_image_detect)/cascads/plafon_url_new/cascade.xml" />
-    <param name="suscribe_camera_topic" value="/wide_camera/image_raw" />
-    <param name="image_transport" value="compressed" />
+    <param name="suscribe_camera_topic" value="/wide_camera/image_rect_color" />
+    <!--<param name="image_transport" value="compressed" />-->
 </node>
 
 <!-- activate rotate turret server-->

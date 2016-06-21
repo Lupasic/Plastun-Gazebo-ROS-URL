@@ -44,9 +44,10 @@ protected:
     //
     ros::NodeHandle n;
     float focal_length_x,focal_length_y, a_yaw, a_pitch;
+    float firstly_yaw, firstly_pitch;
     std_msgs::Float64 angle_yaw,angle_pitch;
     geometry_msgs::Point cur_target;
-    int x_sm, y_sm;
+    int x_sm, y_sm, sleep_targeting_duration;
     bool fl_rotate_status, fl_camera_info, fl_first_rotate; //1 - за возврат туррели, 2 - чтобы самера инфо считалась 1 раз и все, 3 - работает 2 раза, разбиение логики
     std::string camera_info_topic, target_points_topic;
     //Вспомогательные функции

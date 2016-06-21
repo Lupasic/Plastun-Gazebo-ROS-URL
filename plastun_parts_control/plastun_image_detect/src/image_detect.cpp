@@ -11,14 +11,13 @@ Image_detect::Image_detect(std::string name)
     action_name = name;
     //Получаем топик для камеры из launch файла
     std::string suscribe_camera_topic;
-    nh_.getParam("/cascad_testing/suscribe_camera_topic",suscribe_camera_topic);
+    nh_.getParam("/image_detect/suscribe_camera_topic",suscribe_camera_topic);
     // Subscrive to input video feed and publish output video feed
     image_sub_ = it_.subscribe(suscribe_camera_topic, 1, &Image_detect::imageCallback, this);
     image_pub_ = it_.advertise("/image_converter/output_video", 1);
     id_server = new actionlib::SimpleActionServer<plastun_image_detect::access_detectAction>(nh_,name,false);
     id_server->registerGoalCallback(boost::bind(&Image_detect::goal_R,this));
     id_server->registerPreemptCallback(boost::bind(&Image_detect::preempt_R,this));
-    cv::namedWindow(OPENCV_WINDOW);
 
     fl = false;
     id_server->start();
@@ -26,7 +25,6 @@ Image_detect::Image_detect(std::string name)
 
 Image_detect::~Image_detect()
 {
-    //cv::destroyWindow(OPENCV_WINDOW);
 }
 
 void Image_detect::goal_R()
@@ -90,11 +88,10 @@ void Image_detect::imageCallback(const sensor_msgs::ImageConstPtr& msg)
             center.push_back(a);
             //для дебага центра
             rectangle(cv_ptr->image, symbolBegin, symbolEnd, cv::Scalar(0,255,0), 2);
-            break; //Для Каскада газебо
         }
 
-        plastun_image_detect::access_detectResult res;
-        if(!center.empty())
+        plastun_image_detect::access_detectResult res;       
+if(!center.empty())
         {
 
             res.result = true;

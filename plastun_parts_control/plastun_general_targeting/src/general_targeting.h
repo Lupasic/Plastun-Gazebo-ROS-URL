@@ -20,6 +20,7 @@ protected:
     plastun_general_targeting::access_targetingResult result;
     float lengh_to_cam_xy, lengh_to_cam_yz;
     float lengh_to_target;
+    float MRK_height, target_height;
     float cur_pos_x, cur_pos_y;
 
 public:

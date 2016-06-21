@@ -11,7 +11,7 @@
 	<param name="pan_zero" value="395" />
 	<param name="tiltMax" value="30000" />
 	<param name="tilt_zero" value="14940" />
-	<param name="pan_sign" value="1" />
+	<param name="pan_sign" value="-1" />
 	<param name="tilt_sign" value="-1" />
 
 	<param name="hor_max" value="1.57" />

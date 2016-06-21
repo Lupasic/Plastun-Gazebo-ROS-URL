@@ -59,13 +59,23 @@ void General_targeting::main_calculation()
 
     std::cout << "Расстояние до цели, преобразованные коорд: "  << lengh_to_target <<" от мап: " << std::sqrt(std::pow((goal->target_y - cur_pos_y),2) + std::pow((goal->target_x - cur_pos_x),2))  << std::endl;
 
-    //расчет угла поворота по вертикальной оси (y; x)
+    //расчет угла поворота по вертикальной оси
     alpha = std::asin(targ.getY()/lengh_to_target);
-    std::cout << "Угол альфа: " << alpha << std::endl;
+    //std::cout << "Угол альфа: " << alpha << std::endl;
     beta = std::asin(lengh_to_cam_xy/lengh_to_target);
-    std::cout << "Угол бета: " << beta << std::endl;
+    //std::cout << "Угол бета: " << beta << std::endl;
     result.angle_yaw = beta + alpha;
-    std::cout << "Полученный угол в градусах: " << result.angle_yaw * 57.3 << std::endl;
-    result.angle_pitch = 0;
+    std::cout << "Полученный угол по вертикальной оси в градусах: " << result.angle_yaw * 57.3 << std::endl;
+
+    nh.getParam("/general_targeting/target_height",target_height); //высота цели
+    nh.getParam("/general_targeting/target_height",MRK_height); //высота МРК от пола до камеры
+
+    //расчет угла поворота по поперечной оси
+    alpha = std::asin((target_height - MRK_height)/lengh_to_target);
+    //std::cout << "Угол альфа: " << alpha << std::endl;
+    beta = std::asin(lengh_to_cam_yz/lengh_to_target);
+    //std::cout << "Угол бета: " << beta << std::endl;
+    result.angle_pitch = beta + alpha;
+    std::cout << "Полученный угол по поперечной в градусах: " << result.angle_pitch * 57.3 << std::endl;
     gt_server->setSucceeded(result);
 }

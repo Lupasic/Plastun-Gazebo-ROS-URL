@@ -137,10 +137,6 @@ bool Rotate_turret::dispatchReply()
     {
         COUT("udp cmd complete ");
         pantilt_completed = true;
-        //		if ( pantilt_cmd )
-        //		{
-        //			setPanTilt(cmdpan, cmdtilt);
-        //		}
 
         return true;
     }

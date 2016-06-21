@@ -6,11 +6,11 @@
 		<param name="password" value="9999"/>
 		<param name="prefix" value="one"/>
 		<param name="frame_id" value="wide_camera"/>
-		<param name="camera_info_url" value="package://spb_cameras/config/calib.yaml"/>
+		<param name="camera_info_url" value="package://spb_cameras/cfg/wide_camera.yaml"/>
 	</node>
       <node ns="wide_camera" name="image_proc_wide" pkg="image_proc" type="image_proc" >
 		<param name="image_transport" value="compressed"/>
         </node>
-      <node ns="wide_camera" name="repub" pkg="image_transport" type="republish" args="compressed in:=/wide_camera/image_raw raw out:=/wide_camera/image_raw">
+      <node ns="stereo" name="repub" pkg="image_transport" type="republish" args="compressed in:=one/image_raw raw out:=one/image_raw">
 	</node>
 </launch>
