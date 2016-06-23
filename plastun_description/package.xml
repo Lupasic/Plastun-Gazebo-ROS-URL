@@ -2,7 +2,7 @@
 <package>
   <name>plastun_description</name>
   <version>1.0.0</version>
-  <description>Describes MRC "Plastun" with camera, hokyo plugins for Gazebo</description>
+  <description>Describes MRC "Plastun" with camera, hokyo</description>
 
    <maintainer email="obulichev@yandex.ru">Bulichev Oleg</maintainer>
   <license>None</license>

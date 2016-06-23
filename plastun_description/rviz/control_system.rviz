@@ -166,7 +166,7 @@ Visualization Manager:
       History Length: 1
       Name: PointStamped
       Radius: 0.5
-      Topic: /clicked_point
+      Topic: /target_points
       Value: true
     - Class: rviz/TF
       Enabled: true
@@ -218,10 +218,10 @@ Visualization Manager:
     - Class: rviz/SetInitialPose
       Topic: /initialpose
     - Class: rviz/SetGoal
-      Topic: /move_base_simple/goal
+      Topic: /move_base_simple1/goal
     - Class: rviz/PublishPoint
       Single click: true
-      Topic: /clicked_point
+      Topic: /target_points
   Value: true
   Views:
     Current:

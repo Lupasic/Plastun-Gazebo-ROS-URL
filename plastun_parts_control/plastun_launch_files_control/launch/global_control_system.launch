@@ -1,7 +1,7 @@
 <launch>
 
 <!-- activate amcl + move base + others -->
-  <include file="$(find plastun_navigation)/launch/amcl.launch"/>
+  <include file="$(find plastun_navigation)/launch/navigation.launch"/>
 
 <!-- activate move global_control_system (clients for all servers) -->
   <node name="global_control_system" pkg="plastun_global_control_system" type="global_control_system" respawn="false" output="screen">
@@ -21,8 +21,8 @@
 <!-- activate image detect server -->
   <node name="image_detect" pkg="plastun_image_detect" type="image_detect" respawn="false" output="screen">
   	<param name="cascad" value="$(find plastun_image_detect)/cascads/plafon_url_new/cascade.xml" />
-    <param name="suscribe_camera_topic" value="/wide_camera/image_rect_color" />
-    <!--<param name="image_transport" value="compressed" />-->
+    <param name="suscribe_camera_topic" value="/wide_camera/image_color" />
+    <param name="image_transport" value="compressed" />
 </node>
 
 <!-- activate rotate turret server-->
@@ -34,7 +34,6 @@
 <!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms 
 or
 static_transform_publisher x y z qx qy qz qw frame_id child_frame_id  period_in_ms -->
-
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_turrel_vniz_broadcaster" args="0.15 0 0 0 0 0 base_link turrel_vniz 100" />
 
 

@@ -1,5 +1,5 @@
 <launch>
-	<arg name="cfg" default="$(find bins)/launch/config/mobile.cfg"/>
+	<arg name="cfg" default="$(find bins)/config/mobile.cfg"/>
 	
     <param name="cfgfile" value="$(arg cfg)"/>
     <param name="verbose" type="bool" value="1"/>

@@ -1,7 +1,0 @@
-<launch>
-	<param name="/use_sim_time" value="True"/>
-	<node name="odo_tf" pkg="odo_tf_pub" type="odo_tf_pub" output="screen">
-		<remap from="odo" to="/driver1/pubtop"/>
-		<param name="dt" value="0.05"/>
-	</node>
-</launch>
