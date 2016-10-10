@@ -6,9 +6,9 @@
 #include <actionlib/client/terminal_state.h>
 #include "geometry_msgs/PoseStamped.h"
 #include "move_base_msgs/MoveBaseAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_image_detect/access_detectAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_general_targeting/access_targetingAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_rotate_turret/angleAction.h"
+#include <plastun_image_detect/access_detectAction.h>
+#include <plastun_general_targeting/access_targetingAction.h>
+#include <plastun_rotate_turret/angleAction.h>
 #include "std_msgs/Float64.h"
 #include "sensor_msgs/CameraInfo.h"
 #include <tf/transform_broadcaster.h>
@@ -43,6 +43,7 @@ protected:
     void rotate_turret_feedbackCb(const plastun_rotate_turret::angleFeedbackConstPtr &feedback);
     //
     float focal_length_x,focal_length_y, a_yaw,  a_pitch;
+    float firstly_yaw, firstly_pitch;
     std_msgs::Float64 angle_yaw,angle_pitch;
     geometry_msgs::Point cur_target;
     int x_sm, y_sm;

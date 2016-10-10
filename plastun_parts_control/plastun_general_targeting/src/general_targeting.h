@@ -6,8 +6,7 @@
 #include <tf/tf.h>
 #include <tf2_msgs/TFMessage.h>
 #include <actionlib/server/simple_action_server.h>
-//#include "../../../../devel/include/plastun_rotate_turret/angleAction.h"
-#include "/home/lupasic/Programs/catkin_ws/devel/include/plastun_general_targeting/access_targetingAction.h"
+#include <plastun_general_targeting/access_targetingAction.h>
 #include <cmath>
 
 class General_targeting
@@ -22,6 +21,7 @@ protected:
     float lengh_to_cam_xy, lengh_to_cam_yz;
     float lengh_to_target;
     float cur_pos_x, cur_pos_y;
+
 
 public:
     General_targeting(std::string name);

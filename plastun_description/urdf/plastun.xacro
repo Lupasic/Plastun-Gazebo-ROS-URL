@@ -4,7 +4,7 @@
 	<!-- Import all Gazebo-customization elements, including Gazebo colors -->
 	<xacro:include filename="$(find plastun_description)/urdf/plastun.gazebo" />
 	<!-- Import Rviz colors -->
-	<xacro:include filename="$(find rrbot_description)/urdf/materials.xacro" />
+	<xacro:include filename="$(find plastun_description)/urdf/materials.xacro" />
 
 
 	<!-- Constants for robot dimensions -->

@@ -65,7 +65,7 @@ void General_targeting::main_calculation()
     //расчет угла поворота по вертикальной оси (y; x)
     alpha = std::asin(targ.getY()/lengh_to_target);
     std::cout << "Угол альфа: " << alpha << std::endl;
-    beta = std::asin(-lengh_to_cam_xy/lengh_to_target);
+    beta = std::asin(lengh_to_cam_xy/lengh_to_target);
     std::cout << "Угол бета: " << beta << std::endl;
     result.angle_yaw = beta + alpha;
     std::cout << "Полученный угол в градусах: " << result.angle_yaw * 57.3 << std::endl;
